@@ -2,7 +2,7 @@
 
 > Aplicación web moderna para gestionar gastos personales con soporte para gastos recurrentes, categorización inteligente y seguimiento de estados de pago.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/luishron/nextjs-postgres-nextauth-tailwindcss-template/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/luishron/nextjs-postgres-nextauth-tailwindcss-template/releases/tag/v2.0.0)
 [![Next.js](https://img.shields.io/badge/Next.js-15.1.9-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Latest-green)](https://supabase.com/)
@@ -10,6 +10,7 @@
 ## 📋 Tabla de Contenidos
 
 - [Características](#-características)
+- [Novedades en v2.0.0](#-novedades-en-v200)
 - [Stack Tecnológico](#-stack-tecnológico)
 - [Arquitectura](#-arquitectura)
 - [Instalación](#-instalación)
@@ -24,12 +25,25 @@
 
 ## ✨ Características
 
+### 📊 Dashboard Inteligente
+
+- **Resumen Mensual**: Vista consolidada de gastos e ingresos del mes actual
+- **Comparativa Temporal**: Análisis de mes anterior, actual y proyección del próximo mes
+- **KPIs Principales**: Indicadores clave con tendencias y cambios porcentuales
+- **Próximos Gastos a Vencer**: Widget con los gastos pendientes ordenados por urgencia
+- **Top Categorías**: Gráfico visual de las 5 categorías con mayor gasto
+- **Estados Vacíos Inteligentes**: Onboarding guiado para nuevos usuarios sin datos
+- **Balance en Tiempo Real**: Cálculo automático de ingresos - gastos
+
 ### 🎯 Gestión de Gastos
 
 - **CRUD Completo**: Crear, leer, actualizar y eliminar gastos
 - **Estados de Pago**: Seguimiento automático (pendiente, pagado, vencido)
 - **Detección de Vencimientos**: Marcado automático de gastos vencidos por fecha
-- **Métodos de Pago Personalizables**: Sistema configurable de métodos de pago con banco y últimos dígitos
+- **Métodos de Pago Dinámicos**: Selección de métodos configurados (banco + últimos 4 dígitos)
+- **Ordenamiento Inteligente**: Prioriza vencidos → pendientes → pagados
+- **Estadísticas en Tiempo Real**: Totales y desglose por estado en la tabla
+- **Visual de Urgencia**: Resaltado de gastos vencidos con bordes y colores
 - **Notas Personalizadas**: Agregar contexto adicional a cada gasto
 - **Filtros Inteligentes**: Por tipo (todos, recurrentes, únicos)
 
@@ -59,6 +73,18 @@
 - **Personalización Visual**: Colores personalizables para cada método
 - **Iconos Dinámicos**: Iconos automáticos según el tipo de método
 - **Integración Completa**: Selección de métodos al crear/editar gastos
+- **Display Inteligente**: Muestra "Nombre (Banco) ••1234" en formularios y tablas
+
+### 💰 Gestión de Ingresos
+
+- **CRUD Completo**: Crear, leer, actualizar y eliminar ingresos
+- **Categorías Separadas**: Sistema de categorías independiente para ingresos
+- **Ingresos Recurrentes**: Seguimiento de salarios y otros ingresos periódicos
+- **Frecuencias**: Semanal, mensual, anual
+- **Métodos de Pago**: Asociar cómo se recibió cada ingreso
+- **Vistas Organizadas**: Pestañas para todos, recurrentes y únicos
+- **Integración Dashboard**: Ingresos reflejados en KPIs y balance
+- **Categorías Predefinidas**: Salario, Freelance, Inversiones, Otros
 
 ### 🎨 Interfaz de Usuario
 
@@ -68,6 +94,70 @@
 - **Tablas Interactivas**: Acciones contextuales (editar, eliminar)
 - **Diálogos Modales**: Experiencia fluida sin cambios de página
 - **Formato MXN**: Moneda mexicana con separadores correctos
+
+---
+
+## 🚀 Novedades en v2.0.0
+
+### Dashboard Inteligente Completamente Renovado
+
+El dashboard ahora ofrece una vista completa de tu situación financiera:
+
+**KPIs Principales:**
+- Gastos del mes con tendencia vs mes anterior (↑ / ↓ %)
+- Ingresos del mes con tendencia
+- Balance en tiempo real (verde si positivo, rojo si negativo)
+- Gastos vencidos destacados
+
+**Comparativa Temporal:**
+- Vista de 3 meses: anterior, actual y proyección del próximo
+- Proyección automática basada en gastos recurrentes
+- Detección inteligente de nuevos usuarios con onboarding
+
+**Widgets Analíticos:**
+- Próximos 7 gastos a vencer con badges de urgencia
+- Top 5 categorías del mes con porcentajes y barras visuales
+- Contador inteligente (hoy, mañana, en X días/semanas)
+
+### Sistema de Ingresos Completo
+
+**Funcionalidades:**
+- CRUD completo de ingresos (crear, editar, eliminar)
+- Categorías separadas e independientes de gastos
+- 4 categorías predefinidas: Salario, Freelance, Inversiones, Otros
+- Ingresos recurrentes (semanal, mensual, anual)
+- Vistas organizadas en pestañas (todos, recurrentes, únicos)
+- Integración completa con el dashboard para cálculo de balance
+
+**Migración Automática:**
+- Script SQL que crea la estructura completa
+- Asignación inteligente de categorías basada en palabras clave
+- Triggers automáticos para `updated_at`
+
+### Tabla de Gastos Mejorada (UX/UI)
+
+**Ordenamiento Inteligente:**
+- Prioridad automática: vencidos → pendientes → pagados
+- Dentro de cada grupo, ordenado por fecha
+- Resaltado visual de gastos vencidos (fondo rojo, borde izquierdo)
+
+**Estadísticas en Tiempo Real:**
+- Total general al pie de la tabla
+- Desglose detallado por estado en cards visuales
+- Contador de gastos por cada estado
+- Totales calculados automáticamente
+
+**Mejoras Visuales:**
+- Badges de estado con colores semánticos (verde/amarillo/rojo)
+- Display mejorado de métodos de pago (banco + últimos 4 dígitos)
+- Cards de resumen con iconos y colores distintivos
+
+### Integración de Métodos de Pago Dinámicos
+
+- Eliminados valores hardcodeados
+- Selección desde tabla `payment_methods`
+- Display inteligente: "Nombre (Banco) ••1234"
+- Fallback para valores legacy
 
 ---
 
@@ -177,13 +267,19 @@ Ejecuta el script SQL en Supabase SQL Editor:
 # Ver archivo: supabase-init.sql
 ```
 
-5. **Agregar estados de pago** (Opcional para MVP v1.0.0)
+5. **Agregar estados de pago** (Requerido para v2.0.0)
 
 ```bash
 # Ver archivo: supabase-add-payment-status.sql
 ```
 
-6. **Iniciar servidor de desarrollo**
+6. **Agregar sistema de ingresos** (Requerido para v2.0.0)
+
+```bash
+# Ver archivo: supabase-incomes-migration.sql
+```
+
+7. **Iniciar servidor de desarrollo**
 
 ```bash
 pnpm dev
@@ -262,6 +358,24 @@ AUTH_GITHUB_SECRET=
    - Marcar como predeterminado
 4. Los métodos aparecerán en los formularios de gastos
 
+### Gestionar Ingresos
+
+1. Navega a "Ingresos"
+2. Si no hay categorías, primero crea una categoría de ingresos
+3. Click en "Agregar Ingreso"
+4. Completa el formulario:
+   - Fuente del ingreso (ej. "Salario Enero")
+   - Monto
+   - Fecha de recepción
+   - Categoría
+   - Tipo (único o recurrente)
+   - Frecuencia (si es recurrente)
+5. Visualiza tus ingresos en las pestañas:
+   - **Todos**: Lista completa
+   - **Recurrentes**: Solo ingresos periódicos
+   - **Únicos**: Solo ingresos puntuales
+6. Los ingresos se reflejan automáticamente en el dashboard
+
 ### Categorías
 
 1. Navega a "Categorías"
@@ -283,8 +397,12 @@ gastos/
 │   ├── (dashboard)/          # Grupo de rutas del dashboard
 │   │   ├── actions.ts        # Server Actions globales
 │   │   ├── layout.tsx        # Layout compartido
-│   │   ├── page.tsx          # Página principal
-│   │   ├── categorias/       # Módulo de categorías
+│   │   ├── page.tsx          # Dashboard principal con resumen
+│   │   ├── dashboard-kpis.tsx           # KPIs principales
+│   │   ├── monthly-comparison-card.tsx  # Comparativa mensual
+│   │   ├── upcoming-expenses-widget.tsx # Widget gastos próximos
+│   │   ├── top-categories-chart.tsx     # Gráfico categorías
+│   │   ├── categorias/       # Módulo de categorías de gastos
 │   │   │   ├── page.tsx
 │   │   │   ├── category-card.tsx
 │   │   │   └── add-category-dialog.tsx
@@ -292,12 +410,16 @@ gastos/
 │   │   │   ├── page.tsx
 │   │   │   ├── payment-method-card.tsx
 │   │   │   └── add-payment-method-dialog.tsx
-│   │   └── gastos/           # Módulo de gastos
+│   │   ├── gastos/           # Módulo de gastos
+│   │   │   ├── page.tsx
+│   │   │   ├── expenses-table.tsx
+│   │   │   ├── add-expense-dialog.tsx
+│   │   │   ├── edit-expense-dialog.tsx
+│   │   │   └── upcoming-expenses-card.tsx
+│   │   └── ingresos/         # Módulo de ingresos
 │   │       ├── page.tsx
-│   │       ├── expenses-table.tsx
-│   │       ├── add-expense-dialog.tsx
-│   │       ├── edit-expense-dialog.tsx
-│   │       └── upcoming-expenses-card.tsx
+│   │       └── categorias/   # Categorías de ingresos
+│   │           └── page.tsx
 │   ├── login/                # Autenticación
 │   └── layout.tsx            # Layout raíz
 ├── components/
@@ -312,6 +434,7 @@ gastos/
 ├── supabase-init.sql         # Script de inicialización
 ├── supabase-add-payment-status.sql  # Script estados de pago
 ├── supabase-payment-methods.sql     # Script métodos de pago
+├── supabase-incomes-migration.sql   # Script sistema de ingresos
 └── package.json
 ```
 
@@ -392,6 +515,29 @@ export type UpcomingExpense = Expense & {
   nextDate: string;
   templateId: number;
 }
+
+export type IncomeCategory = {
+  id: number;
+  user_id: string;
+  name: string;
+  color: string;
+  icon?: string | null;
+  description?: string | null;
+}
+
+export type Income = {
+  id: number;
+  user_id: string;
+  source: string;
+  amount: string;
+  date: string;
+  description?: string | null;
+  category_id?: number | null;
+  payment_method?: string | null;
+  is_recurring?: number;
+  recurrence_frequency?: string | null;
+  notes?: string | null;
+}
 ```
 
 #### Funciones de Gastos
@@ -464,6 +610,55 @@ getUpcomingRecurringExpenses(
 4. Filtra instancias ya pagadas
 5. Ordena por proximidad
 
+#### Funciones de Dashboard
+
+```typescript
+// Resumen mensual de ingresos y gastos
+getMonthlySummary(
+  userId: string,
+  year: number,
+  month: number
+): Promise<MonthlySummary>
+
+// Obtener gastos vencidos
+getOverdueExpenses(userId: string): Promise<OverdueExpensesSummary>
+
+// Próximos gastos a vencer
+getUpcomingDueExpenses(
+  userId: string,
+  limit?: number
+): Promise<Expense[]>
+
+// Top categorías del mes
+getTopCategoriesByMonth(
+  userId: string,
+  year: number,
+  month: number,
+  limit?: number
+): Promise<CategorySummary[]>
+
+// Proyección del próximo mes (basado en recurrentes)
+getNextMonthProjection(userId: string): Promise<MonthlyProjection>
+```
+
+#### Funciones de Ingresos
+
+```typescript
+// Obtener ingresos del usuario
+getIncomesByUser(userId: string): Promise<Income[]>
+
+// CRUD de ingresos
+createIncome(income: InsertIncome): Promise<Income>
+updateIncome(id: number, income: Partial<InsertIncome>): Promise<Income>
+deleteIncomeById(id: number): Promise<void>
+
+// Categorías de ingresos
+getIncomeCategoriesByUser(userId: string): Promise<IncomeCategory[]>
+createIncomeCategory(category: InsertIncomeCategory): Promise<IncomeCategory>
+updateIncomeCategory(id: number, category: Partial<InsertIncomeCategory>): Promise<IncomeCategory>
+deleteIncomeCategoryById(id: number): Promise<void>
+```
+
 ---
 
 ### 3. Server Actions (`app/(dashboard)/actions.ts`)
@@ -488,6 +683,16 @@ export async function deletePaymentMethod(formData: FormData): Promise<void>
 
 // Gastos Recurrentes
 export async function payRecurringExpense(formData: FormData): Promise<ActionResult>
+
+// Ingresos
+export async function saveIncome(formData: FormData): Promise<ActionResult>
+export async function updateIncome(formData: FormData): Promise<ActionResult>
+export async function deleteIncome(formData: FormData): Promise<void>
+
+// Categorías de Ingresos
+export async function saveIncomeCategory(formData: FormData): Promise<ActionResult>
+export async function updateIncomeCategory(formData: FormData): Promise<ActionResult>
+export async function deleteIncomeCategory(formData: FormData): Promise<void>
 ```
 
 **Características:**
@@ -503,11 +708,46 @@ export async function payRecurringExpense(formData: FormData): Promise<ActionRes
 #### ExpensesTable (`expenses-table.tsx`)
 
 Tabla interactiva de gastos con:
-- Formateo de moneda MXN
-- Badges de estado con colores semánticos
-- Detección automática de vencimientos
-- Acciones contextuales (editar, eliminar)
-- Diálogo de edición inline
+- **Ordenamiento Inteligente**: Prioriza vencidos → pendientes → pagados
+- **Estadísticas en Tiempo Real**: Calcula totales por estado
+- **Resaltado Visual**: Gastos vencidos con fondo rojo y borde izquierdo
+- **Badges Semánticos**: Colores según estado (verde/amarillo/rojo)
+- **Desglose Detallado**: Cards al final con totales por estado
+- **Formateo de Moneda MXN**
+- **Métodos de Pago Dinámicos**: Muestra nombre + banco + últimos dígitos
+- **Acciones Contextuales**: Editar y eliminar
+
+#### DashboardKPIs (`dashboard-kpis.tsx`)
+
+KPIs principales del mes actual:
+- Gastos del mes con tendencia vs mes anterior
+- Ingresos del mes con tendencia
+- Balance (ingresos - gastos) con indicador visual
+- Gastos vencidos destacados en rojo
+
+#### MonthlyComparisonCard (`monthly-comparison-card.tsx`)
+
+Comparativa de 3 meses:
+- Mes anterior (histórico)
+- Mes actual (destacado)
+- Próximo mes (proyección basada en recurrentes)
+- Manejo inteligente de estados vacíos
+
+#### UpcomingExpensesWidget (`upcoming-expenses-widget.tsx`)
+
+Widget de próximos gastos a vencer:
+- Muestra próximos 7 gastos pendientes
+- Badges de urgencia por color (hoy/mañana/días/semanas)
+- Contador de días hasta vencimiento
+- Display de categorías y montos
+
+#### TopCategoriesChart (`top-categories-chart.tsx`)
+
+Top 5 categorías del mes:
+- Ranking visual (#1, #2, etc.)
+- Barras de progreso con colores de categoría
+- Porcentajes calculados automáticamente
+- Total y cantidad de gastos por categoría
 
 #### UpcomingExpensesCard (`upcoming-expenses-card.tsx`)
 
@@ -580,12 +820,71 @@ CREATE INDEX idx_expenses_date ON expenses(date);
 CREATE INDEX idx_expenses_payment_status ON expenses(payment_status);
 ```
 
+#### `payment_methods`
+```sql
+CREATE TABLE payment_methods (
+  id SERIAL PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('tarjeta_credito', 'tarjeta_debito', 'efectivo', 'transferencia', 'otro')),
+  bank TEXT,
+  last_four_digits TEXT,
+  icon TEXT,
+  color TEXT NOT NULL DEFAULT '#6366f1',
+  is_default BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX idx_payment_methods_user_id ON payment_methods(user_id);
+```
+
+#### `income_categories`
+```sql
+CREATE TABLE income_categories (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  name TEXT NOT NULL,
+  color TEXT NOT NULL DEFAULT '#10B981',
+  icon TEXT,
+  description TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_income_categories_user_id ON income_categories(user_id);
+```
+
+#### `incomes`
+```sql
+CREATE TABLE incomes (
+  id SERIAL PRIMARY KEY,
+  user_id UUID NOT NULL,
+  source TEXT NOT NULL,
+  amount NUMERIC(10, 2) NOT NULL,
+  date DATE NOT NULL,
+  description TEXT,
+  category_id INTEGER REFERENCES income_categories(id) ON DELETE SET NULL,
+  payment_method TEXT,
+  is_recurring INTEGER DEFAULT 0 CHECK (is_recurring IN (0, 1)),
+  recurrence_frequency TEXT CHECK (recurrence_frequency IN ('weekly', 'monthly', 'yearly')),
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_incomes_user_id ON incomes(user_id);
+CREATE INDEX idx_incomes_recurring ON incomes(user_id, is_recurring) WHERE is_recurring = 1;
+```
+
 ### Relaciones
 
 ```
 users (1) ──< (N) categories
 users (1) ──< (N) expenses
+users (1) ──< (N) payment_methods
+users (1) ──< (N) income_categories
+users (1) ──< (N) incomes
 categories (1) ──< (N) expenses
+income_categories (1) ──< (N) incomes
 ```
 
 ### Row Level Security (RLS)
@@ -611,30 +910,54 @@ CREATE POLICY "Users can delete own data" ON expenses
 
 ## 🗺️ Roadmap
 
-### v1.1.0 - Reportes y Análisis
-- [ ] Dashboard con gráficas
-- [ ] Reporte mensual de gastos
-- [ ] Análisis por categoría
-- [ ] Exportación a CSV/Excel
-- [ ] Comparativa mes a mes
+### ✅ v1.0.0 - MVP Base (Completado)
+- [x] Sistema de autenticación con GitHub OAuth
+- [x] CRUD de gastos
+- [x] Categorías personalizables
+- [x] Métodos de pago configurables
+- [x] Gastos recurrentes con generación virtual
+- [x] Estados de pago (pendiente, pagado, vencido)
 
-### v1.2.0 - Presupuestos
+### ✅ v2.0.0 - Dashboard e Ingresos (Completado)
+- [x] Dashboard inteligente con KPIs
+- [x] Resumen mensual (anterior, actual, proyección)
+- [x] Widget de próximos gastos a vencer
+- [x] Top categorías con gráficos
+- [x] Gestión de ingresos con CRUD completo
+- [x] Categorías de ingresos separadas
+- [x] Ingresos recurrentes
+- [x] Cálculo de balance (ingresos - gastos)
+- [x] Tabla de gastos mejorada con ordenamiento inteligente
+- [x] Estadísticas en tiempo real
+- [x] Estados vacíos con onboarding
+
+### v2.1.0 - Reportes y Exportación
+- [ ] Exportación a CSV/Excel de gastos e ingresos
+- [ ] Gráficas de tendencias temporales
+- [ ] Reporte PDF mensual
+- [ ] Análisis de patrones de gasto
+- [ ] Comparativa año a año
+
+### v2.2.0 - Presupuestos
 - [ ] Definir presupuesto por categoría
 - [ ] Alertas de sobre-gasto
 - [ ] Progreso visual del presupuesto
 - [ ] Presupuesto mensual global
+- [ ] Notificaciones de límites
 
-### v1.3.0 - Mejoras de Recurrentes
+### v2.3.0 - Mejoras de Recurrentes
 - [ ] Edición de monto por instancia
 - [ ] Pausar/reanudar recurrentes
 - [ ] Historial de cambios
 - [ ] Predicción de gastos futuros
+- [ ] Ajuste automático por inflación
 
-### v2.0.0 - Ingresos y Balance
-- [ ] Gestión de ingresos
-- [ ] Cálculo de balance (ingresos - gastos)
-- [ ] Proyecciones financieras
-- [ ] Metas de ahorro
+### v3.0.0 - Metas y Ahorro
+- [ ] Definir metas de ahorro
+- [ ] Tracking de progreso de metas
+- [ ] Sugerencias de ahorro basadas en IA
+- [ ] Proyecciones financieras avanzadas
+- [ ] Análisis de viabilidad de metas
 
 ---
 

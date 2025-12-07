@@ -66,6 +66,16 @@ export type Budget = {
   updated_at?: string;
 };
 
+export type IncomeCategory = {
+  id: number;
+  user_id: string;
+  name: string;
+  color: string;
+  icon?: string | null;
+  description?: string | null;
+  created_at?: string;
+};
+
 export type Income = {
   id: number;
   user_id: string;
@@ -73,7 +83,13 @@ export type Income = {
   amount: string;
   date: string;
   description?: string | null;
+  category_id?: number | null;
+  payment_method?: string | null;
+  is_recurring?: number;
+  recurrence_frequency?: string | null;
+  notes?: string | null;
   created_at?: string;
+  updated_at?: string;
 };
 
 export type Statistic = {
@@ -87,10 +103,11 @@ export type Statistic = {
 };
 
 export type InsertCategory = Omit<Category, 'id' | 'created_at'>;
+export type InsertIncomeCategory = Omit<IncomeCategory, 'id' | 'created_at'>;
 export type InsertPaymentMethod = Omit<PaymentMethod, 'id' | 'created_at' | 'updated_at'>;
 export type InsertExpense = Omit<Expense, 'id' | 'created_at' | 'updated_at'>;
 export type InsertBudget = Omit<Budget, 'id' | 'created_at' | 'updated_at'>;
-export type InsertIncome = Omit<Income, 'id' | 'created_at'>;
+export type InsertIncome = Omit<Income, 'id' | 'created_at' | 'updated_at'>;
 
 // Aliases para compatibilidad
 export type SelectExpense = Expense;
@@ -392,7 +409,7 @@ export async function getIncomesByUser(userId: string): Promise<Income[]> {
 
 export async function createIncome(income: InsertIncome): Promise<Income> {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const { data, error} = await supabase
     .from('incomes')
     .insert(income)
     .select()
@@ -400,6 +417,87 @@ export async function createIncome(income: InsertIncome): Promise<Income> {
 
   if (error) throw error;
   return data;
+}
+
+export async function updateIncome(
+  id: number,
+  income: Partial<InsertIncome>
+): Promise<Income> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('incomes')
+    .update(income)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteIncomeById(id: number): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase.from('incomes').delete().eq('id', id);
+
+  if (error) throw error;
+}
+
+//==============================================================================
+// FUNCIONES DE QUERIES - Categorías de Ingresos
+//==============================================================================
+
+export async function getIncomeCategoriesByUser(
+  userId: string
+): Promise<IncomeCategory[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('income_categories')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+}
+
+export async function createIncomeCategory(
+  category: InsertIncomeCategory
+): Promise<IncomeCategory> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('income_categories')
+    .insert(category)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function updateIncomeCategory(
+  id: number,
+  category: Partial<InsertIncomeCategory>
+): Promise<IncomeCategory> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('income_categories')
+    .update(category)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function deleteIncomeCategoryById(id: number): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from('income_categories')
+    .delete()
+    .eq('id', id);
+
+  if (error) throw error;
 }
 
 //==============================================================================
