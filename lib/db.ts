@@ -361,6 +361,22 @@ export async function getUpcomingRecurringExpenses(
   if (error) throw error;
   if (!recurringExpenses || recurringExpenses.length === 0) return [];
 
+  // Obtener todos los gastos únicos (que son instancias pagadas de recurrentes)
+  const { data: paidExpenses } = await supabase
+    .from('expenses')
+    .select('date, description')
+    .eq('user_id', userId)
+    .eq('is_recurring', 0);
+
+  // Crear un Set de fechas ya pagadas para búsqueda rápida
+  const paidDatesSet = new Set(
+    (paidExpenses || []).map((e) => {
+      // Extraer la fecha del formato "Descripción (YYYY-MM-DD)"
+      const match = e.description?.match(/\((\d{4}-\d{2}-\d{2})\)$/);
+      return match ? match[1] : null;
+    }).filter(Boolean)
+  );
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -377,28 +393,28 @@ export async function getUpcomingRecurringExpenses(
     endDate.setMonth(endDate.getMonth() + monthsAhead);
 
     while (nextDate <= endDate) {
+      const nextDateStr = nextDate.toISOString().split('T')[0];
       const daysUntilDue = Math.floor(
         (nextDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
       );
 
-      // Solo incluir si es futuro o está vencido pero no pagado
-      if (daysUntilDue >= -30) {
+      // Solo incluir si:
+      // 1. Es futuro o vencido reciente (últimos 30 días)
+      // 2. NO ha sido pagado ya
+      if (daysUntilDue >= -30 && !paidDatesSet.has(nextDateStr)) {
         upcoming.push({
           ...expense,
           isVirtual: true,
           daysUntilDue,
           dueMessage: getDueMessage(daysUntilDue),
-          nextDate: nextDate.toISOString().split('T')[0],
+          nextDate: nextDateStr,
           templateId: expense.id,
           payment_status: daysUntilDue < 0 ? 'vencido' : 'pendiente'
         });
       }
 
       // Calcular siguiente ocurrencia
-      nextDate = getNextOccurrence(
-        nextDate.toISOString().split('T')[0],
-        expense.recurrence_frequency
-      );
+      nextDate = getNextOccurrence(nextDateStr, expense.recurrence_frequency);
     }
   }
 

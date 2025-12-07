@@ -3,7 +3,12 @@ import { Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ExpensesTable } from './expenses-table';
 import { AddExpenseDialog } from './add-expense-dialog';
-import { getCategoriesByUser, getExpensesByUser } from '@/lib/db';
+import { UpcomingExpensesCard } from './upcoming-expenses-card';
+import {
+  getCategoriesByUser,
+  getExpensesByUser,
+  getUpcomingRecurringExpenses
+} from '@/lib/db';
 import { getUser } from '@/lib/auth';
 import Link from 'next/link';
 
@@ -23,6 +28,9 @@ export default async function GastosPage() {
   const { expenses, totalExpenses } = await getExpensesByUser(user.id, {
     limit: 100
   });
+
+  // Obtener próximos gastos recurrentes (virtuales)
+  const upcomingExpenses = await getUpcomingRecurringExpenses(user.id, 3);
 
   return (
     <div className="flex flex-col gap-4">
@@ -64,13 +72,19 @@ export default async function GastosPage() {
           />
         </TabsContent>
 
-        <TabsContent value="recurrentes" className="mt-4">
-          <div className="rounded-lg border bg-card p-6 mb-4">
+        <TabsContent value="recurrentes" className="mt-4 space-y-4">
+          <div className="rounded-lg border bg-card p-6">
             <h3 className="font-semibold mb-2">Gastos Recurrentes</h3>
             <p className="text-sm text-muted-foreground">
               Gastos que se repiten periódicamente como agua, luz, internet, renta, etc.
             </p>
           </div>
+
+          <UpcomingExpensesCard
+            upcomingExpenses={upcomingExpenses}
+            categories={categories}
+          />
+
           <ExpensesTable
             expenses={expenses.filter((e) => e.is_recurring === 1)}
             totalExpenses={expenses.filter((e) => e.is_recurring === 1).length}

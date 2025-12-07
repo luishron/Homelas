@@ -162,3 +162,44 @@ export async function saveCategory(formData: FormData) {
     return { error: 'Error al guardar la categoría' };
   }
 }
+
+export async function payRecurringExpense(formData: FormData) {
+  try {
+    const user = await getUser();
+
+    if (!user) {
+      return { error: 'No estás autenticado' };
+    }
+
+    const userId = user.id;
+
+    const templateId = formData.get('templateId') as string;
+    const nextDate = formData.get('nextDate') as string;
+    const amount = formData.get('amount') as string;
+    const description = formData.get('description') as string;
+    const categoryId = formData.get('categoryId') as string;
+    const paymentMethod = formData.get('paymentMethod') as string;
+    const notes = formData.get('notes') as string;
+    const recurrenceFrequency = formData.get('recurrenceFrequency') as string;
+
+    // Crear el gasto real para esta instancia recurrente
+    await createExpense({
+      user_id: userId,
+      category_id: parseInt(categoryId),
+      amount,
+      description: `${description} (${nextDate})`,
+      date: nextDate,
+      payment_method: paymentMethod,
+      payment_status: 'pagado',
+      is_recurring: 0, // Marcar como no recurrente (es una instancia individual)
+      recurrence_frequency: null,
+      notes
+    });
+
+    revalidatePath('/gastos');
+    return { success: true };
+  } catch (error) {
+    console.error('Error al pagar gasto recurrente:', error);
+    return { error: 'Error al pagar el gasto recurrente' };
+  }
+}
