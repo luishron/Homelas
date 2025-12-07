@@ -530,3 +530,266 @@ export async function getUpcomingRecurringExpenses(
   // Ordenar por fecha (más cercano primero)
   return upcoming.sort((a, b) => a.daysUntilDue - b.daysUntilDue);
 }
+
+//==============================================================================
+// FUNCIONES PARA DASHBOARD - Resúmenes y Estadísticas
+//==============================================================================
+
+export type MonthlySummary = {
+  year: number;
+  month: number;
+  totalExpenses: number;
+  totalIncome: number;
+  balance: number;
+  expensesCount: number;
+  incomesCount: number;
+};
+
+export type OverdueExpensesSummary = {
+  count: number;
+  total: number;
+  expenses: Expense[];
+};
+
+export type CategorySummary = {
+  categoryId: number;
+  categoryName: string;
+  categoryIcon: string | null;
+  categoryColor: string;
+  total: number;
+  count: number;
+  percentage: number;
+};
+
+/**
+ * Obtiene el resumen de gastos de un mes específico
+ */
+export async function getMonthlyExpensesSummary(
+  userId: string,
+  year: number,
+  month: number
+): Promise<{ total: number; count: number }> {
+  const supabase = await createClient();
+
+  // Calcular primer y último día del mes
+  const firstDay = new Date(year, month - 1, 1).toISOString().split('T')[0];
+  const lastDay = new Date(year, month, 0).toISOString().split('T')[0];
+
+  const { data, error } = await supabase
+    .from('expenses')
+    .select('amount')
+    .eq('user_id', userId)
+    .gte('date', firstDay)
+    .lte('date', lastDay);
+
+  if (error) throw error;
+
+  const total = (data || []).reduce((sum, expense) => {
+    return sum + parseFloat(expense.amount);
+  }, 0);
+
+  return { total, count: data?.length || 0 };
+}
+
+/**
+ * Obtiene el resumen de ingresos de un mes específico
+ */
+export async function getMonthlyIncomesSummary(
+  userId: string,
+  year: number,
+  month: number
+): Promise<{ total: number; count: number }> {
+  const supabase = await createClient();
+
+  // Calcular primer y último día del mes
+  const firstDay = new Date(year, month - 1, 1).toISOString().split('T')[0];
+  const lastDay = new Date(year, month, 0).toISOString().split('T')[0];
+
+  const { data, error } = await supabase
+    .from('incomes')
+    .select('amount')
+    .eq('user_id', userId)
+    .gte('date', firstDay)
+    .lte('date', lastDay);
+
+  if (error) throw error;
+
+  const total = (data || []).reduce((sum, income) => {
+    return sum + parseFloat(income.amount);
+  }, 0);
+
+  return { total, count: data?.length || 0 };
+}
+
+/**
+ * Obtiene resumen completo de un mes (gastos + ingresos + balance)
+ */
+export async function getMonthlySummary(
+  userId: string,
+  year: number,
+  month: number
+): Promise<MonthlySummary> {
+  const expenses = await getMonthlyExpensesSummary(userId, year, month);
+  const incomes = await getMonthlyIncomesSummary(userId, year, month);
+
+  return {
+    year,
+    month,
+    totalExpenses: expenses.total,
+    totalIncome: incomes.total,
+    balance: incomes.total - expenses.total,
+    expensesCount: expenses.count,
+    incomesCount: incomes.count
+  };
+}
+
+/**
+ * Obtiene gastos vencidos (fecha pasada y no pagados)
+ */
+export async function getOverdueExpenses(
+  userId: string
+): Promise<OverdueExpensesSummary> {
+  const supabase = await createClient();
+  const today = new Date().toISOString().split('T')[0];
+
+  const { data, error } = await supabase
+    .from('expenses')
+    .select('*')
+    .eq('user_id', userId)
+    .lt('date', today)
+    .neq('payment_status', 'pagado')
+    .order('date', { ascending: true });
+
+  if (error) throw error;
+
+  const expenses = data || [];
+  const total = expenses.reduce((sum, expense) => {
+    return sum + parseFloat(expense.amount);
+  }, 0);
+
+  return {
+    count: expenses.length,
+    total,
+    expenses
+  };
+}
+
+/**
+ * Obtiene gastos pendientes próximos a vencer
+ */
+export async function getUpcomingDueExpenses(
+  userId: string,
+  limit: number = 10
+): Promise<Expense[]> {
+  const supabase = await createClient();
+  const today = new Date().toISOString().split('T')[0];
+
+  const { data, error } = await supabase
+    .from('expenses')
+    .select('*')
+    .eq('user_id', userId)
+    .gte('date', today)
+    .neq('payment_status', 'pagado')
+    .order('date', { ascending: true })
+    .limit(limit);
+
+  if (error) throw error;
+  return data || [];
+}
+
+/**
+ * Obtiene top categorías con mayor gasto en un mes
+ */
+export async function getTopCategoriesByMonth(
+  userId: string,
+  year: number,
+  month: number,
+  limit: number = 5
+): Promise<CategorySummary[]> {
+  const supabase = await createClient();
+
+  // Calcular primer y último día del mes
+  const firstDay = new Date(year, month - 1, 1).toISOString().split('T')[0];
+  const lastDay = new Date(year, month, 0).toISOString().split('T')[0];
+
+  // Obtener gastos del mes con su categoría
+  const { data: expenses, error: expensesError } = await supabase
+    .from('expenses')
+    .select('amount, category_id')
+    .eq('user_id', userId)
+    .gte('date', firstDay)
+    .lte('date', lastDay);
+
+  if (expensesError) throw expensesError;
+  if (!expenses || expenses.length === 0) return [];
+
+  // Obtener todas las categorías del usuario
+  const { data: categories, error: categoriesError } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('user_id', userId);
+
+  if (categoriesError) throw categoriesError;
+
+  // Agrupar gastos por categoría
+  const categoryTotals = new Map<number, { total: number; count: number }>();
+
+  expenses.forEach((expense) => {
+    const current = categoryTotals.get(expense.category_id) || {
+      total: 0,
+      count: 0
+    };
+    current.total += parseFloat(expense.amount);
+    current.count += 1;
+    categoryTotals.set(expense.category_id, current);
+  });
+
+  // Calcular total general para porcentajes
+  const grandTotal = Array.from(categoryTotals.values()).reduce(
+    (sum, cat) => sum + cat.total,
+    0
+  );
+
+  // Crear resumen con información de categoría
+  const summaries: CategorySummary[] = Array.from(categoryTotals.entries())
+    .map(([categoryId, stats]) => {
+      const category = categories?.find((c) => c.id === categoryId);
+      return {
+        categoryId,
+        categoryName: category?.name || 'Sin categoría',
+        categoryIcon: category?.icon || null,
+        categoryColor: category?.color || '#6B7280',
+        total: stats.total,
+        count: stats.count,
+        percentage: grandTotal > 0 ? (stats.total / grandTotal) * 100 : 0
+      };
+    })
+    .sort((a, b) => b.total - a.total)
+    .slice(0, limit);
+
+  return summaries;
+}
+
+/**
+ * Calcula proyección de gastos del próximo mes basado en gastos recurrentes
+ */
+export async function getNextMonthProjection(
+  userId: string
+): Promise<{ total: number; count: number }> {
+  const supabase = await createClient();
+
+  // Obtener gastos recurrentes activos
+  const { data: recurringExpenses, error } = await supabase
+    .from('expenses')
+    .select('amount')
+    .eq('user_id', userId)
+    .eq('is_recurring', 1);
+
+  if (error) throw error;
+
+  const total = (recurringExpenses || []).reduce((sum, expense) => {
+    return sum + parseFloat(expense.amount);
+  }, 0);
+
+  return { total, count: recurringExpenses?.length || 0 };
+}
