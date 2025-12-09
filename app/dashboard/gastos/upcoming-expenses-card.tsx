@@ -36,7 +36,10 @@ export function UpcomingExpensesCard({
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-MX', {
+    // Parsear la fecha como local sin conversión de zona horaria
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString('es-MX', {
       day: 'numeric',
       month: 'short',
       year: 'numeric'
@@ -108,7 +111,7 @@ export function UpcomingExpensesCard({
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {upcomingExpenses.slice(0, 10).map((expense, index) => {
+          {upcomingExpenses.slice(0, 10).map((expense) => {
             const dueBadge = getDueBadge(expense.daysUntilDue);
             const DueIcon = dueBadge.icon;
 

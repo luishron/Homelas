@@ -28,7 +28,10 @@ export function UpcomingExpensesWidget({ expenses, categories }: UpcomingExpense
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-MX', {
+    // Parsear la fecha como local sin conversión de zona horaria
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString('es-MX', {
       day: 'numeric',
       month: 'short'
     });

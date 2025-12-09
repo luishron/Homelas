@@ -46,7 +46,11 @@ export function IncomesList({ incomes, categories }: IncomesListProps) {
             <div className="flex-1">
               <p className="font-medium">{income.source}</p>
               <p className="text-sm text-muted-foreground">
-                {new Date(income.date).toLocaleDateString('es-MX')}
+                {(() => {
+                  const [year, month, day] = income.date.split('-').map(Number);
+                  const date = new Date(year, month - 1, day);
+                  return date.toLocaleDateString('es-MX');
+                })()}
                 {income.description && ` • ${income.description}`}
               </p>
             </div>
