@@ -5,6 +5,7 @@ import { getUser } from '@/lib/auth';
 import { getIncomesByUser, getIncomeCategoriesByUser } from '@/lib/db';
 import Link from 'next/link';
 import { AddIncomeDialog } from './add-income-dialog';
+import { IncomesList } from './incomes-list';
 
 export const dynamic = 'force-dynamic';
 
@@ -86,30 +87,7 @@ export default async function IngresosPage() {
                 )}
               </div>
             ) : (
-              <div className="space-y-2">
-                {incomes.map((income) => (
-                  <div
-                    key={income.id}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50"
-                  >
-                    <div>
-                      <p className="font-medium">{income.source}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(income.date).toLocaleDateString('es-MX')}
-                        {income.description && ` • ${income.description}`}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-bold text-green-600 text-lg">
-                        {new Intl.NumberFormat('es-MX', {
-                          style: 'currency',
-                          currency: 'MXN'
-                        }).format(parseFloat(income.amount))}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <IncomesList incomes={incomes} categories={categories} />
             )}
           </div>
         </TabsContent>
