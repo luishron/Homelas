@@ -29,7 +29,7 @@ export default async function GastosPage() {
   const paymentMethods = await getPaymentMethodsByUser(user.id);
 
   // Obtener gastos del usuario
-  const { expenses, totalExpenses } = await getExpensesByUser(user.id, {
+  const { expenses } = await getExpensesByUser(user.id, {
     limit: 100
   });
 
