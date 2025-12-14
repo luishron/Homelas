@@ -40,6 +40,38 @@ export default async function GastosPage() {
   const activeExpenses = expenses.filter((e) => e.payment_status !== 'pagado');
   const paidCount = expenses.filter((e) => e.payment_status === 'pagado').length;
 
+  // Calcular estadísticas
+  const stats = activeExpenses.reduce(
+    (acc, expense) => {
+      const amount = parseFloat(expense.amount);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const expenseDate = new Date(expense.date);
+      expenseDate.setHours(0, 0, 0, 0);
+      const isOverdue = expenseDate < today && expense.payment_status !== 'pagado';
+
+      acc.total += amount;
+
+      if (isOverdue) {
+        acc.overdue += amount;
+        acc.overdueCount++;
+      } else {
+        acc.pending += amount;
+        acc.pendingCount++;
+      }
+
+      return acc;
+    },
+    { total: 0, overdue: 0, pending: 0, overdueCount: 0, pendingCount: 0 }
+  );
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'MXN'
+    }).format(amount);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -56,6 +88,33 @@ export default async function GastosPage() {
           </Link>
         </Button>
       </div>
+
+      {/* Cards de estadísticas */}
+      {activeExpenses.length > 0 && (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+            <div className="text-xs font-medium text-red-600">Vencidos</div>
+            <div className="text-2xl font-bold text-red-700">
+              {formatCurrency(stats.overdue)}
+            </div>
+            <div className="text-xs text-red-600">{stats.overdueCount} gastos</div>
+          </div>
+          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
+            <div className="text-xs font-medium text-yellow-600">Pendientes</div>
+            <div className="text-2xl font-bold text-yellow-700">
+              {formatCurrency(stats.pending)}
+            </div>
+            <div className="text-xs text-yellow-600">{stats.pendingCount} gastos</div>
+          </div>
+          <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+            <div className="text-xs font-medium text-green-600">Pagados</div>
+            <div className="text-2xl font-bold text-green-700">
+              {formatCurrency(0)}
+            </div>
+            <div className="text-xs text-green-600">{paidCount} gastos</div>
+          </div>
+        </div>
+      )}
 
       <Tabs defaultValue="todos" className="w-full">
         <div className="flex items-center justify-between">

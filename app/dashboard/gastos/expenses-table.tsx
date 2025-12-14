@@ -88,33 +88,10 @@ export function ExpensesTable({
     return dateB.getTime() - dateA.getTime();
   });
 
-  // Calcular estadísticas
-  const stats = expenses.reduce(
-    (acc, expense) => {
-      const amount = parseFloat(expense.amount);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const expenseDate = new Date(expense.date);
-      expenseDate.setHours(0, 0, 0, 0);
-      const isOverdue = expenseDate < today && expense.payment_status !== 'pagado';
-
-      acc.total += amount;
-
-      if (expense.payment_status === 'pagado') {
-        acc.paid += amount;
-        acc.paidCount++;
-      } else if (isOverdue) {
-        acc.overdue += amount;
-        acc.overdueCount++;
-      } else {
-        acc.pending += amount;
-        acc.pendingCount++;
-      }
-
-      return acc;
-    },
-    { total: 0, paid: 0, pending: 0, overdue: 0, paidCount: 0, pendingCount: 0, overdueCount: 0 }
-  );
+  // Calcular total
+  const totalAmount = expenses.reduce((acc, expense) => {
+    return acc + parseFloat(expense.amount);
+  }, 0);
 
   const formatCurrency = (amount: string | number) => {
     const num = typeof amount === 'string' ? parseFloat(amount) : amount;
@@ -271,38 +248,12 @@ export function ExpensesTable({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {/* Desglose de totales */}
-        {!hideActions && expenses.length > 0 && (
-          <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div className="rounded-lg border border-red-200 bg-red-50 p-3">
-              <div className="text-xs font-medium text-red-600">Vencidos</div>
-              <div className="text-2xl font-bold text-red-700">
-                {formatCurrency(stats.overdue)}
-              </div>
-              <div className="text-xs text-red-600">{stats.overdueCount} gastos</div>
-            </div>
-            <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-3">
-              <div className="text-xs font-medium text-yellow-600">Pendientes</div>
-              <div className="text-2xl font-bold text-yellow-700">
-                {formatCurrency(stats.pending)}
-              </div>
-              <div className="text-xs text-yellow-600">{stats.pendingCount} gastos</div>
-            </div>
-            <div className="rounded-lg border border-green-200 bg-green-50 p-3">
-              <div className="text-xs font-medium text-green-600">Pagados</div>
-              <div className="text-2xl font-bold text-green-700">
-                {formatCurrency(stats.paid)}
-              </div>
-              <div className="text-xs text-green-600">{stats.paidCount} gastos</div>
-            </div>
-          </div>
-        )}
         {(hideActions || showEditOnly) && expenses.length > 0 && (
           <div className="mb-6">
             <div className="rounded-lg border border-green-200 bg-green-50 p-4">
               <div className="text-sm font-medium text-green-600 mb-1">Total Pagado</div>
               <div className="text-3xl font-bold text-green-700">
-                {formatCurrency(stats.total)}
+                {formatCurrency(totalAmount)}
               </div>
               <div className="text-sm text-green-600 mt-1">{expenses.length} gastos en historial</div>
             </div>
@@ -447,7 +398,7 @@ export function ExpensesTable({
                   Total General:
                 </TableCell>
                 <TableCell className="text-right text-lg">
-                  {formatCurrency(stats.total)}
+                  {formatCurrency(totalAmount)}
                 </TableCell>
                 {(!hideActions || showEditOnly) && (
                   <TableCell></TableCell>
