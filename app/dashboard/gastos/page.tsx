@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download } from 'lucide-react';
+import { Download, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ExpensesTable } from './expenses-table';
 import { AddExpenseDialog } from './add-expense-dialog';
@@ -36,10 +36,25 @@ export default async function GastosPage() {
   // Obtener próximos gastos recurrentes (virtuales)
   const upcomingExpenses = await getUpcomingRecurringExpenses(user.id, 3);
 
+  // Filtrar gastos: separar pagados de activos (vencidos + pendientes)
+  const activeExpenses = expenses.filter((e) => e.payment_status !== 'pagado');
+  const paidCount = expenses.filter((e) => e.payment_status === 'pagado').length;
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Gastos</h1>
+        <div>
+          <h1 className="text-3xl font-bold">Gastos</h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Gestiona tus gastos vencidos y pendientes
+          </p>
+        </div>
+        <Button variant="outline" asChild>
+          <Link href="/dashboard/gastos/pagados" className="gap-2">
+            <History className="h-4 w-4" />
+            <span>Ver Pagados ({paidCount})</span>
+          </Link>
+        </Button>
       </div>
 
       <Tabs defaultValue="todos" className="w-full">
@@ -79,8 +94,8 @@ export default async function GastosPage() {
 
         <TabsContent value="todos" className="mt-4">
           <ExpensesTable
-            expenses={expenses}
-            totalExpenses={totalExpenses}
+            expenses={activeExpenses}
+            totalExpenses={activeExpenses.length}
             categories={categories}
             paymentMethods={paymentMethods}
           />
@@ -100,8 +115,8 @@ export default async function GastosPage() {
           />
 
           <ExpensesTable
-            expenses={expenses.filter((e) => e.is_recurring === 1)}
-            totalExpenses={expenses.filter((e) => e.is_recurring === 1).length}
+            expenses={activeExpenses.filter((e) => e.is_recurring === 1)}
+            totalExpenses={activeExpenses.filter((e) => e.is_recurring === 1).length}
             categories={categories}
             paymentMethods={paymentMethods}
           />
@@ -115,8 +130,8 @@ export default async function GastosPage() {
             </p>
           </div>
           <ExpensesTable
-            expenses={expenses.filter((e) => e.is_recurring === 0)}
-            totalExpenses={expenses.filter((e) => e.is_recurring === 0).length}
+            expenses={activeExpenses.filter((e) => e.is_recurring === 0)}
+            totalExpenses={activeExpenses.filter((e) => e.is_recurring === 0).length}
             categories={categories}
             paymentMethods={paymentMethods}
           />

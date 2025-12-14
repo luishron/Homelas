@@ -37,13 +37,17 @@ interface ExpensesTableProps {
   totalExpenses: number;
   categories: Category[];
   paymentMethods: PaymentMethod[];
+  hideActions?: boolean;
+  showEditOnly?: boolean;
 }
 
 export function ExpensesTable({
   expenses,
   totalExpenses,
   categories,
-  paymentMethods
+  paymentMethods,
+  hideActions = false,
+  showEditOnly = false
 }: ExpensesTableProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -250,7 +254,7 @@ export function ExpensesTable({
 
   return (
     <>
-      {editingExpense && (
+      {(!hideActions || showEditOnly) && editingExpense && (
         <EditExpenseDialog
           expense={editingExpense}
           categories={categories}
@@ -268,7 +272,7 @@ export function ExpensesTable({
       </CardHeader>
       <CardContent>
         {/* Desglose de totales */}
-        {expenses.length > 0 && (
+        {!hideActions && expenses.length > 0 && (
           <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-red-200 bg-red-50 p-3">
               <div className="text-xs font-medium text-red-600">Vencidos</div>
@@ -293,6 +297,17 @@ export function ExpensesTable({
             </div>
           </div>
         )}
+        {(hideActions || showEditOnly) && expenses.length > 0 && (
+          <div className="mb-6">
+            <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+              <div className="text-sm font-medium text-green-600 mb-1">Total Pagado</div>
+              <div className="text-3xl font-bold text-green-700">
+                {formatCurrency(stats.total)}
+              </div>
+              <div className="text-sm text-green-600 mt-1">{expenses.length} gastos en historial</div>
+            </div>
+          </div>
+        )}
 
         <Table>
           <TableHeader>
@@ -306,16 +321,20 @@ export function ExpensesTable({
                 Método de Pago
               </TableHead>
               <TableHead className="text-right">Monto</TableHead>
-              <TableHead className="text-right">Acción</TableHead>
-              <TableHead>
-                <span className="sr-only">Más</span>
-              </TableHead>
+              {!hideActions && !showEditOnly && (
+                <TableHead className="text-right">Acción</TableHead>
+              )}
+              {(!hideActions || showEditOnly) && (
+                <TableHead>
+                  <span className="sr-only">Más</span>
+                </TableHead>
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
             {expenses.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={9} className="text-center py-8">
+                <TableCell colSpan={hideActions && !showEditOnly ? 7 : showEditOnly ? 8 : 9} className="text-center py-8">
                   <p className="text-muted-foreground">
                     No hay gastos registrados.
                   </p>
@@ -372,46 +391,50 @@ export function ExpensesTable({
                   <TableCell className="text-right font-semibold">
                     {formatCurrency(expense.amount)}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {expense.payment_status !== 'pagado' && (
-                      <Button
-                        size="sm"
-                        variant={isOverdue ? 'destructive' : 'default'}
-                        onClick={() => handlePay(expense)}
-                        disabled={payingExpenseId === expense.id}
-                        className="gap-1"
-                      >
-                        <CreditCard className="h-4 w-4" />
-                        {payingExpenseId === expense.id ? 'Pagando...' : 'Pagar'}
-                      </Button>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                  {!hideActions && !showEditOnly && (
+                    <TableCell className="text-right">
+                      {expense.payment_status !== 'pagado' && (
                         <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
+                          size="sm"
+                          variant={isOverdue ? 'destructive' : 'default'}
+                          onClick={() => handlePay(expense)}
+                          disabled={payingExpenseId === expense.id}
+                          className="gap-1"
                         >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
+                          <CreditCard className="h-4 w-4" />
+                          {payingExpenseId === expense.id ? 'Pagando...' : 'Pagar'}
                         </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                        <DropdownMenuItem onClick={() => handleEdit(expense)}>
-                          Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="text-destructive"
-                          onClick={() => handleDelete(expense.id)}
-                        >
-                          Eliminar
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+                      )}
+                    </TableCell>
+                  )}
+                  {(!hideActions || showEditOnly) && (
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+                          <DropdownMenuItem onClick={() => handleEdit(expense)}>
+                            Editar
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-destructive"
+                            onClick={() => handleDelete(expense.id)}
+                          >
+                            Eliminar
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  )}
                 </TableRow>
                 );
               })
@@ -426,7 +449,9 @@ export function ExpensesTable({
                 <TableCell className="text-right text-lg">
                   {formatCurrency(stats.total)}
                 </TableCell>
-                <TableCell></TableCell>
+                {(!hideActions || showEditOnly) && (
+                  <TableCell></TableCell>
+                )}
               </TableRow>
             )}
           </TableBody>
