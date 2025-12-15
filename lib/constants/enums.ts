@@ -54,20 +54,20 @@ export const DATA_LIMITS = {
 
 export interface PaymentStatusConfig {
   label: string;
-  variant: 'default' | 'secondary' | 'destructive';
+  variant: 'default' | 'secondary' | 'destructive' | 'success' | 'warning' | 'info';
   className: string;
 }
 
 export const PAYMENT_STATUS_CONFIG: Record<string, PaymentStatusConfig> = {
   [PAYMENT_STATUS.PAID]: {
     label: 'Pagado',
-    variant: 'default',
-    className: 'bg-green-500 hover:bg-green-600'
+    variant: 'success',
+    className: ''
   },
   [PAYMENT_STATUS.PENDING]: {
     label: 'Pendiente',
-    variant: 'secondary',
-    className: 'bg-yellow-500 hover:bg-yellow-600 text-white'
+    variant: 'warning',
+    className: ''
   },
   [PAYMENT_STATUS.OVERDUE]: {
     label: 'Vencido',
@@ -112,10 +112,8 @@ export function getPaymentStatusBadge(
     return {
       ...baseConfig,
       label: daysDiff === 0 ? 'Vence Hoy' : `Vence en ${daysDiff}d`,
-      className:
-        daysDiff <= 2
-          ? 'bg-orange-500 hover:bg-orange-600 text-white'
-          : baseConfig.className
+      variant: daysDiff <= 2 ? 'warning' : baseConfig.variant,
+      className: ''
     };
   }
 

@@ -68,7 +68,7 @@ export default async function GastosPage() {
   );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Gastos</h1>
@@ -87,26 +87,26 @@ export default async function GastosPage() {
       {/* Cards de estadísticas */}
       {activeExpenses.length > 0 && (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-            <div className="text-xs font-medium text-red-600">Vencidos</div>
-            <div className="text-2xl font-bold text-red-700">
+          <div className="rounded-lg border-2 border-destructive bg-card p-3 sm:p-4 animate-scale-in" style={{ animationDelay: '0.02s' }}>
+            <div className="text-xs font-medium text-destructive">Vencidos</div>
+            <div className="text-xl sm:text-2xl font-bold text-destructive">
               {formatCurrency(stats.overdue)}
             </div>
-            <div className="text-xs text-red-600">{stats.overdueCount} gastos</div>
+            <div className="text-xs text-muted-foreground">{stats.overdueCount} gastos</div>
           </div>
-          <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4">
-            <div className="text-xs font-medium text-yellow-600">Pendientes</div>
-            <div className="text-2xl font-bold text-yellow-700">
+          <div className="rounded-lg border-2 border-warning bg-card p-3 sm:p-4 animate-scale-in" style={{ animationDelay: '0.04s' }}>
+            <div className="text-xs font-medium text-warning">Pendientes</div>
+            <div className="text-xl sm:text-2xl font-bold text-warning">
               {formatCurrency(stats.pending)}
             </div>
-            <div className="text-xs text-yellow-600">{stats.pendingCount} gastos</div>
+            <div className="text-xs text-muted-foreground">{stats.pendingCount} gastos</div>
           </div>
-          <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-            <div className="text-xs font-medium text-green-600">Pagados</div>
-            <div className="text-2xl font-bold text-green-700">
+          <div className="rounded-lg border-2 border-success bg-card p-3 sm:p-4 animate-scale-in" style={{ animationDelay: '0.06s' }}>
+            <div className="text-xs font-medium text-success">Pagados</div>
+            <div className="text-xl sm:text-2xl font-bold text-success">
               {formatCurrency(0)}
             </div>
-            <div className="text-xs text-green-600">{paidCount} gastos</div>
+            <div className="text-xs text-muted-foreground">{paidCount} gastos</div>
           </div>
         </div>
       )}

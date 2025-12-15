@@ -71,7 +71,7 @@ export default async function DashboardPage() {
 
   if (isFirstTime) {
     return (
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 animate-fade-in">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Estado vacío con CTAs */}
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 animate-fade-in-up" style={{ animationDelay: '0.03s' }}>
           <div className="rounded-lg border bg-card p-8">
             <div className="flex flex-col items-center text-center">
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -121,7 +121,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Guía rápida */}
-        <div className="rounded-lg border bg-muted/50 p-6">
+        <div className="rounded-lg border bg-muted/50 p-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
           <h3 className="font-semibold mb-3">Pasos para comenzar:</h3>
           <ol className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
@@ -147,7 +147,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Dashboard</h1>
@@ -164,21 +164,25 @@ export default async function DashboardPage() {
       </div>
 
       {/* KPIs Principales */}
-      <DashboardKPIs
-        currentMonth={currentMonthSummary}
-        previousMonth={previousMonthSummary.expensesCount > 0 ? previousMonthSummary : null}
-        overdueExpenses={overdueExpenses}
-      />
+      <div className="animate-fade-in-up" style={{ animationDelay: '0.03s' }}>
+        <DashboardKPIs
+          currentMonth={currentMonthSummary}
+          previousMonth={previousMonthSummary.expensesCount > 0 ? previousMonthSummary : null}
+          overdueExpenses={overdueExpenses}
+        />
+      </div>
 
       {/* Comparativa Mensual */}
-      <MonthlyComparisonCard
-        previousMonth={previousMonthSummary.expensesCount > 0 ? previousMonthSummary : null}
-        currentMonth={currentMonthSummary}
-        nextMonthProjection={nextMonthProjection}
-      />
+      <div className="animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+        <MonthlyComparisonCard
+          previousMonth={previousMonthSummary.expensesCount > 0 ? previousMonthSummary : null}
+          currentMonth={currentMonthSummary}
+          nextMonthProjection={nextMonthProjection}
+        />
+      </div>
 
       {/* Grid de 2 columnas: Próximos gastos y Top categorías */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 animate-fade-in-up" style={{ animationDelay: '0.07s' }}>
         <UpcomingExpensesWidget
           expenses={upcomingExpenses}
           categories={categories}

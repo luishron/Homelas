@@ -39,6 +39,8 @@ import {
 } from '@/lib/utils/formatting';
 import { getPaymentStatusBadge, PAYMENT_STATUS } from '@/lib/constants/enums';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import { cn } from '@/lib/utils';
+import { ExpenseCard } from './expense-card';
 
 interface ExpensesTableProps {
   expenses: SelectExpense[];
@@ -193,17 +195,42 @@ export function ExpensesTable({
       <CardContent>
         {(hideActions || showEditOnly) && expenses.length > 0 && (
           <div className="mb-6">
-            <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-              <div className="text-sm font-medium text-green-600 mb-1">Total Pagado</div>
-              <div className="text-3xl font-bold text-green-700">
+            <div className="rounded-lg border-2 border-success bg-card p-4">
+              <div className="text-sm font-medium text-success mb-1">Total Pagado</div>
+              <div className="text-3xl font-bold text-success">
                 {formatCurrency(totalAmount)}
               </div>
-              <div className="text-sm text-green-600 mt-1">{expenses.length} gastos en historial</div>
+              <div className="text-sm text-muted-foreground mt-1">{expenses.length} gastos en historial</div>
             </div>
           </div>
         )}
 
-        <Table>
+        {/* Mobile Card View */}
+        <div className="block md:hidden space-y-3">
+          {sortedExpenses.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">
+                No hay gastos registrados.
+              </p>
+            </div>
+          ) : (
+            sortedExpenses.map((expense, index) => (
+              <ExpenseCard
+                key={expense.id}
+                expense={expense}
+                categories={categories}
+                paymentMethods={paymentMethods}
+                onPay={handlePay}
+                onEdit={handleEdit}
+                onDelete={handleDeleteClick}
+              />
+            ))
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block">
+          <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Descripción</TableHead>
@@ -235,7 +262,7 @@ export function ExpensesTable({
                 </TableCell>
               </TableRow>
             ) : (
-              sortedExpenses.map((expense) => {
+              sortedExpenses.map((expense, index) => {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const expenseDate = new Date(expense.date);
@@ -245,7 +272,11 @@ export function ExpensesTable({
                 return (
                 <TableRow
                   key={expense.id}
-                  className={isOverdue ? 'bg-red-50 hover:bg-red-100 border-l-4 border-l-red-500' : ''}
+                  className={cn(
+                    'animate-fade-in-up',
+                    isOverdue && 'border-l-4 border-l-destructive'
+                  )}
+                  style={{ animationDelay: `${index * 0.015}s` }}
                 >
                   <TableCell className="font-medium">
                     {expense.description || 'Sin descripción'}
@@ -350,6 +381,7 @@ export function ExpensesTable({
             )}
           </TableBody>
         </Table>
+        </div>
 
         <div className="mt-4 text-xs text-muted-foreground">
           Mostrando {expenses.length} de {totalExpenses} gastos

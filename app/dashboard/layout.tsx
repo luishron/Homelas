@@ -23,6 +23,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { User } from './user';
 import Providers from './providers';
 import { NavItem } from './nav-item';
+import { MobileNavBottom } from '@/components/mobile-nav-bottom';
 
 export default function DashboardLayout({
   children
@@ -40,10 +41,11 @@ export default function DashboardLayout({
             <div className="ml-auto" />
             <User />
           </header>
-          <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
+          <main className="grid flex-1 items-start gap-2 p-3 pb-20 sm:p-4 sm:pb-0 sm:px-6 sm:py-0 md:gap-4">
             {children}
           </main>
         </div>
+        <MobileNavBottom />
         <Analytics />
       </main>
     </Providers>

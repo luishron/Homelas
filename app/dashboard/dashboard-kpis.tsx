@@ -72,7 +72,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
 
     const isPositive = change > 0;
     const Icon = isPositive ? TrendingUp : TrendingDown;
-    const colorClass = isPositive ? 'text-green-600' : 'text-red-600';
+    const colorClass = isPositive ? 'text-success' : 'text-destructive';
 
     return (
       <div className={`flex items-center gap-1 text-xs ${colorClass}`}>
@@ -85,14 +85,14 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {/* Total Gastos del Mes */}
-      <div className="rounded-lg border bg-card p-6">
+      <div className="rounded-lg border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-medium text-muted-foreground">
             Gastos del Mes
           </h3>
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </div>
-        <p className="text-3xl font-bold">{formatCurrency(currentMonth.totalExpenses)}</p>
+        <p className="text-2xl sm:text-3xl font-bold">{formatCurrency(currentMonth.totalExpenses)}</p>
         <div className="mt-2 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
             {currentMonth.expensesCount} gastos
@@ -102,7 +102,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       </div>
 
       {/* Total Ingresos del Mes */}
-      <div className="rounded-lg border bg-card p-6">
+      <div className="rounded-lg border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-medium text-muted-foreground">
             Ingresos del Mes
@@ -110,7 +110,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
           <div className="flex items-center gap-2">
             <button
               onClick={toggleHideIncome}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 -m-2"
               aria-label={hideIncome ? 'Mostrar ingresos' : 'Ocultar ingresos'}
             >
               {hideIncome ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -118,7 +118,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        <p className="text-3xl font-bold text-green-600">
+        <p className="text-2xl sm:text-3xl font-bold text-success">
           {hideIncome ? '••••••' : formatCurrency(currentMonth.totalIncome)}
         </p>
         <div className="mt-2 flex items-center justify-between">
@@ -130,7 +130,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       </div>
 
       {/* Balance del Mes */}
-      <div className="rounded-lg border bg-card p-6">
+      <div className="rounded-lg border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-medium text-muted-foreground">
             Balance del Mes
@@ -138,7 +138,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
           <div className="flex items-center gap-2">
             <button
               onClick={toggleHideBalance}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 -m-2"
               aria-label={hideBalance ? 'Mostrar balance' : 'Ocultar balance'}
             >
               {hideBalance ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -146,8 +146,8 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
             <Wallet className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        <p className={`text-3xl font-bold ${
-          currentMonth.balance >= 0 ? 'text-green-600' : 'text-red-600'
+        <p className={`text-2xl sm:text-3xl font-bold ${
+          currentMonth.balance >= 0 ? 'text-success' : 'text-destructive'
         }`}>
           {hideBalance ? '••••••' : formatCurrency(currentMonth.balance)}
         </p>
@@ -160,29 +160,29 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       </div>
 
       {/* Gastos Vencidos */}
-      <div className={`rounded-lg border p-6 ${
+      <div className={`rounded-lg bg-card p-4 sm:p-6 ${
         overdueExpenses.count > 0
-          ? 'bg-red-50 border-red-200'
-          : 'bg-card'
+          ? 'border-2 border-destructive'
+          : 'border'
       }`}>
         <div className="flex items-center justify-between mb-2">
           <h3 className={`text-sm font-medium ${
-            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`}>
             Gastos Vencidos
           </h3>
           <AlertTriangle className={`h-4 w-4 ${
-            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`} />
         </div>
-        <p className={`text-3xl font-bold ${
-          overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+        <p className={`text-2xl sm:text-3xl font-bold ${
+          overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
         }`}>
           {overdueExpenses.count > 0 ? formatCurrency(overdueExpenses.total) : '$0.00'}
         </p>
         <div className="mt-2">
           <p className={`text-xs ${
-            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive/80' : 'text-muted-foreground'
           }`}>
             {overdueExpenses.count} {overdueExpenses.count === 1 ? 'gasto vencido' : 'gastos vencidos'}
           </p>

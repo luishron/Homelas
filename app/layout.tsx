@@ -3,6 +3,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
   title: 'homelas',
@@ -18,8 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="flex min-h-screen w-full flex-col">
-        {children}
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
       <Analytics />
     </html>
