@@ -13,6 +13,7 @@ export type Category = {
   color: string;
   icon?: string | null;
   description?: string | null;
+  metadata?: Record<string, any> | null;
   created_at?: string;
 };
 
@@ -35,6 +36,7 @@ export type PaymentMethod = {
   icon?: string | null;
   color: string;
   is_default: boolean;
+  metadata?: Record<string, any> | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -51,6 +53,7 @@ export type Expense = {
   notes?: string | null;
   is_recurring?: number;
   recurrence_frequency?: string | null;
+  metadata?: Record<string, any> | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -62,6 +65,7 @@ export type Budget = {
   amount: string;
   month: number;
   year: number;
+  metadata?: Record<string, any> | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -73,6 +77,7 @@ export type IncomeCategory = {
   color: string;
   icon?: string | null;
   description?: string | null;
+  metadata?: Record<string, any> | null;
   created_at?: string;
 };
 
@@ -88,6 +93,7 @@ export type Income = {
   is_recurring?: number;
   recurrence_frequency?: string | null;
   notes?: string | null;
+  metadata?: Record<string, any> | null;
   created_at?: string;
   updated_at?: string;
 };
