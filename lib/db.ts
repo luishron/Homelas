@@ -149,6 +149,53 @@ export async function getCategoryTotalExpenses(
   return total;
 }
 
+export type CategoryWithStats = Category & {
+  total: number;
+  expenseCount: number;
+};
+
+export async function getCategoriesWithStats(
+  userId: string
+): Promise<CategoryWithStats[]> {
+  const supabase = await createClient();
+
+  // Get all categories
+  const { data: categories, error: categoriesError } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: true });
+
+  if (categoriesError) throw categoriesError;
+  if (!categories) return [];
+
+  // Get expenses grouped by category
+  const { data: expenses, error: expensesError } = await supabase
+    .from('expenses')
+    .select('category_id, amount')
+    .eq('user_id', userId);
+
+  if (expensesError) throw expensesError;
+
+  // Calculate total and count for each category
+  const expensesByCategory = (expenses || []).reduce((acc, expense) => {
+    const categoryId = expense.category_id;
+    if (!acc[categoryId]) {
+      acc[categoryId] = { total: 0, count: 0 };
+    }
+    acc[categoryId].total += parseFloat(expense.amount);
+    acc[categoryId].count += 1;
+    return acc;
+  }, {} as Record<number, { total: number; count: number }>);
+
+  // Merge categories with their stats
+  return categories.map((category) => ({
+    ...category,
+    total: expensesByCategory[category.id]?.total || 0,
+    expenseCount: expensesByCategory[category.id]?.count || 0
+  }));
+}
+
 export async function createCategory(category: InsertCategory): Promise<Category> {
   const supabase = await createClient();
   const { data, error } = await supabase

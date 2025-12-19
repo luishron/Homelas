@@ -11,22 +11,14 @@ import {
 } from '@/components/ui/card';
 import { CardFinance } from '@/components/ui/card-finance';
 import { MoneyDisplay } from '@/components/ui/money-display';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Receipt } from 'lucide-react';
 import { deleteCategory } from '../actions';
 import { useRouter } from 'next/navigation';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/hooks/use-toast';
+import type { CategoryWithStats } from '@/lib/db';
 
-type Category = {
-  id: number;
-  name: string;
-  color: string;
-  icon?: string | null;
-  description?: string | null;
-  total?: number;
-};
-
-export function CategoryCard({ category }: { category: Category }) {
+export function CategoryCard({ category }: { category: CategoryWithStats }) {
   const router = useRouter();
   const { toast } = useToast();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -116,6 +108,17 @@ export function CategoryCard({ category }: { category: Category }) {
                 Total gastado
               </span>
               <MoneyDisplay amount={category.total || 0} size="md" />
+            </div>
+
+            {/* Expense count */}
+            <div className="mt-2 flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Receipt className="h-3.5 w-3.5" />
+                <span>Gastos</span>
+              </div>
+              <span className="text-sm font-medium">
+                {category.expenseCount || 0}
+              </span>
             </div>
           </CardContent>
         </CardFinance>
