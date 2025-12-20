@@ -128,11 +128,11 @@ export function QuickAddFAB({
 
   return (
     <>
-      {/* Botón flotante */}
+      {/* Botón flotante - Reposicionado para mobile */}
       <Button
         onClick={() => setOpen(true)}
         size="lg"
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 z-50"
+        className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110 z-40"
         aria-label="Agregar gasto rápido"
       >
         <PlusCircle className="h-6 w-6" />
