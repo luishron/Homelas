@@ -6,35 +6,35 @@
   :root {
     /* ========================================
        HOMELAS DESIGN SYSTEM - Light Mode
-       Brand color palette
+       Optimized with Wise-inspired balance
        ======================================== */
 
-    /* Backgrounds */
-    --background: 56 60% 98%;          /* Soft beige-white #FCFBF6 */
+    /* Backgrounds - Más limpio y blanco */
+    --background: 56 40% 99%;          /* Casi blanco con toque beige #FEFDFB */
     --foreground: 153 65% 8%;          /* Verde pino dark #071C11 for text */
 
-    /* Cards & Surfaces */
-    --card: 56 60% 96%;                /* Beige/Cream #F9F8E3 */
+    /* Cards & Surfaces - Contraste sutil */
+    --card: 0 0% 100%;                 /* Blanco puro para cards principales */
     --card-foreground: 153 65% 8%;     /* Verde pino dark */
 
-    --popover: 56 60% 96%;
+    --popover: 0 0% 100%;              /* Blanco puro */
     --popover-foreground: 153 65% 8%;
 
-    /* Brand Colors - Verde Vibrante */
+    /* Brand Colors - Verde Vibrante (sin cambios, es perfecto) */
     --primary: 98 100% 70%;            /* Verde vibrante #9FFF66 */
     --primary-foreground: 153 65% 8%;  /* Verde pino dark on primary */
 
-    --secondary: 56 40% 88%;           /* Beige más saturado */
+    --secondary: 56 25% 93%;           /* Beige muy suave, menos saturado */
     --secondary-foreground: 153 65% 8%;
 
-    /* Interactive States */
-    --muted: 56 30% 92%;               /* Beige muy suave */
-    --muted-foreground: 153 20% 35%;   /* Verde grisáceo */
+    /* Interactive States - Balance mejorado */
+    --muted: 56 20% 96%;               /* Beige ultra suave, casi gris */
+    --muted-foreground: 153 15% 40%;   /* Gris verdoso más neutral */
 
-    --accent: 98 100% 85%;             /* Verde vibrante light */
+    --accent: 56 30% 94%;              /* Beige suave para hover */
     --accent-foreground: 153 65% 8%;   /* Verde pino dark */
 
-    /* Functional Colors */
+    /* Functional Colors - Optimizados */
     --destructive: 0 84% 60%;          /* Rojo para gastos/errores */
     --destructive-foreground: 0 0% 100%;
 
@@ -47,9 +47,9 @@
     --info: 199 89% 48%;               /* Azul */
     --info-foreground: 0 0% 100%;
 
-    /* Borders & Inputs */
-    --border: 56 30% 85%;              /* Beige border suave */
-    --input: 56 30% 85%;
+    /* Borders & Inputs - Más sutiles */
+    --border: 56 20% 90%;              /* Border muy suave */
+    --input: 56 20% 88%;               /* Input border ligeramente más visible */
     --ring: 98 100% 70%;               /* Verde vibrante focus ring */
 
     --radius: 0.75rem;
@@ -57,45 +57,45 @@
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(98 100% 70%) 0%, hsl(110 90% 65%) 100%);
     --gradient-success: linear-gradient(135deg, hsl(98 100% 70%) 0%, hsl(142 76% 55%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(56 60% 96%) 0%, hsl(56 50% 94%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(56 30% 98%) 100%);
   }
 
   .dark {
     /* ========================================
        HOMELAS DESIGN SYSTEM - Dark Mode
-       Balanced neutral palette with strategic green accents
+       Optimized with better contrast and balance
        ======================================== */
 
-    /* Backgrounds - Neutral dark with subtle green tint */
-    --background: 160 8% 9%;           /* Charcoal with subtle green tint #15191A */
-    --foreground: 40 15% 92%;          /* Soft warm white for text #ECEAE5 */
+    /* Backgrounds - Más profundo y neutral */
+    --background: 160 10% 8%;          /* Más oscuro con toque verde #131618 */
+    --foreground: 40 15% 95%;          /* Texto más brillante #F2F1ED */
 
-    /* Cards & Surfaces - Elevated neutral grays */
-    --card: 160 6% 13%;                /* Dark slate gray #1E2325 */
-    --card-foreground: 40 15% 92%;     /* Soft warm white */
+    /* Cards & Surfaces - Mejor contraste */
+    --card: 160 8% 12%;                /* Cards más claras que bg #1A1E21 */
+    --card-foreground: 40 15% 95%;     /* Soft warm white */
 
-    --popover: 160 8% 11%;             /* Slightly lighter than bg #191E20 */
-    --popover-foreground: 40 15% 92%;
+    --popover: 160 8% 11%;             /* Popover ligeramente más oscuro */
+    --popover-foreground: 40 15% 95%;
 
-    /* Brand Colors - Verde Vibrante as accent only */
-    --primary: 98 100% 70%;            /* Verde vibrante #9FFF66 - reserved for key actions */
+    /* Brand Colors - Verde Vibrante (sin cambios) */
+    --primary: 98 100% 70%;            /* Verde vibrante #9FFF66 */
     --primary-foreground: 160 20% 8%;  /* Dark background on primary */
 
-    --secondary: 160 6% 20%;           /* Neutral gray #2F3537 */
-    --secondary-foreground: 40 15% 92%;
+    --secondary: 160 8% 18%;           /* Secondary más visible */
+    --secondary-foreground: 40 15% 95%;
 
-    /* Interactive States - Balanced neutrals */
-    --muted: 160 6% 16%;               /* Medium dark gray #262B2D */
-    --muted-foreground: 40 8% 65%;     /* Medium gray text #A19E96 */
+    /* Interactive States - Mejor definición */
+    --muted: 160 8% 15%;               /* Muted más claro que bg */
+    --muted-foreground: 40 10% 60%;    /* Texto muted más legible */
 
-    --accent: 160 10% 20%;             /* Slate with subtle green #2E3638 */
-    --accent-foreground: 40 15% 95%;   /* Bright text on accent */
+    --accent: 160 10% 18%;             /* Accent bien diferenciado */
+    --accent-foreground: 40 15% 98%;   /* Texto muy brillante en accent */
 
     /* Functional Colors */
     --destructive: 0 72% 55%;          /* Softer red for dark mode */
     --destructive-foreground: 0 0% 100%;
 
-    --success: 98 100% 70%;            /* Verde vibrante #9FFF66 for positive values */
+    --success: 98 100% 70%;            /* Verde vibrante #9FFF66 */
     --success-foreground: 160 20% 8%;  /* Dark text on success */
 
     --warning: 38 92% 55%;             /* Amber */
@@ -104,15 +104,15 @@
     --info: 199 89% 55%;               /* Bright blue */
     --info-foreground: 0 0% 100%;
 
-    /* Borders & Inputs - Subtle separators */
-    --border: 160 6% 22%;              /* Subtle border #34393C */
-    --input: 160 6% 22%;               /* Input borders */
+    /* Borders & Inputs - Más visibles */
+    --border: 160 8% 20%;              /* Border más visible #2D3336 */
+    --input: 160 8% 22%;               /* Input borders claros */
     --ring: 98 100% 70%;               /* Verde vibrante focus ring */
 
     /* Gradients - Adjusted for dark mode */
     --gradient-primary: linear-gradient(135deg, hsl(98 100% 70%) 0%, hsl(110 90% 65%) 100%);
     --gradient-success: linear-gradient(135deg, hsl(98 100% 70%) 0%, hsl(142 76% 55%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(160 6% 13%) 0%, hsl(160 8% 11%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(160 8% 12%) 0%, hsl(160 10% 10%) 100%);
   }
 }
 
@@ -124,7 +124,7 @@
 
   * {
     @apply border-border;
-    transition-property: color, background-color, border-color;
+    transition-property: color, background-color, border-color, box-shadow, transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
   }
@@ -132,7 +132,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    font-feature-settings: 'cv05' 1, 'cv10' 1; /* Better number legibility */
+    font-feature-settings: 'cv05' 1, 'cv10' 1, 'tnum' 1; /* Better number legibility + tabular nums */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Responsive font scaling */
@@ -188,6 +190,25 @@ input[type='search']::-ms-clear {
 .overflow-x-auto::-webkit-scrollbar-thumb {
   background: hsl(var(--primary) / 0.3);
   border-radius: 2px;
+}
+
+/* Wise-inspired utilities */
+@layer utilities {
+  /* Money display - tabular numbers for alignment */
+  .text-money {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md hover:scale-[1.01];
+  }
+
+  /* Subtle shadow for cards */
+  .shadow-card {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  }
 }
 
 /* Accessibility - Reduce Motion */
