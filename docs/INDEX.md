@@ -44,6 +44,15 @@ Sistema de diseño, componentes y mejoras visuales.
 
 ---
 
+## 📋 Product & Strategy
+
+Visión del producto, objetivos y roadmap.
+
+- **[PRD.md](./PRD.md)** - **Product Requirements Document** ⭐ NUEVO
+  Visión del producto, user personas, justificación de features, success metrics y roadmap priorizado.
+
+---
+
 ## 👥 Para Desarrolladores
 
 Guías para contribuir y trabajar con el código.
@@ -88,8 +97,9 @@ Guías para contribuir y trabajar con el código.
 
 **Product Manager:**
 1. [README.md](../README.md) - Visión general
-2. [IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md) - Features y progreso
-3. [ui-improvements.md](./ui-improvements.md) - Mejoras implementadas
+2. [PRD.md](./PRD.md) - Product Requirements Document
+3. [IMPLEMENTATION_STATUS.md](./IMPLEMENTATION_STATUS.md) - Features y progreso
+4. [ui-improvements.md](./ui-improvements.md) - Mejoras implementadas
 
 ### Por Tarea
 
@@ -117,6 +127,7 @@ Guías para contribuir y trabajar con el código.
 | COMPONENT_GUIDE.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | CONTRIBUTING.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | IMPLEMENTATION_STATUS.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
+| PRD.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | CLAUDE.md | ✅ Actualizado | 2.0.0 | Diciembre 2025 |
 | ui-improvements.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
 | card-improvements-plan.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |

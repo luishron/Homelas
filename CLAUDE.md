@@ -430,6 +430,7 @@ if (!category) throw new Error('Category not found')
 **Key Documentation Files:**
 - `/README.md` - Project overview and setup
 - `/CONTRIBUTING.md` - Contribution guidelines
+- `/docs/PRD.md` - Product Requirements Document (vision, personas, metrics, roadmap)
 - `/docs/design-system.md` - OLEA design system
 - `/docs/COMPONENT_GUIDE.md` - Component catalog and usage
 - `/docs/ACCESSIBILITY-AUDIT.md` - WCAG 2.1 AA compliance audit

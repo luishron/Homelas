@@ -1014,6 +1014,10 @@ CREATE POLICY "Users can delete own data" ON expenses
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Guía para contribuir al proyecto
 - **[CLAUDE.md](./CLAUDE.md)** - Guía para trabajar con Claude Code
 
+### Product & Strategy
+
+- **[docs/PRD.md](./docs/PRD.md)** - Product Requirements Document (visión, user personas, métricas, roadmap)
+
 ### Diseño y Componentes
 
 - **[docs/design-system.md](./docs/design-system.md)** - Sistema de diseño OLEA (colores, tipografía, animaciones)
