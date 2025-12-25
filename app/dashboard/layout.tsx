@@ -8,6 +8,7 @@ import {
   PanelLeft,
   CreditCard
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 import {
   Breadcrumb,
@@ -25,82 +26,114 @@ import Providers from './providers';
 import { NavItem } from './nav-item';
 import { MobileNavBottom } from '@/components/mobile-nav-bottom';
 import { QuickAddFAB } from './quick-add-fab';
-import { getCategoriesByUser, getPaymentMethodsByUser } from '@/lib/db';
+import { getCategoriesByUser, getPaymentMethodsByUser, getExpensesByUser, getIncomesByUser } from '@/lib/db';
 import { getUser } from '@/lib/auth';
+import { GlobalSearchProvider, GlobalSearchTrigger } from '@/components/global-search-provider';
 
 export default async function DashboardLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  // Obtener datos para Quick Add
+  // Obtener datos para Quick Add y búsqueda global
   const user = await getUser();
   const categories = user ? await getCategoriesByUser(user.id) : [];
   const paymentMethods = user ? await getPaymentMethodsByUser(user.id) : [];
 
+  // Datos para búsqueda global
+  const { expenses } = user ? await getExpensesByUser(user.id, { limit: 100 }) : { expenses: [] };
+  const incomes = user ? await getIncomesByUser(user.id) : [];
+
+  const searchData = {
+    expenses,
+    incomes,
+    categories,
+    paymentMethods
+  };
+
   return (
     <Providers>
-      <main className="flex min-h-screen w-full flex-col bg-muted/40">
-        <DesktopNav />
-        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-          <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-            <MobileNav />
-            <DashboardBreadcrumb />
-            <div className="ml-auto" />
-            <User />
-          </header>
-          <main className="grid flex-1 items-start gap-2 p-3 pb-20 sm:p-4 sm:pb-0 sm:px-6 sm:py-0 md:gap-4">
-            {children}
-          </main>
-        </div>
-        <MobileNavBottom />
+      <GlobalSearchProvider data={searchData}>
+        <main className="flex min-h-screen w-full flex-col bg-muted/40">
+          <DesktopNav />
+          <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-60">
+            <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+              <MobileNav />
+              <DashboardBreadcrumb />
+              <GlobalSearchTrigger />
+              <div className="ml-auto" />
+              <User />
+            </header>
+            <main className="grid flex-1 items-start gap-2 p-3 pb-20 sm:p-4 sm:pb-0 sm:px-6 sm:py-0 md:gap-4">
+              {children}
+            </main>
+          </div>
+          <MobileNavBottom />
 
-        {/* Quick Add Flotante */}
-        <QuickAddFAB categories={categories} paymentMethods={paymentMethods} />
+          {/* Quick Add Flotante */}
+          <QuickAddFAB categories={categories} paymentMethods={paymentMethods} />
 
-        <Analytics />
-      </main>
+          <Analytics />
+        </main>
+      </GlobalSearchProvider>
     </Providers>
   );
 }
 
 function DesktopNav() {
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-      <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-        <Link
-          href="/"
-          className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-        >
-          <Wallet className="h-4 w-4 transition-all group-hover:scale-110" />
-          <span className="sr-only">homelas</span>
-        </Link>
+    <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-background sm:flex">
+      <div className="flex h-full flex-col gap-2">
+        {/* Logo/Brand - Estilo shadcn limpio */}
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <Link href="/" className="flex items-center gap-2 font-semibold">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <Wallet className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <span className="text-lg">homelas</span>
+          </Link>
+        </div>
 
-        <NavItem href="/dashboard" label="Dashboard">
-          <Home className="h-5 w-5" />
-        </NavItem>
+        {/* Navigation Items */}
+        <div className="flex-1 overflow-auto py-2">
+          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+            <NavItem href="/dashboard" label="Dashboard">
+              <Home className="h-4 w-4" />
+            </NavItem>
 
-        <NavItem href="/dashboard/gastos" label="Gastos">
-          <DollarSign className="h-5 w-5" />
-        </NavItem>
+            <NavItem href="/dashboard/gastos" label="Gastos">
+              <DollarSign className="h-4 w-4" />
+            </NavItem>
 
-        <NavItem href="/dashboard/categorias" label="Categorías">
-          <FolderOpen className="h-5 w-5" />
-        </NavItem>
+            <NavItem href="/dashboard/categorias" label="Categorías">
+              <FolderOpen className="h-4 w-4" />
+            </NavItem>
 
-        <NavItem href="/dashboard/metodos-pago" label="Métodos">
-          <CreditCard className="h-5 w-5" />
-        </NavItem>
+            <NavItem href="/dashboard/metodos-pago" label="Métodos de Pago">
+              <CreditCard className="h-4 w-4" />
+            </NavItem>
 
-        <NavItem href="/dashboard/ingresos" label="Ingresos">
-          <TrendingUp className="h-5 w-5" />
-        </NavItem>
-      </nav>
+            <NavItem href="/dashboard/ingresos" label="Ingresos">
+              <TrendingUp className="h-4 w-4" />
+            </NavItem>
+          </nav>
+        </div>
+      </div>
     </aside>
   );
 }
 
 function MobileNav() {
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+
+  const navLinks = [
+    { href: '/dashboard', label: 'Dashboard', icon: Home },
+    { href: '/dashboard/gastos', label: 'Gastos', icon: DollarSign },
+    { href: '/dashboard/categorias', label: 'Categorías', icon: FolderOpen },
+    { href: '/dashboard/metodos-pago', label: 'Métodos de Pago', icon: CreditCard },
+    { href: '/dashboard/ingresos', label: 'Ingresos', icon: TrendingUp }
+  ];
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -109,51 +142,40 @@ function MobileNav() {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
-        <nav className="grid gap-6 text-lg font-medium">
-          <Link
-            href="/"
-            className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-          >
-            <Wallet className="h-5 w-5 transition-all group-hover:scale-110" />
-            <span className="sr-only">homelas</span>
-          </Link>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-4 px-2.5 text-foreground"
-          >
-            <Home className="h-5 w-5" />
-            Dashboard
-          </Link>
-          <Link
-            href="/dashboard/gastos"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <DollarSign className="h-5 w-5" />
-            Gastos
-          </Link>
-          <Link
-            href="/dashboard/categorias"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <FolderOpen className="h-5 w-5" />
-            Categorías
-          </Link>
-          <Link
-            href="/dashboard/metodos-pago"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <CreditCard className="h-5 w-5" />
-            Métodos
-          </Link>
-          <Link
-            href="/dashboard/ingresos"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <TrendingUp className="h-5 w-5" />
-            Ingresos
-          </Link>
-        </nav>
+      <SheetContent side="left" className="p-0">
+        <div className="flex h-full flex-col">
+          {/* Logo/Brand - Estilo shadcn limpio */}
+          <div className="flex h-14 items-center border-b px-4">
+            <Link href="/" className="flex items-center gap-2 font-semibold">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+                <Wallet className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <span className="text-lg">homelas</span>
+            </Link>
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 overflow-auto py-4">
+            <div className="grid gap-1 px-2 text-sm font-medium">
+              {navLinks.map(({ href, label, icon: Icon }) => {
+                const isActive = pathname === href;
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                      'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                      isActive ? 'bg-muted text-primary' : 'transparent'
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {label}
+                  </Link>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
       </SheetContent>
     </Sheet>
   );

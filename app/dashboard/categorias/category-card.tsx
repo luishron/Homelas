@@ -11,22 +11,32 @@ import {
 } from '@/components/ui/card';
 import { CardFinance } from '@/components/ui/card-finance';
 import { MoneyDisplay } from '@/components/ui/money-display';
+import { MiniChart } from '@/components/ui/mini-chart';
+import { TransactionPreview, TransactionPreviewList } from '@/components/ui/transaction-preview';
 import { Trash2 } from 'lucide-react';
 import { deleteCategory } from '../actions';
 import { useRouter } from 'next/navigation';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { useToast } from '@/hooks/use-toast';
+import { formatShortDate } from '@/lib/utils/date-grouping';
 
-type Category = {
+type CategoryWithData = {
   id: number;
   name: string;
   color: string;
   icon?: string | null;
   description?: string | null;
   total?: number;
+  monthlyTrend?: Array<{ month: string; total: number; count: number }>;
+  recentExpenses?: Array<{
+    id: number;
+    description: string | null;
+    amount: string;
+    date: string;
+  }>;
 };
 
-export function CategoryCard({ category }: { category: Category }) {
+export function CategoryCard({ category }: { category: CategoryWithData }) {
   const router = useRouter();
   const { toast } = useToast();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -69,7 +79,7 @@ export function CategoryCard({ category }: { category: Category }) {
                   }}
                 />
                 <div
-                  className="relative flex h-14 w-14 items-center justify-center rounded-xl text-2xl transition-transform group-hover:scale-110"
+                  className="relative flex h-16 w-16 items-center justify-center rounded-xl text-3xl transition-transform group-hover:scale-110"
                   style={{
                     backgroundColor: `${category.color}20`,
                     color: category.color
@@ -111,12 +121,40 @@ export function CategoryCard({ category }: { category: Category }) {
             </div>
 
             {/* Total amount */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-muted-foreground">
                 Total gastado
               </span>
               <MoneyDisplay amount={category.total || 0} size="md" />
             </div>
+
+            {/* Mini Chart - Tendencia de los últimos 6 meses */}
+            {category.monthlyTrend && category.monthlyTrend.length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs text-muted-foreground mb-2">Tendencia (6 meses)</p>
+                <MiniChart
+                  data={category.monthlyTrend.map((m) => m.total)}
+                  color={category.color}
+                  height={40}
+                  smooth
+                />
+              </div>
+            )}
+
+            {/* Recent Transactions */}
+            {category.recentExpenses && category.recentExpenses.length > 0 && (
+              <TransactionPreviewList title="Últimas Transacciones">
+                {category.recentExpenses.slice(0, 3).map((expense, index) => (
+                  <TransactionPreview
+                    key={expense.id}
+                    description={expense.description || 'Sin descripción'}
+                    amount={-parseFloat(expense.amount)}
+                    date={formatShortDate(new Date(expense.date))}
+                    showDivider={index > 0}
+                  />
+                ))}
+              </TransactionPreviewList>
+            )}
           </CardContent>
         </CardFinance>
       </Link>

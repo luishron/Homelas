@@ -80,6 +80,8 @@ export function MobileNavBottom() {
               <Link
                 key={href}
                 href={href}
+                aria-current={isActive ? 'page' : undefined}
+                aria-label={label}
                 className={cn(
                   'flex flex-col items-center gap-2 rounded-2xl px-3 py-3 text-xs font-semibold transition-all duration-300',
                   'relative overflow-hidden',
@@ -116,6 +118,8 @@ export function MobileNavBottom() {
           {/* "Más" button */}
           <button
             onClick={() => setMoreOpen(true)}
+            aria-label="Ver más opciones"
+            aria-expanded={moreOpen}
             className={cn(
               'flex flex-col items-center gap-2 rounded-2xl px-3 py-3 text-xs font-semibold transition-all duration-300',
               'relative',
@@ -150,6 +154,8 @@ export function MobileNavBottom() {
                 <button
                   key={href}
                   onClick={() => handleMoreLinkClick(href)}
+                  aria-label={`${label}: ${description}`}
+                  aria-current={isActive ? 'page' : undefined}
                   className={cn(
                     'w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300',
                     'hover:bg-accent/80 active:scale-[0.97]',

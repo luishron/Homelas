@@ -20,6 +20,7 @@
 - [Módulos Principales](#-módulos-principales)
 - [Documentación de la Base de Datos](#-documentación-de-la-base-de-datos)
 - [Roadmap](#-roadmap)
+- [Documentación](#-documentación)
 
 ---
 
@@ -158,6 +159,48 @@ El dashboard ahora ofrece una vista completa de tu situación financiera:
 - Selección desde tabla `payment_methods`
 - Display inteligente: "Nombre (Banco) ••1234"
 - Fallback para valores legacy
+
+### Wise-Inspired UX/UI Transformation (FASE 1-5)
+
+**Transformación completa del diseño** inspirada en Wise para máxima claridad y accesibilidad:
+
+**FASE 1: Sistema de Diseño OLEA**
+- Paleta de colores con verde vibrante (#9FFF66) como primary
+- Colores semánticos para transacciones (income, expense, transfer)
+- Sistema de iconos con 30+ categorías
+- Tipografía optimizada y animaciones suaves
+- Dark mode completamente funcional
+
+**FASE 2: Componentes Core**
+- `TransactionItem`: Componente principal estilo Wise (variantes: default, compact, detailed)
+- `FilterBar`: Filtros horizontales con multi-select
+- `SearchBar`: Búsqueda con debounce y Cmd+K shortcut
+- `TimelineGroup`: Agrupación temporal (Today, Yesterday, etc.)
+- `Skeletons`: 11 componentes de loading states
+
+**FASE 3: Pantallas Principales**
+- Dashboard rediseñado con KPIs, QuickAddFAB y widgets
+- Gastos estilo Wise con TransactionItem y agrupación temporal
+- Categorías en grid mejorado
+- Formularios espaciosos y claros
+
+**FASE 4: Features UX Avanzadas**
+- GlobalSearch con Cmd+K y búsqueda fuzzy
+- Filtros avanzados con URL sync y presets guardables
+- Sistema de toast mejorado (success, error, warning, info, loading, promise)
+- Micro-interacciones y animaciones
+
+**FASE 5: Accesibilidad y Responsive** ✅
+- **WCAG 2.1 AA Compliance:** 100% compliant
+  - Touch targets ≥ 44px en todos los elementos interactivos
+  - Contraste de colores ≥ 4.5:1 verificado
+  - ARIA labels completos
+  - Navegación por teclado completa
+  - Focus visible en todos los elementos
+- **Responsive Design:** Mobile-first (320px-1920px+)
+- **Documentación completa:** 9 documentos actualizados/creados
+
+Ver: `/docs/ACCESSIBILITY-AUDIT.md` y `/docs/IMPLEMENTATION_STATUS.md` para más detalles.
 
 ---
 
@@ -958,6 +1001,36 @@ CREATE POLICY "Users can delete own data" ON expenses
 - [ ] Sugerencias de ahorro basadas en IA
 - [ ] Proyecciones financieras avanzadas
 - [ ] Análisis de viabilidad de metas
+
+---
+
+## 📚 Documentación
+
+**Índice central:** Para navegar toda la documentación del proyecto, consulta **[docs/INDEX.md](./docs/INDEX.md)** ⭐
+
+### Documentación Principal
+
+- **[README.md](./README.md)** - Este archivo, visión general del proyecto
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Guía para contribuir al proyecto
+- **[CLAUDE.md](./CLAUDE.md)** - Guía para trabajar con Claude Code
+
+### Diseño y Componentes
+
+- **[docs/design-system.md](./docs/design-system.md)** - Sistema de diseño OLEA (colores, tipografía, animaciones)
+- **[docs/COMPONENT_GUIDE.md](./docs/COMPONENT_GUIDE.md)** - Catálogo de componentes UI con ejemplos
+- **[docs/ACCESSIBILITY-AUDIT.md](./docs/ACCESSIBILITY-AUDIT.md)** - Auditoría WCAG 2.1 AA compliance
+- **[docs/ui-improvements.md](./docs/ui-improvements.md)** - Mejoras UI implementadas
+- **[docs/card-improvements-plan.md](./docs/card-improvements-plan.md)** - Plan de mejora de cards
+
+### Desarrollo y Features
+
+- **[docs/IMPLEMENTATION_STATUS.md](./docs/IMPLEMENTATION_STATUS.md)** - Estado de features y roadmap
+
+### Configuración
+
+- **[docs/setup/SUPABASE.md](./docs/setup/SUPABASE.md)** - Setup de base de datos Supabase
+- **[docs/setup/GITHUB_OAUTH.md](./docs/setup/GITHUB_OAUTH.md)** - Configuración de GitHub OAuth
+- **[.env.example](./.env.example)** - Template de variables de entorno
 
 ---
 

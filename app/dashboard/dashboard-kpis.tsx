@@ -83,106 +83,116 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
   };
 
   return (
-    <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {/* Total Gastos del Mes */}
-      <div className="rounded-xl border border-border/50 bg-card p-5 sm:p-6 hover:border-border transition-colors shadow-sm">
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <h3 className="text-sm font-medium text-muted-foreground">
             Gastos del Mes
           </h3>
-          <DollarSign className="h-4 w-4 text-muted-foreground/60" />
+          <DollarSign className="h-4 w-4 text-muted-foreground" />
         </div>
-        <p className="text-3xl sm:text-4xl font-bold tracking-tight">{formatCurrency(currentMonth.totalExpenses)}</p>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="space-y-1">
+          <p className="text-2xl font-bold tracking-tight">{formatCurrency(currentMonth.totalExpenses)}</p>
           <p className="text-xs text-muted-foreground">
             {currentMonth.expensesCount} {currentMonth.expensesCount === 1 ? 'gasto' : 'gastos'}
           </p>
-          <TrendIndicator change={expensesChange} />
         </div>
+        {expensesChange !== null && (
+          <div className="mt-3">
+            <TrendIndicator change={expensesChange} />
+          </div>
+        )}
       </div>
 
       {/* Total Ingresos del Mes */}
-      <div className="rounded-xl border border-border/50 bg-card p-5 sm:p-6 hover:border-border transition-colors shadow-sm">
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <h3 className="text-sm font-medium text-muted-foreground">
             Ingresos del Mes
           </h3>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <button
               onClick={toggleHideIncome}
-              className="text-muted-foreground hover:text-foreground transition-colors p-2 -m-2 rounded-md hover:bg-muted/50"
+              className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-md hover:bg-muted"
               aria-label={hideIncome ? 'Mostrar ingresos' : 'Ocultar ingresos'}
             >
               {hideIncome ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
-            <TrendingUp className="h-4 w-4 text-muted-foreground/60" />
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        <p className="text-3xl sm:text-4xl font-bold tracking-tight text-success">
-          {hideIncome ? '••••••' : formatCurrency(currentMonth.totalIncome)}
-        </p>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="space-y-1">
+          <p className="text-2xl font-bold tracking-tight text-green-600">
+            {hideIncome ? '••••••' : formatCurrency(currentMonth.totalIncome)}
+          </p>
           <p className="text-xs text-muted-foreground">
             {currentMonth.incomesCount} {currentMonth.incomesCount === 1 ? 'ingreso' : 'ingresos'}
           </p>
-          {!hideIncome && <TrendIndicator change={incomesChange} />}
         </div>
+        {!hideIncome && incomesChange !== null && (
+          <div className="mt-3">
+            <TrendIndicator change={incomesChange} />
+          </div>
+        )}
       </div>
 
       {/* Balance del Mes */}
-      <div className="rounded-xl border border-border/50 bg-card p-5 sm:p-6 hover:border-border transition-colors shadow-sm">
+      <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+          <h3 className="text-sm font-medium text-muted-foreground">
             Balance del Mes
           </h3>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <button
               onClick={toggleHideBalance}
-              className="text-muted-foreground hover:text-foreground transition-colors p-2 -m-2 rounded-md hover:bg-muted/50"
+              className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-md hover:bg-muted"
               aria-label={hideBalance ? 'Mostrar balance' : 'Ocultar balance'}
             >
               {hideBalance ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
-            <Wallet className="h-4 w-4 text-muted-foreground/60" />
+            <Wallet className="h-4 w-4 text-muted-foreground" />
           </div>
         </div>
-        <p className={`text-3xl sm:text-4xl font-bold tracking-tight ${
-          currentMonth.balance >= 0 ? 'text-success' : 'text-destructive'
-        }`}>
-          {hideBalance ? '••••••' : formatCurrency(currentMonth.balance)}
-        </p>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="space-y-1">
+          <p className={`text-2xl font-bold tracking-tight ${
+            currentMonth.balance >= 0 ? 'text-green-600' : 'text-red-600'
+          }`}>
+            {hideBalance ? '••••••' : formatCurrency(currentMonth.balance)}
+          </p>
           <p className="text-xs text-muted-foreground">
             {currentMonth.balance >= 0 ? 'Superávit' : 'Déficit'}
           </p>
-          {!hideBalance && <TrendIndicator change={balanceChange} />}
         </div>
+        {!hideBalance && balanceChange !== null && (
+          <div className="mt-3">
+            <TrendIndicator change={balanceChange} />
+          </div>
+        )}
       </div>
 
       {/* Gastos Vencidos */}
-      <div className={`rounded-xl bg-card p-5 sm:p-6 shadow-sm transition-all ${
-        overdueExpenses.count > 0
-          ? 'border-2 border-destructive/50 hover:border-destructive'
-          : 'border border-border/50 hover:border-border'
+      <div className={`rounded-lg border bg-card p-6 shadow-sm ${
+        overdueExpenses.count > 0 ? 'border-red-200 bg-red-50/50' : ''
       }`}>
         <div className="flex items-center justify-between mb-3">
-          <h3 className={`text-xs font-semibold uppercase tracking-wider ${
-            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
+          <h3 className={`text-sm font-medium ${
+            overdueExpenses.count > 0 ? 'text-red-900' : 'text-muted-foreground'
           }`}>
             Gastos Vencidos
           </h3>
           <AlertTriangle className={`h-4 w-4 ${
-            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground/60'
+            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
           }`} />
         </div>
-        <p className={`text-3xl sm:text-4xl font-bold tracking-tight ${
-          overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
-        }`}>
-          {overdueExpenses.count > 0 ? formatCurrency(overdueExpenses.total) : '$0.00'}
-        </p>
-        <div className="mt-3">
+        <div className="space-y-1">
+          <p className={`text-2xl font-bold tracking-tight ${
+            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+          }`}>
+            {overdueExpenses.count > 0 ? formatCurrency(overdueExpenses.total) : '$0.00'}
+          </p>
           <p className={`text-xs ${
-            overdueExpenses.count > 0 ? 'text-destructive/80' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-red-600/80' : 'text-muted-foreground'
           }`}>
             {overdueExpenses.count} {overdueExpenses.count === 1 ? 'gasto vencido' : 'gastos vencidos'}
           </p>

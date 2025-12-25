@@ -1,4 +1,4 @@
-import { Calendar } from 'lucide-react';
+import { Calendar, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -37,6 +37,22 @@ export function MonthlyComparisonCard({
   };
 
   const hasPreviousData = previousMonth && previousMonth.expensesCount > 0;
+
+  // Calcular cambio porcentual
+  const getChangePercent = () => {
+    if (!hasPreviousData) return null;
+    const change = ((currentMonth.totalExpenses - previousMonth.totalExpenses) / previousMonth.totalExpenses) * 100;
+    return change;
+  };
+
+  const changePercent = getChangePercent();
+
+  const TrendIcon = () => {
+    if (changePercent === null) return null;
+    if (changePercent > 5) return <TrendingUp className="h-4 w-4 text-red-500" />;
+    if (changePercent < -5) return <TrendingDown className="h-4 w-4 text-green-500" />;
+    return <Minus className="h-4 w-4 text-muted-foreground" />;
+  };
 
   return (
     <Card>
@@ -93,17 +109,31 @@ export function MonthlyComparisonCard({
           </div>
 
           {/* Mes Actual */}
-          <div className="rounded-lg border p-4 bg-primary/5 border-primary/20">
-            <div className="text-sm font-medium text-primary mb-2">
-              {`${getMonthName(currentMonth.month)} ${currentMonth.year}`}
-              <span className="ml-2 text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded">
+          <div className="group relative rounded-lg border p-4 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 hover:border-primary/30 hover:shadow-md transition-all">
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-sm font-medium text-primary">
+                {`${getMonthName(currentMonth.month)} ${currentMonth.year}`}
+              </div>
+              <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded">
                 Actual
               </span>
             </div>
-            <div className="text-2xl font-bold mb-1">
-              {formatCurrency(currentMonth.totalExpenses)}
+            <div className="flex items-center gap-2">
+              <div className="text-2xl font-bold">
+                {formatCurrency(currentMonth.totalExpenses)}
+              </div>
+              {changePercent !== null && (
+                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                  changePercent > 5 ? 'bg-red-100 text-red-700' :
+                  changePercent < -5 ? 'bg-green-100 text-green-700' :
+                  'bg-gray-100 text-gray-700'
+                }`}>
+                  <TrendIcon />
+                  <span>{Math.abs(changePercent).toFixed(1)}%</span>
+                </div>
+              )}
             </div>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-muted-foreground mt-1">
               {currentMonth.expensesCount} gastos
             </div>
             <div className="mt-3 pt-3 border-t border-primary/20">

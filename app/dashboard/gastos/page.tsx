@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Download, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ExpensesTable } from './expenses-table';
+import { ExpensesListWise } from './expenses-list-wise';
 import { AddExpenseDialog } from './add-expense-dialog';
 import { UpcomingExpensesCard } from './upcoming-expenses-card';
 import {
@@ -112,19 +113,20 @@ export default async function GastosPage() {
       )}
 
       <Tabs defaultValue="todos" className="w-full">
-        <div className="flex items-center justify-between">
-          <TabsList>
-            <TabsTrigger value="todos">Todos</TabsTrigger>
-            <TabsTrigger value="recurrentes">Recurrentes</TabsTrigger>
-            <TabsTrigger value="unicos">Únicos</TabsTrigger>
-          </TabsList>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline" className="h-8 gap-1">
-              <Download className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Exportar
-              </span>
-            </Button>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <TabsList>
+              <TabsTrigger value="todos">Todos</TabsTrigger>
+              <TabsTrigger value="recurrentes">Recurrentes</TabsTrigger>
+              <TabsTrigger value="unicos">Únicos</TabsTrigger>
+            </TabsList>
+            <div className="flex items-center gap-2">
+              <Button size="sm" variant="outline" className="h-8 gap-1">
+                <Download className="h-3.5 w-3.5" />
+                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                  Exportar
+                </span>
+              </Button>
             {categories.length === 0 ? (
               <Button size="sm" className="h-8 gap-1" asChild>
                 <Link href="/categorias">
@@ -145,11 +147,11 @@ export default async function GastosPage() {
             )}
           </div>
         </div>
+      </div>
 
-        <TabsContent value="todos" className="mt-4">
-          <ExpensesTable
+      <TabsContent value="todos" className="mt-4">
+          <ExpensesListWise
             expenses={activeExpenses}
-            totalExpenses={activeExpenses.length}
             categories={categories}
             paymentMethods={paymentMethods}
           />

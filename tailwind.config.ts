@@ -18,6 +18,12 @@ export default {
       }
     },
     extend: {
+      spacing: {
+        // Wise-inspired generous spacing
+        '18': '4.5rem',   // 72px
+        '22': '5.5rem',   // 88px
+        '26': '6.5rem',   // 104px
+      },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace']
@@ -37,7 +43,17 @@ export default {
           { lineHeight: '1.5rem', fontWeight: '600' }
         ],
         'money-md': ['1.75rem', { lineHeight: '2rem', fontWeight: '700' }],
-        'money-lg': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }]
+        'money-lg': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }],
+        // Display sizes (Wise-inspired)
+        'display-sm': ['2rem', { lineHeight: '2.5rem', fontWeight: '700' }],
+        'display-md': ['2.5rem', { lineHeight: '3rem', fontWeight: '700' }],
+        'display-lg': ['3rem', { lineHeight: '3.5rem', fontWeight: '700' }],
+        // Micro typography
+        'caption': ['0.625rem', { lineHeight: '0.875rem', fontWeight: '500' }],
+        'overline': [
+          '0.75rem',
+          { lineHeight: '1rem', fontWeight: '600', letterSpacing: '0.05em' }
+        ]
       },
       colors: {
         border: 'hsl(var(--border))',

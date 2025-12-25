@@ -128,37 +128,26 @@ export function QuickAddFAB({
 
   return (
     <>
-      {/* Botón flotante mejorado - Diseño moderno */}
+      {/* Botón flotante estilo shadcn - mejor contraste */}
       <button
         onClick={() => setOpen(true)}
-        className="group fixed bottom-24 right-4 sm:bottom-6 sm:right-6 h-16 w-16 rounded-full
-                   bg-gradient-to-br from-primary via-primary to-primary/80
-                   shadow-2xl shadow-primary/50
-                   hover:shadow-[0_20px_50px_rgba(var(--primary),0.4)]
-                   hover:scale-110
-                   active:scale-95
-                   transition-all duration-300 ease-out
-                   z-40
-                   border-2 border-white/20
-                   backdrop-blur-sm
-                   before:absolute before:inset-0 before:rounded-full
-                   before:bg-gradient-to-br before:from-white/20 before:to-transparent
-                   before:opacity-0 hover:before:opacity-100
-                   before:transition-opacity before:duration-300"
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6
+                   z-50
+                   inline-flex items-center justify-center gap-2
+                   rounded-full
+                   bg-primary text-primary-foreground
+                   shadow-lg
+                   px-4 py-3 sm:px-6 sm:py-4
+                   text-sm font-medium
+                   transition-all
+                   hover:bg-primary/90
+                   hover:shadow-xl
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                   disabled:pointer-events-none disabled:opacity-50"
         aria-label="Agregar gasto rápido"
       >
-        <div className="relative z-10 flex items-center justify-center h-full w-full">
-          <PlusCircle className="h-7 w-7 text-white drop-shadow-lg
-                                 group-hover:rotate-90
-                                 transition-transform duration-300 ease-out" />
-        </div>
-
-        {/* Pulse animation ring */}
-        <span className="absolute inset-0 rounded-full
-                        bg-primary/30
-                        animate-ping
-                        group-hover:animate-none"
-              style={{ animationDuration: '2s' }} />
+        <PlusCircle className="h-5 w-5" />
+        <span className="hidden sm:inline-block">Nuevo Gasto</span>
       </button>
 
       {/* Diálogo mejorado */}
@@ -238,9 +227,9 @@ export function QuickAddFAB({
                 id="quick-isPaid"
                 checked={isPaid}
                 onChange={(e) => setIsPaid(e.target.checked)}
-                className="h-4 w-4 rounded border-gray-300"
+                className="h-5 w-5 rounded border-gray-300 cursor-pointer"
               />
-              <Label htmlFor="quick-isPaid" className="cursor-pointer font-normal">
+              <Label htmlFor="quick-isPaid" className="cursor-pointer font-normal flex-1">
                 Ya pagué este gasto
               </Label>
             </div>

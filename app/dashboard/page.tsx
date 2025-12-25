@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PlusCircle, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DashboardQuickActions } from './dashboard-quick-actions';
 import { getUser } from '@/lib/auth';
 import {
   getMonthlySummary,
@@ -155,6 +156,11 @@ export default async function DashboardPage() {
             Resumen de {getMonthName(currentMonth)} {currentYear}
           </p>
         </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="animate-fade-in-up" style={{ animationDelay: '0.01s' }}>
+        <DashboardQuickActions overdueCount={overdueExpenses.overdueCount} />
       </div>
 
       {/* KPIs Principales */}
