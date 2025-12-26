@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   getCategoriesByUser,
   getCategoryTotalExpenses,
@@ -6,8 +5,7 @@ import {
   getExpensesByCategoryId
 } from '@/lib/db';
 import { getUser } from '@/lib/auth';
-import { AddCategoryDialog } from './add-category-dialog';
-import { CategoryCard } from './category-card';
+import { CategoryGridClient } from './category-grid-client';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,7 +18,7 @@ export default async function CategoriasPage() {
 
   const categories = await getCategoriesByUser(user.id);
 
-  // Obtener el total, tendencia y transacciones recientes para cada categoría
+  // Obtener stats completas para cada categoría
   const categoriesWithData = await Promise.all(
     categories.map(async (category) => {
       const [total, monthlyTrend, allExpenses] = await Promise.all([
@@ -29,10 +27,31 @@ export default async function CategoriasPage() {
         getExpensesByCategoryId(user.id, category.id)
       ]);
 
+      // Calcular stats adicionales
+      const thisMonth = monthlyTrend[monthlyTrend.length - 1];
+      const lastMonth = monthlyTrend[monthlyTrend.length - 2];
+
+      const monthlyAverage =
+        monthlyTrend.length > 0
+          ? monthlyTrend.reduce((sum, m) => sum + m.total, 0) /
+            monthlyTrend.length
+          : 0;
+
+      const trendPercent =
+        lastMonth && lastMonth.total > 0
+          ? ((thisMonth.total - lastMonth.total) / lastMonth.total) * 100
+          : null;
+
+      const lastExpense = allExpenses[0]; // Ya ordenados por fecha DESC
+
       return {
         ...category,
         total,
         monthlyTrend,
+        monthlyAverage,
+        trendPercent,
+        lastExpenseDate: lastExpense?.date || null,
+        budget: null, // TODO: Implement budget fetching when budget system is ready
         recentExpenses: allExpenses.slice(0, 3).map((expense) => ({
           id: expense.id,
           description: expense.description || null,
@@ -43,32 +62,5 @@ export default async function CategoriasPage() {
     })
   );
 
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Categorías</h1>
-        <AddCategoryDialog />
-      </div>
-
-      {categoriesWithData.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-          <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-            <h3 className="mt-4 text-lg font-semibold">
-              No hay categorías
-            </h3>
-            <p className="mb-4 mt-2 text-sm text-muted-foreground">
-              Crea tu primera categoría para comenzar a organizar tus gastos.
-            </p>
-            <AddCategoryDialog />
-          </div>
-        </div>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {categoriesWithData.map((category) => (
-            <CategoryCard key={category.id} category={category} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  return <CategoryGridClient categories={categoriesWithData} />;
 }

@@ -172,27 +172,27 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       </div>
 
       {/* Gastos Vencidos */}
-      <div className={`rounded-lg border bg-card p-6 shadow-sm ${
-        overdueExpenses.count > 0 ? 'border-red-200 bg-red-50/50' : ''
+      <div className={`rounded-lg border bg-card p-6 shadow-sm transition-colors ${
+        overdueExpenses.count > 0 ? 'border-destructive/20 bg-destructive/[0.02]' : ''
       }`}>
         <div className="flex items-center justify-between mb-3">
           <h3 className={`text-sm font-medium ${
-            overdueExpenses.count > 0 ? 'text-red-900' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`}>
             Gastos Vencidos
           </h3>
           <AlertTriangle className={`h-4 w-4 ${
-            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`} />
         </div>
         <div className="space-y-1">
           <p className={`text-2xl font-bold tracking-tight ${
-            overdueExpenses.count > 0 ? 'text-red-600' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`}>
             {overdueExpenses.count > 0 ? formatCurrency(overdueExpenses.total) : '$0.00'}
           </p>
           <p className={`text-xs ${
-            overdueExpenses.count > 0 ? 'text-red-600/80' : 'text-muted-foreground'
+            overdueExpenses.count > 0 ? 'text-destructive/80' : 'text-muted-foreground'
           }`}>
             {overdueExpenses.count} {overdueExpenses.count === 1 ? 'gasto vencido' : 'gastos vencidos'}
           </p>
