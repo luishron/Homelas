@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,7 +15,7 @@ import {
 import { signInWithMagicLink } from '@/lib/auth-actions';
 import { Mail, Sparkles, Wallet } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -48,37 +48,32 @@ export default function LoginPage() {
 
   if (emailSent) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4 animate-fade-in">
-        <Card className="w-full max-w-md shadow-lg">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4">
+        <Card className="w-full max-w-md animate-fade-in border-primary/20 shadow-2xl">
           <CardHeader className="space-y-3 text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
               <Mail className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-2xl font-bold">
-              ¡Revisa tu email!
+              Revisa tu email
             </CardTitle>
             <CardDescription className="text-base">
-              Te enviamos un enlace mágico a{' '}
-              <span className="font-medium text-foreground">{email}</span>
+              Te enviamos un enlace mágico a <strong>{email}</strong>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="rounded-lg bg-muted p-4 text-sm text-muted-foreground">
-              <p className="mb-2">
-                <strong>Instrucciones:</strong>
+            <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
+              <p className="text-sm text-muted-foreground">
+                Haz clic en el enlace del email para iniciar sesión. El enlace
+                expira en 1 hora.
               </p>
-              <ol className="list-inside list-decimal space-y-1">
-                <li>Abre tu bandeja de entrada</li>
-                <li>Busca el email de Gastos</li>
-                <li>Haz clic en el enlace para iniciar sesión</li>
-              </ol>
             </div>
             <Button
+              onClick={() => setEmailSent(false)}
               variant="outline"
               className="w-full"
-              onClick={() => setEmailSent(false)}
             >
-              Usar otro email
+              Enviar otro enlace
             </Button>
           </CardContent>
         </Card>
@@ -87,104 +82,102 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 px-4 sm:px-6 lg:px-8 animate-fade-in">
-      <div className="w-full max-w-md space-y-8">
-        {/* Logo & Branding */}
-        <div className="text-center space-y-3 animate-slide-in">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 ring-4 ring-primary/20">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4">
+      <Card className="w-full max-w-md animate-fade-in border-primary/20 shadow-2xl">
+        <CardHeader className="space-y-3 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
             <Wallet className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight text-foreground">
-            Gastos
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Gestiona tus finanzas con inteligencia
-          </p>
-        </div>
-
-        {/* Login Card */}
-        <Card className="shadow-xl border-2 animate-slide-in">
-          <CardHeader className="space-y-2">
-            <CardTitle className="text-2xl font-bold flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              Iniciar Sesión
-            </CardTitle>
-            <CardDescription className="text-base">
-              Ingresa tu email y te enviaremos un enlace mágico
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-base">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="tu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  className="h-11 text-base"
-                  aria-describedby={error || urlError ? 'email-error' : undefined}
-                />
-              </div>
-
-              {(error || urlError) && (
-                <div
-                  id="email-error"
-                  role="alert"
-                  className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive"
-                >
-                  {error || (urlError === 'auth_error' && 'Error de autenticación. Intenta de nuevo.') || (urlError === 'profile_error' && 'Error al crear perfil. Contacta soporte.')}
-                </div>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full h-11 text-base font-semibold"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <span className="flex items-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
-                    Enviando enlace...
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    Enviar enlace mágico
-                  </span>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-6 rounded-lg bg-primary/5 p-4 text-sm text-muted-foreground">
-              <p className="mb-2 font-medium text-foreground">
-                ¿Qué es un enlace mágico?
-              </p>
-              <p>
-                Es una forma segura de iniciar sesión sin contraseña. Solo haz
-                clic en el enlace que te enviamos por email.
+          <CardTitle className="text-3xl font-bold">Bienvenido</CardTitle>
+          <CardDescription className="text-base">
+            Ingresa tu email para recibir un enlace mágico
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {(error || urlError) && (
+            <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-center">
+              <p className="text-sm font-medium text-destructive">
+                {error || urlError}
               </p>
             </div>
-          </CardContent>
-        </Card>
+          )}
 
-        {/* Footer */}
-        <p className="text-center text-sm text-muted-foreground">
-          Al iniciar sesión, aceptas nuestros{' '}
-          <a href="#" className="font-medium text-primary hover:underline">
-            Términos de Servicio
-          </a>{' '}
-          y{' '}
-          <a href="#" className="font-medium text-primary hover:underline">
-            Política de Privacidad
-          </a>
-        </p>
-      </div>
+          <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-base">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="tu@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isLoading}
+                className="h-12 text-base"
+                autoFocus
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="h-12 w-full text-base font-semibold"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                  Enviando...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5" />
+                  Enviar enlace mágico
+                </span>
+              )}
+            </Button>
+          </form>
+
+          <div className="space-y-4 rounded-lg border border-primary/20 bg-primary/5 p-4">
+            <p className="text-center text-sm font-medium text-primary">
+              ¿Cómo funciona?
+            </p>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <span className="text-primary">1.</span>
+                <span>Ingresa tu email y haz clic en "Enviar enlace mágico"</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">2.</span>
+                <span>
+                  Revisa tu bandeja de entrada y haz clic en el enlace
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-primary">3.</span>
+                <span>
+                  ¡Listo! Serás redirigido automáticamente a la aplicación
+                </span>
+              </li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
