@@ -137,8 +137,8 @@ Guías para contribuir y trabajar con el código.
 |-----------|--------|---------|---------------------|
 | README.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
 | setup/SUPABASE.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
-| AUTHENTICATION.md | ⭐ Nuevo | 2.1.0 | Diciembre 2025 |
-| DEPLOYMENT.md | ⭐ Nuevo | 2.1.0 | Diciembre 2025 |
+| AUTHENTICATION.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
+| DEPLOYMENT.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | setup/GITHUB_OAUTH.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
 | .env.example | ✅ Actualizado | 2.0.0 | Diciembre 2025 |
 | design-system.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
@@ -148,7 +148,7 @@ Guías para contribuir y trabajar con el código.
 | IMPLEMENTATION_STATUS.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | PRD.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
 | LANDING_PAGE_PLAN.md | ⭐ Nuevo | 2.0.0 | Diciembre 2025 |
-| CLAUDE.md | ✅ Actualizado | 2.1.0 | Diciembre 2025 |
+| CLAUDE.md | ✅ Actualizado | 2.0.0 | Diciembre 2025 |
 | ui-improvements.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
 | card-improvements-plan.md | ✅ Actualizado | 2.0.0 | Diciembre 2024 |
 | LICENSE.md | ✅ Actualizado | - | Diciembre 2024 |

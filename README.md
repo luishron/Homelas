@@ -215,8 +215,9 @@ Ver: `/docs/ACCESSIBILITY-AUDIT.md` y `/docs/IMPLEMENTATION_STATUS.md` para más
 
 ### Backend & Base de Datos
 - **[Supabase](https://supabase.com/)** - Base de datos PostgreSQL + Auth
+- **[Supabase Auth](https://supabase.com/docs/guides/auth)** - Autenticación con Magic Links
 - **[Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)** - Mutaciones del lado del servidor
-- **[Auth.js (NextAuth)](https://authjs.dev/)** - Autenticación con GitHub OAuth
+- **[Drizzle ORM](https://orm.drizzle.team/)** - Type-safe database migrations
 
 ### Desarrollo
 - **[pnpm](https://pnpm.io/)** - Package manager eficiente
@@ -274,7 +275,6 @@ El proyecto sigue una arquitectura **Server-First** con Next.js App Router:
 - Node.js 18.17 o superior
 - pnpm 8.0 o superior
 - Cuenta de Supabase
-- Cuenta de GitHub (para OAuth)
 
 ### Pasos
 
@@ -294,35 +294,33 @@ pnpm install
 3. **Configurar variables de entorno**
 
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-Edita `.env` y configura:
-- Credenciales de Supabase
-- GitHub OAuth credentials
-- NextAuth secret
+Edita `.env.local` y configura tus credenciales de Supabase (obtén las claves en tu [dashboard de Supabase](https://supabase.com/dashboard)):
 
-4. **Configurar Supabase**
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
+```
 
-Ejecuta el script SQL en Supabase SQL Editor:
+4. **Configurar Base de Datos**
 
+La aplicación usa **Drizzle ORM** para migraciones automáticas. Tienes dos opciones:
+
+**Opción A: Desarrollo (Push directo)**
 ```bash
-# Ver archivo: supabase-init.sql
+pnpm db:push
 ```
 
-5. **Agregar estados de pago** (Requerido para v2.0.0)
-
+**Opción B: Producción (Migraciones versionadas)**
 ```bash
-# Ver archivo: supabase-add-payment-status.sql
+pnpm db:migrate
 ```
 
-6. **Agregar sistema de ingresos** (Requerido para v2.0.0)
+Ver `/docs/DEPLOYMENT.md` para configuración en producción.
 
-```bash
-# Ver archivo: supabase-incomes-migration.sql
-```
-
-7. **Iniciar servidor de desarrollo**
+5. **Iniciar servidor de desarrollo**
 
 ```bash
 pnpm dev
@@ -336,30 +334,23 @@ Visita [http://localhost:3000](http://localhost:3000)
 
 ### Supabase
 
-Ver documentación detallada en [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
-
-### GitHub OAuth
-
-Ver documentación detallada en [GITHUB_OAUTH_SETUP.md](./GITHUB_OAUTH_SETUP.md)
+Ver documentación detallada en [docs/setup/SUPABASE.md](./docs/setup/SUPABASE.md)
 
 ### Variables de Entorno
 
 ```env
-# Supabase
-POSTGRES_URL=
-POSTGRES_PRISMA_URL=
-POSTGRES_URL_NO_SSL=
-POSTGRES_URL_NON_POOLING=
-POSTGRES_USER=
-POSTGRES_HOST=
-POSTGRES_PASSWORD=
-POSTGRES_DATABASE=
+# Supabase (Requerido)
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-anon-key-here
 
-# NextAuth
-AUTH_SECRET=
-AUTH_GITHUB_ID=
-AUTH_GITHUB_SECRET=
+# Opcional: Site URL para Magic Links (producción)
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+
+# Opcional: Database URL para Drizzle (producción)
+DATABASE_URL=postgresql://postgres:PASSWORD@db.PROJECT.supabase.co:5432/postgres?sslmode=require
 ```
+
+Ver `.env.example` para el template completo.
 
 ---
 
@@ -487,16 +478,19 @@ gastos/
 
 ### 1. Autenticación (`lib/auth.ts`)
 
-Gestiona la autenticación de usuarios con GitHub OAuth:
+Gestiona la autenticación de usuarios con Supabase Auth:
 
 ```typescript
 export async function getUser(): Promise<User | null>
+export async function signInWithMagicLink(email: string): Promise<void>
+export async function signOut(): Promise<void>
 ```
 
 **Características:**
-- GitHub OAuth integration
-- Session management
-- Protected routes
+- Magic Links (autenticación sin contraseña)
+- Session management con cookies
+- Protected routes y middleware
+- Onboarding automático de nuevos usuarios
 
 ---
 
@@ -1033,7 +1027,9 @@ CREATE POLICY "Users can delete own data" ON expenses
 ### Configuración
 
 - **[docs/setup/SUPABASE.md](./docs/setup/SUPABASE.md)** - Setup de base de datos Supabase
-- **[docs/setup/GITHUB_OAUTH.md](./docs/setup/GITHUB_OAUTH.md)** - Configuración de GitHub OAuth
+- **[docs/setup/GITHUB_OAUTH.md](./docs/setup/GITHUB_OAUTH.md)** - Configuración de GitHub OAuth (Opcional - para OAuth via Supabase Auth)
+- **[docs/AUTHENTICATION.md](./docs/AUTHENTICATION.md)** - Sistema de autenticación con Magic Links
+- **[docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md)** - Guía de deployment en producción
 - **[.env.example](./.env.example)** - Template de variables de entorno
 
 ---

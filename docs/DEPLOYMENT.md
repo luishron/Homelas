@@ -91,11 +91,6 @@ NEXT_PUBLIC_SITE_URL=https://tu-dominio.vercel.app
 ```bash
 # Migración: Fallar build si migración falla (default: false)
 FAIL_ON_MIGRATION_ERROR=false
-
-# Auth (si usas OAuth)
-AUTH_SECRET=openssl-rand-base64-32
-AUTH_GITHUB_ID=tu_github_oauth_id
-AUTH_GITHUB_SECRET=tu_github_oauth_secret
 ```
 
 **⚠️ IMPORTANTE:** Usa el puerto **5432** (conexión directa), NO el puerto **6543** (pooler). El pooler puede causar problemas con Drizzle.
@@ -330,10 +325,7 @@ node -e "console.log(encodeURIComponent('TU_PASSWORD'))"
 | `DATABASE_URL` | ✅ Sí | Conexión directa a Supabase (puerto 5432) | `postgresql://postgres:pass@db.xxx.supabase.co:5432/postgres?sslmode=require` |
 | `SUPABASE_URL` | ✅ Sí | URL del proyecto Supabase | `https://xxx.supabase.co` |
 | `SUPABASE_ANON_KEY` | ✅ Sí | Anon key de Supabase | `eyJhbGci...` |
-| `NEXT_PUBLIC_SITE_URL` | ✅ Sí | URL pública de la app | `https://app.vercel.app` |
-| `AUTH_SECRET` | ⚠️ Si usas OAuth | Secret para NextAuth | `openssl rand -base64 32` |
-| `AUTH_GITHUB_ID` | ❌ Opcional | OAuth GitHub Client ID | `Iv1.xxx` |
-| `AUTH_GITHUB_SECRET` | ❌ Opcional | OAuth GitHub Secret | `abc123...` |
+| `NEXT_PUBLIC_SITE_URL` | ✅ Sí | URL pública para Magic Link redirects | `https://app.vercel.app` |
 | `FAIL_ON_MIGRATION_ERROR` | ❌ Opcional | Fallar build si migración falla | `true` o `false` (default) |
 
 ---

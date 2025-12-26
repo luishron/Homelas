@@ -49,8 +49,7 @@ Hay muchas formas de contribuir a Homelas:
 - **Node.js** 18.x o superior
 - **npm** o **pnpm** (recomendado)
 - **Git**
-- Cuenta de **Supabase** (para base de datos)
-- Cuenta de **GitHub** (para OAuth)
+- Cuenta de **Supabase** (para base de datos y autenticación)
 
 ### 1. Fork y Clone
 
@@ -82,13 +81,14 @@ cp .env.example .env.local
 **Variables requeridas:**
 - `SUPABASE_URL` - URL de tu proyecto Supabase
 - `SUPABASE_ANON_KEY` - Anon key de Supabase
-- `AUTH_SECRET` - Genera con: `openssl rand -base64 32`
-- `AUTH_GITHUB_ID` - OAuth App ID de GitHub
-- `AUTH_GITHUB_SECRET` - OAuth App Secret de GitHub
+
+**Variables opcionales (producción):**
+- `NEXT_PUBLIC_SITE_URL` - URL del sitio para Magic Links
+- `DATABASE_URL` - URL de conexión para migraciones Drizzle
 
 **Guías de setup:**
 - [docs/setup/SUPABASE.md](./docs/setup/SUPABASE.md) - Configurar Supabase
-- [docs/setup/GITHUB_OAUTH.md](./docs/setup/GITHUB_OAUTH.md) - Configurar GitHub OAuth
+- [docs/AUTHENTICATION.md](./docs/AUTHENTICATION.md) - Sistema de autenticación con Magic Links
 
 ### 4. Crear Usuario de Prueba (Opcional)
 

@@ -726,12 +726,14 @@ _No hay bugs conocidos actualmente._
 
 ### Cobertura de Tests
 
-**Actual:** 0% (tests no implementados)
+**Actual:**
+- E2E tests: Playwright instalado para screenshot capture (no user flow tests)
+- Unit/Component tests: 0% (no implementados)
 
 **Meta:**
 - Unit tests: > 80% coverage
 - Component tests: > 70% coverage
-- E2E tests: Flujos principales cubiertos
+- E2E tests: Flujos de usuario principales cubiertos (no solo screenshots)
 
 ---
 

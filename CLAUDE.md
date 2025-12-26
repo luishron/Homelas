@@ -8,9 +8,20 @@ Personal expense management web application built with Next.js 15, TypeScript, S
 
 **Version:** 2.0.0 (Wise-inspired UX/UI transformation completed)
 **Status:** ✅ Production Ready
-**Last Updated:** 25 de Diciembre, 2025
+**Last Updated:** December 26, 2025
 
 ## Recent Changes (v2.0.0)
+
+### Documentation Audit (Dec 26, 2025) ✅ COMPLETED
+
+- **Comprehensive Documentation Review**: Full audit of all project documentation
+- **Authentication Documentation**: Updated to reflect Supabase Auth with Magic Links (removed obsolete NextAuth references)
+- **Environment Variables**: Cleaned up .env.example to remove unused variables
+- **Version Management**: Added version field to package.json for consistency
+- **Installation Guide**: Updated to use Drizzle automatic migrations instead of manual SQL scripts
+- **Accuracy Improvements**: Fixed version inconsistencies and outdated references across all documentation files
+
+See: Audit report by docs-maintainer agent (December 26, 2025)
 
 ### FASE 5: Accessibility & Responsive Audit (Dec 25, 2025) ✅ COMPLETED
 
@@ -156,7 +167,7 @@ Database (Supabase PostgreSQL)
 ```
 app/
 ├── dashboard/                    # Main application (route group)
-│   ├── actions.ts               # ALL Server Actions (expenses, categories, incomes, etc)
+│   ├── actions.ts               # Primary Server Actions (expenses, categories, incomes, etc)
 │   ├── page.tsx                 # Dashboard home with KPIs and analytics
 │   ├── layout.tsx               # Shared layout with navigation
 │   ├── categorias/              # Expense categories module
@@ -218,7 +229,7 @@ Recurring expenses are stored once with `is_recurring=1` and `recurrence_frequen
 
 ### Server Actions Pattern (`app/dashboard/actions.ts`)
 
-**All mutations go through this single file**. Every action follows this pattern:
+**Primary mutations go through `app/dashboard/actions.ts`**, with page-specific actions co-located when needed. Every action follows this pattern:
 
 ```typescript
 export async function saveExpense(formData: FormData): Promise<ActionResult> {
@@ -366,7 +377,7 @@ Configured in `tsconfig.json`:
 ## Important Patterns & Conventions
 
 ### 1. Server Actions Are Centralized
-ALL Server Actions live in `app/dashboard/actions.ts`. Never create server actions in component files.
+Server Actions primarily live in `app/dashboard/actions.ts`, with page-specific actions co-located when appropriate (e.g., `categorias/[id]/actions.ts` for category detail page). Never create server actions in component files.
 
 ### 2. Authentication Flow
 - Authentication check: `const user = await getUser()` (from `lib/auth.ts`)
@@ -440,7 +451,7 @@ if (!category) throw new Error('Category not found')
 - `/docs/AUTHENTICATION.md` - Magic Links, user roles, onboarding system
 - `/docs/DEPLOYMENT.md` - Production deployment with automatic migrations
 - `/docs/setup/SUPABASE.md` - Database setup guide
-- `/docs/setup/GITHUB_OAUTH.md` - OAuth configuration guide
+- `/docs/setup/GITHUB_OAUTH.md` - OAuth configuration guide (Optional - for GitHub OAuth via Supabase Auth)
 
 ## Configuration
 
@@ -451,10 +462,11 @@ Required in `.env.local` (see `.env.example` for template):
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-anon-key-here
 
-# NextAuth.js Configuration
-AUTH_SECRET=your-auth-secret-here-run-openssl-rand-base64-32
-AUTH_GITHUB_ID=your-github-oauth-app-id
-AUTH_GITHUB_SECRET=your-github-oauth-app-secret
+# Optional: Site URL for Magic Link redirects (production)
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+
+# Optional: Database URL for Drizzle migrations (production only)
+DATABASE_URL=postgresql://postgres:PASSWORD@db.PROJECT.supabase.co:5432/postgres?sslmode=require
 ```
 
 **Test User Setup:**
