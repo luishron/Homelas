@@ -12,11 +12,13 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { signInWithMagicLink } from '@/lib/auth-actions';
-import { Mail, Sparkles, Wallet } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { signIn, signInWithMagicLink } from '@/lib/auth-actions';
+import { Mail, Sparkles, Wallet, KeyRound } from 'lucide-react';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
@@ -25,6 +27,28 @@ function LoginForm() {
 
   // Check for errors from URL params
   const urlError = searchParams.get('error');
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    try {
+      const result = await signIn(email, password);
+
+      if (result.error) {
+        setError(result.error);
+      } else {
+        // Redirect to dashboard on success
+        router.push('/dashboard');
+        router.refresh();
+      }
+    } catch (error) {
+      setError('Error al iniciar sesión');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleMagicLinkSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +114,7 @@ function LoginForm() {
           </div>
           <CardTitle className="text-3xl font-bold">Bienvenido</CardTitle>
           <CardDescription className="text-base">
-            Ingresa tu email para recibir un enlace mágico
+            Elige tu método de inicio de sesión
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -102,66 +126,139 @@ function LoginForm() {
             </div>
           )}
 
-          <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-base">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={isLoading}
-                className="h-12 text-base"
-                autoFocus
-              />
-            </div>
+          <Tabs defaultValue="password" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="password" className="gap-2">
+                <KeyRound className="h-4 w-4" />
+                Email & Contraseña
+              </TabsTrigger>
+              <TabsTrigger value="magic" className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                Magic Link
+              </TabsTrigger>
+            </TabsList>
 
-            <Button
-              type="submit"
-              className="h-12 w-full text-base font-semibold"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <span className="flex items-center gap-2">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                  Enviando...
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  Enviar enlace mágico
-                </span>
-              )}
-            </Button>
-          </form>
+            {/* Password Login Tab */}
+            <TabsContent value="password" className="space-y-4">
+              <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email-password" className="text-base">
+                    Email
+                  </Label>
+                  <Input
+                    id="email-password"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="h-12 text-base"
+                    autoFocus
+                  />
+                </div>
 
-          <div className="space-y-4 rounded-lg border border-primary/20 bg-primary/5 p-4">
-            <p className="text-center text-sm font-medium text-primary">
-              ¿Cómo funciona?
-            </p>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="text-primary">1.</span>
-                <span>Ingresa tu email y haz clic en "Enviar enlace mágico"</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">2.</span>
-                <span>
-                  Revisa tu bandeja de entrada y haz clic en el enlace
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-primary">3.</span>
-                <span>
-                  ¡Listo! Serás redirigido automáticamente a la aplicación
-                </span>
-              </li>
-            </ul>
-          </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-base">
+                    Contraseña
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="h-12 text-base"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="h-12 w-full text-base font-semibold"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      Iniciando sesión...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <KeyRound className="h-5 w-5" />
+                      Iniciar sesión
+                    </span>
+                  )}
+                </Button>
+              </form>
+
+              <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-center">
+                <p className="text-xs text-muted-foreground">
+                  💡 <strong>Para testing:</strong> testadmin@gmail.com / cualquier contraseña
+                </p>
+              </div>
+            </TabsContent>
+
+            {/* Magic Link Tab */}
+            <TabsContent value="magic" className="space-y-4">
+              <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email-magic" className="text-base">
+                    Email
+                  </Label>
+                  <Input
+                    id="email-magic"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    disabled={isLoading}
+                    className="h-12 text-base"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="h-12 w-full text-base font-semibold"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      Enviando...
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="h-5 w-5" />
+                      Enviar enlace mágico
+                    </span>
+                  )}
+                </Button>
+              </form>
+
+              <div className="space-y-3 rounded-lg border border-primary/20 bg-primary/5 p-4">
+                <p className="text-center text-sm font-medium text-primary">
+                  ¿Cómo funciona?
+                </p>
+                <ul className="space-y-2 text-xs text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary font-semibold">1.</span>
+                    <span>Ingresa tu email y haz clic en "Enviar"</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary font-semibold">2.</span>
+                    <span>Revisa tu email y haz clic en el enlace</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary font-semibold">3.</span>
+                    <span>¡Listo! Acceso automático</span>
+                  </li>
+                </ul>
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

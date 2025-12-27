@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { LayoutGrid, LayoutList } from 'lucide-react';
-import { Button } from './button';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { type CategoryView } from '@/lib/hooks/use-category-view';
 import { cn } from '@/lib/utils';
 
@@ -20,8 +20,7 @@ export interface ViewToggleProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * ViewToggle - Toggle entre vista compacta y detallada
  *
- * Basado en el patrón de TopCategoriesChart
- * Dos botones con iconos, el botón activo tiene variant="default"
+ * Ahora usa shadcn ToggleGroup para mejor consistencia
  *
  * Features:
  * - WCAG 2.1 AA compliant (botones ≥44px)
@@ -38,45 +37,32 @@ export function ViewToggle({
   view,
   onViewChange,
   className,
-  ...props
 }: ViewToggleProps) {
   return (
-    <div
-      className={cn(
-        'flex items-center gap-1 rounded-md border border-border bg-background p-1',
-        className
-      )}
-      role="group"
+    <ToggleGroup
+      type="single"
+      value={view}
+      onValueChange={(value) => {
+        if (value) onViewChange(value as CategoryView);
+      }}
+      className={cn('gap-1', className)}
       aria-label="Selector de vista de categorías"
-      {...props}
     >
-      <Button
-        variant={view === 'compact' ? 'default' : 'ghost'}
-        size="sm"
-        onClick={() => onViewChange('compact')}
+      <ToggleGroupItem
+        value="compact"
         aria-label="Vista compacta"
-        aria-pressed={view === 'compact'}
-        className={cn(
-          'transition-all duration-200',
-          view === 'compact' && 'shadow-sm'
-        )}
+        className="h-10 w-10"
       >
         <LayoutGrid className="h-4 w-4" />
-      </Button>
+      </ToggleGroupItem>
 
-      <Button
-        variant={view === 'detailed' ? 'default' : 'ghost'}
-        size="sm"
-        onClick={() => onViewChange('detailed')}
+      <ToggleGroupItem
+        value="detailed"
         aria-label="Vista detallada"
-        aria-pressed={view === 'detailed'}
-        className={cn(
-          'transition-all duration-200',
-          view === 'detailed' && 'shadow-sm'
-        )}
+        className="h-10 w-10"
       >
         <LayoutList className="h-4 w-4" />
-      </Button>
-    </div>
+      </ToggleGroupItem>
+    </ToggleGroup>
   );
 }

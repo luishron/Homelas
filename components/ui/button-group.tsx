@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
 
 export interface ButtonGroupOption {
@@ -14,6 +15,11 @@ export interface ButtonGroupProps {
   className?: string;
 }
 
+/**
+ * ButtonGroup - Migrado a shadcn ToggleGroup
+ *
+ * Wrapper conveniente sobre ToggleGroup para mantener la API existente
+ */
 export function ButtonGroup({
   options,
   value,
@@ -21,28 +27,24 @@ export function ButtonGroup({
   className
 }: ButtonGroupProps) {
   return (
-    <div
-      className={cn(
-        'inline-flex rounded-lg border border-border bg-muted p-1 shadow-sm',
-        className
-      )}
+    <ToggleGroup
+      type="single"
+      value={value}
+      onValueChange={(newValue) => {
+        if (newValue) onChange(newValue);
+      }}
+      className={cn('gap-0', className)}
     >
       {options.map((option) => (
-        <button
+        <ToggleGroupItem
           key={option.value}
-          onClick={() => onChange(option.value)}
-          className={cn(
-            'inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200',
-            'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
-            value === option.value
-              ? 'bg-background text-foreground shadow-sm scale-105'
-              : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
-          )}
+          value={option.value}
+          className="gap-2"
         >
           {option.icon}
           {option.label}
-        </button>
+        </ToggleGroupItem>
       ))}
-    </div>
+    </ToggleGroup>
   );
 }
