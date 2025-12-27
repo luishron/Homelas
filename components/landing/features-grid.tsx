@@ -6,42 +6,42 @@ const features = [
     icon: BarChart3,
     title: "Dashboard Inteligente",
     description:
-      "Visualiza tus finanzas en tiempo real. KPIs principales, comparativas mensuales y proyecciones automáticas. Responde '¿puedo gastar?' en menos de 5 segundos.",
+      "Ve tu situación financiera completa: gastos, ingresos, balance. En un solo vistazo. Responde '¿cómo estoy?' en 5 segundos.",
     iconColor: "hsl(220 89% 61%)", // Azul
   },
   {
     icon: RefreshCw,
-    title: "Gastos Recurrentes Virtuales",
+    title: "Gastos Recurrentes",
     description:
-      "Registra Netflix una vez, generamos automáticamente las próximas instancias. Sin saturar tu base de datos. Proyecta tus próximos meses con precisión.",
+      "Configura Netflix una vez, Homelas calcula automáticamente los próximos meses. Sin duplicar trabajo.",
     iconColor: "hsl(142 76% 55%)", // Verde
   },
   {
     icon: Zap,
-    title: "Quick Add (< 3 segundos)",
+    title: "Quick Add (10 segundos)",
     description:
-      "Agregar gasto en menos de 3 taps. FAB siempre visible con formulario simplificado. La fricción es el enemigo del tracking financiero.",
+      "Botón verde siempre visible. Click → 'Café $45' → Listo. Tan rápido que no hay excusa.",
     iconColor: "hsl(45 93% 47%)", // Amarillo/Dorado
   },
   {
     icon: Sparkles,
-    title: "UX Estilo Wise",
+    title: "Búsqueda Instantánea",
     description:
-      "Cards en lugar de tablas abrumadoras, agrupación temporal inteligente, búsqueda Cmd+K instantánea. Diseñado para claridad máxima.",
+      "Encuentra cualquier gasto en 3 segundos con Cmd+K. Sin scroll infinito. Sin frustración.",
     iconColor: "hsl(280 83% 63%)", // Morado
   },
   {
     icon: Eye,
-    title: "Accesibilidad WCAG 2.1 AA",
+    title: "100% Responsive",
     description:
-      "Touch targets ≥44px, contraste ≥4.5:1, navegación por teclado completa. Finanzas para todos, sin excepciones.",
+      "Consulta desde tu celular en la tienda. Analiza en tu laptop en casa. Mobile-first, accesible para todos.",
     iconColor: "hsl(199 89% 48%)", // Cyan
   },
   {
     icon: TrendingUp,
-    title: "Sistema Completo de Ingresos",
+    title: "Categorías Personalizables",
     description:
-      "Categorías separadas, ingresos recurrentes, proyecciones precisas. Entiende tu situación financiera completa, no solo tus gastos.",
+      "Organiza tus gastos como quieras. Ve en qué categoría gastas más. Descubre patrones y ahorra.",
     iconColor: "hsl(98 100% 70%)", // Verde Vibrante (primary)
   },
 ];

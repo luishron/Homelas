@@ -3,10 +3,12 @@ import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/landing/logo";
 import { HeroSection } from "@/components/landing/hero-section";
-import { FeaturesGrid } from "@/components/landing/features-grid";
+import { ProblemSection } from "@/components/landing/problem-section";
+import { SolutionSteps } from "@/components/landing/solution-steps";
 import { ScreenshotsCarousel } from "@/components/landing/screenshots-carousel";
+import { ComparisonSection } from "@/components/landing/comparison-section";
 import { PricingTable } from "@/components/landing/pricing-table";
-import { TestimonialsSection } from "@/components/landing/testimonials-section";
+import { FAQSection } from "@/components/landing/faq-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { FooterLanding } from "@/components/landing/footer-landing";
 import { Button } from "@/components/ui/button";
@@ -84,21 +86,28 @@ export default async function HomePage() {
 
       {/* Main Content */}
       <main>
+        {/* 1. Hero - Problema en headline */}
         <HeroSection />
 
-        {/* Features Section */}
-        <FeaturesGrid />
+        {/* 2. Problema - Empatizar con el dolor */}
+        <ProblemSection />
 
-        {/* Screenshots Section */}
+        {/* 3. Solución + Beneficios - 3 pasos con value props */}
+        <SolutionSteps />
+
+        {/* 4. Demo Visual - Screenshots */}
         <ScreenshotsCarousel />
 
-        {/* Pricing Section */}
+        {/* 5. Comparación - Por qué Homelas */}
+        <ComparisonSection />
+
+        {/* 6. Pricing - 100% gratis sin trucos */}
         <PricingTable />
 
-        {/* Testimonials Section */}
-        <TestimonialsSection />
+        {/* 7. FAQ - Eliminar objeciones */}
+        <FAQSection />
 
-        {/* Final CTA Section */}
+        {/* 8. CTA Final - Último empujón */}
         <CTASection />
       </main>
 
