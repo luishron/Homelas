@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Zap, RefreshCw, Mail, Gift } from "lucide-react";
 
 export function HeroSection() {
   return (
@@ -11,17 +12,98 @@ export function HeroSection() {
           <div className="text-center lg:text-left animate-fade-in">
             <h1
               id="hero-heading"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight max-w-4xl mx-auto lg:mx-0"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto lg:mx-0"
             >
-              El problema no es gastar.
+              <span className="text-primary">El problema no es gastar.</span> Es
+              decidir sin ver lo que viene.
             </h1>
 
-            <p className="text-lg sm:text-xl md:text-2xl text-foreground mt-6 max-w-2xl mx-auto lg:mx-0">
-              Es decidir sin ver los{" "}
-              <span className="text-primary font-semibold">próximos gastos</span>.
-              <br />
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-6 max-w-2xl mx-auto lg:mx-0">
               Homelas te muestra tus gastos y tu balance real antes de gastar.
             </p>
+
+            {/* Feature Points */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8 max-w-xl mx-auto lg:mx-0">
+              {/* Gratis - Most important (Gold/Amber) */}
+              <div className="group flex items-center gap-3 cursor-pointer transition-transform hover:translate-x-1">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                  style={{ backgroundColor: 'hsl(45 93% 47% / 0.1)' }}
+                >
+                  <Gift
+                    className="w-5 h-5 transition-all duration-300 group-hover:animate-bounce"
+                    style={{ color: 'hsl(45 93% 47%)' }}
+                    aria-hidden="true"
+                  />
+                </div>
+                <span
+                  className="text-base font-medium transition-colors duration-300"
+                  style={{ color: 'hsl(var(--foreground))' }}
+                >
+                  <span className="group-hover:text-[hsl(45_93%_47%)] transition-colors">Gratis</span>
+                </span>
+              </div>
+
+              {/* Registro de gasto fácil (Primary Green) */}
+              <div className="group flex items-center gap-3 cursor-pointer transition-transform hover:translate-x-1">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                  style={{ backgroundColor: 'hsl(98 100% 70% / 0.1)' }}
+                >
+                  <Zap
+                    className="w-5 h-5 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
+                    style={{ color: 'hsl(98 100% 70%)' }}
+                    aria-hidden="true"
+                  />
+                </div>
+                <span
+                  className="text-base font-medium transition-colors duration-300"
+                  style={{ color: 'hsl(var(--foreground))' }}
+                >
+                  <span className="group-hover:text-[hsl(98_100%_70%)] transition-colors">Registro de gasto fácil</span>
+                </span>
+              </div>
+
+              {/* Gastos recurrentes (Blue) */}
+              <div className="group flex items-center gap-3 cursor-pointer transition-transform hover:translate-x-1">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                  style={{ backgroundColor: 'hsl(220 89% 61% / 0.1)' }}
+                >
+                  <RefreshCw
+                    className="w-5 h-5 transition-all duration-500 group-hover:rotate-180"
+                    style={{ color: 'hsl(220 89% 61%)' }}
+                    aria-hidden="true"
+                  />
+                </div>
+                <span
+                  className="text-base font-medium transition-colors duration-300"
+                  style={{ color: 'hsl(var(--foreground))' }}
+                >
+                  <span className="group-hover:text-[hsl(220_89%_61%)] transition-colors">Gastos recurrentes</span>
+                </span>
+              </div>
+
+              {/* Alertas por email (Purple) */}
+              <div className="group flex items-center gap-3 cursor-pointer transition-transform hover:translate-x-1">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                  style={{ backgroundColor: 'hsl(280 83% 63% / 0.1)' }}
+                >
+                  <Mail
+                    className="w-5 h-5 transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110"
+                    style={{ color: 'hsl(280 83% 63%)' }}
+                    aria-hidden="true"
+                  />
+                </div>
+                <span
+                  className="text-base font-medium transition-colors duration-300"
+                  style={{ color: 'hsl(var(--foreground))' }}
+                >
+                  <span className="group-hover:text-[hsl(280_83%_63%)] transition-colors">Alertas por email</span>
+                </span>
+              </div>
+            </div>
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center lg:justify-start">
@@ -34,11 +116,6 @@ export function HeroSection() {
                 <Link href="/login">Comenzar gratis →</Link>
               </Button>
             </div>
-
-            {/* Social Proof */}
-            <p className="text-sm text-muted-foreground mt-6">
-              Sin ansiedad · Sin suposiciones · Gratis
-            </p>
           </div>
 
           {/* Screenshot */}

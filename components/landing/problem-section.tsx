@@ -1,27 +1,33 @@
 import { AlertCircle, TrendingDown, Calendar } from "lucide-react";
+import Image from "next/image";
 
 const problems = [
   {
     icon: AlertCircle,
     title: "Dudas antes de gastar",
-    description:
-      "Quieres comprar algo y no sabes si estás haciendo bien las cuentas.",
+    description: "¿Me alcanza? ¿Estoy gastando de más?",
+    highlight: "No tienes claridad financiera",
     color: "hsl(45 93% 47%)", // Amarillo
+    image: "/images/problem-1-doubt.png",
+    imageAlt: "Persona con dudas antes de realizar una compra",
   },
   {
     icon: TrendingDown,
-    title: "Falta de visibilidad",
-    description:
-      "Ganas bien, pero no ves todos tus gastos juntos.",
-    additionalLine: "El dinero no desaparece: se diluye.",
+    title: "El dinero se diluye",
+    description: "Ganas bien, pero no sabes a dónde va tu dinero.",
+    highlight: "Falta de visibilidad total",
     color: "hsl(0 72% 50%)", // Rojo
+    image: "/images/problem-2-visibility.png",
+    imageAlt: "Dinero dispersándose sin control",
   },
   {
     icon: Calendar,
-    title: "Consecuencias evitables",
-    description:
-      "Olvidos, recargos y decisiones que después pesan.",
+    title: "Olvidos que cuestan",
+    description: "Recargos, intereses y decisiones que pesan.",
+    highlight: "Consecuencias evitables",
     color: "hsl(280 83% 63%)", // Morado
+    image: "/images/problem-3-consequences.png",
+    imageAlt: "Calendario con pagos olvidados",
   },
 ];
 
@@ -52,37 +58,88 @@ export function ProblemSection() {
             return (
               <div
                 key={problem.title}
-                className="animate-fade-in-up bg-card border border-border rounded-2xl p-8 hover:shadow-lg transition-shadow"
+                className="group animate-fade-in-up bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-2"
                 style={{
                   animationDelay: `${index * 100}ms`,
                 }}
               >
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center mb-6"
-                  style={{
-                    backgroundColor: `${problem.color}20`,
-                  }}
-                >
-                  <Icon
-                    className="w-7 h-7"
-                    style={{ color: problem.color }}
-                    aria-hidden="true"
+                {/* Image Container */}
+                <div className="relative h-44 overflow-hidden bg-gradient-to-br from-muted/50 to-muted/20">
+                  {/* Multi-layer gradient placeholder */}
+                  <div
+                    className="absolute inset-0 opacity-70 group-hover:opacity-80 transition-opacity"
+                    style={{
+                      background: `
+                        radial-gradient(circle at 30% 30%, ${problem.color}20 0%, transparent 60%),
+                        linear-gradient(120deg, ${problem.color}10 0%, transparent 50%, ${problem.color}08 100%),
+                        radial-gradient(circle at 70% 70%, ${problem.color}15 0%, transparent 50%)
+                      `,
+                    }}
                   />
+
+                  {/* Animated gradient blobs */}
+                  <div className="absolute inset-0 opacity-25">
+                    <div
+                      className="absolute top-0 left-0 w-28 h-28 rounded-full blur-2xl animate-pulse"
+                      style={{ backgroundColor: problem.color, animationDuration: '4s' }}
+                    />
+                    <div
+                      className="absolute bottom-0 right-0 w-36 h-36 rounded-full blur-3xl animate-pulse"
+                      style={{ backgroundColor: `${problem.color}90`, animationDuration: '5s', animationDelay: '1s' }}
+                    />
+                  </div>
+
+                  {/* Small icon indicator */}
+                  <div className="absolute top-4 right-4 opacity-40">
+                    <Icon className="w-6 h-6" style={{ color: problem.color }} aria-hidden="true" />
+                  </div>
+
+                  {/* Image placeholder indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center px-4">
+                      <div className="w-14 h-14 mx-auto mb-2 rounded-lg border-2 border-dashed flex items-center justify-center" style={{ borderColor: `${problem.color}40` }}>
+                        <svg className="w-7 h-7" style={{ color: `${problem.color}60` }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <p className="text-xs font-medium opacity-50" style={{ color: problem.color }}>
+                        {problem.imageAlt}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Uncomment when images are ready */}
+                  {/* <Image
+                    src={problem.image}
+                    alt={problem.imageAlt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  /> */}
                 </div>
 
-                <h3 className="text-xl font-bold text-foreground mb-3">
-                  {problem.title}
-                </h3>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    {problem.title}
+                  </h3>
 
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  {problem.description}
-                </p>
-
-                {problem.additionalLine && (
-                  <p className="text-base text-foreground font-semibold mt-3 italic">
-                    {problem.additionalLine}
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {problem.description}
                   </p>
-                )}
+
+                  {/* Highlight badge */}
+                  <div
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border"
+                    style={{
+                      backgroundColor: `${problem.color}10`,
+                      borderColor: `${problem.color}30`,
+                      color: problem.color,
+                    }}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: problem.color }} />
+                    {problem.highlight}
+                  </div>
+                </div>
               </div>
             );
           })}
