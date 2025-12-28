@@ -2,6 +2,8 @@
 
 Esta guía explica cómo hacer deploy de la aplicación a producción con **migraciones automáticas de base de datos**.
 
+**IMPORTANTE:** Asegúrate de que la migración crítica `0001_add_user_plan_enum_and_triggers.sql` esté aplicada para que el registro de usuarios funcione correctamente. Ver `MIGRATION-GUIDE.md` para detalles.
+
 ## Tabla de Contenidos
 
 - [Configuración General](#configuración-general)
@@ -24,7 +26,7 @@ Esta guía explica cómo hacer deploy de la aplicación a producción con **migr
 
 ### Sistema de Migraciones Automáticas
 
-El proyecto usa **Drizzle ORM** con migraciones automáticas en cada deploy:
+El proyecto usa **Drizzle ORM** con migraciones automáticas siguiendo un enfoque **100% Drizzle**:
 
 ```bash
 pnpm build:prod    # Ejecuta migraciones + build de Next.js
@@ -34,14 +36,18 @@ pnpm build:prod    # Ejecuta migraciones + build de Next.js
 
 1. El script `scripts/migrate-auto.ts` se ejecuta antes del build
 2. Valida la conexión a la base de datos
-3. Aplica los schemas de Drizzle usando `drizzle-kit push`
-4. Si las migraciones fallan, el build continúa (configurable)
-5. Next.js hace el build de producción
+3. Aplica las migraciones de Drizzle (`lib/drizzle/migrations/*.sql`)
+4. Incluye triggers y funciones SQL (ejemplo: `0001_add_user_plan_enum_and_triggers.sql`)
+5. Si las migraciones fallan, el build continúa (configurable)
+6. Next.js hace el build de producción
+
+**Migraciones Críticas:**
+- `0001_add_user_plan_enum_and_triggers.sql` - **REQUERIDA**: Corrige el sistema de registro de usuarios creando el ENUM `user_plan` y los triggers de autenticación
 
 **Flujo en CI/CD:**
 
 ```
-GitHub Push → Deploy Platform → pnpm build:prod → Migraciones → Next.js Build → Deploy
+GitHub Push → Deploy Platform → pnpm build:prod → Migraciones Drizzle → Next.js Build → Deploy
 ```
 
 ---
@@ -111,6 +117,15 @@ WHERE table_schema = 'public'
 ORDER BY table_name;
 
 # Debe incluir: user_profiles, categories, expenses, incomes, etc.
+
+# Verificar que la migración crítica se aplicó
+SELECT EXISTS (
+  SELECT 1 FROM pg_type WHERE typname = 'user_plan'
+) AS user_plan_enum_exists;
+
+SELECT trigger_name
+FROM information_schema.triggers
+WHERE trigger_name = 'on_auth_user_created';
 ```
 
 ---

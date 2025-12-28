@@ -1,8 +1,8 @@
 # Authentication & User Management
 
-**Version:** 2.1.0
-**Date:** December 26, 2025
-**Status:** ✅ Production Ready
+**Version:** 2.2.0
+**Date:** December 27, 2025
+**Status:** ✅ Production Ready (Fixed user registration bug)
 
 ## Overview
 
@@ -58,11 +58,12 @@ sequenceDiagram
 ```typescript
 type UserProfile = {
   id: string;                    // UUID (references auth.users.id)
-  role: 'free' | 'premium';      // Subscription tier
-  plan_expires_at?: string;      // Premium expiration date
+  plan: 'free' | 'pro' | 'plus' | 'admin';  // ENUM type user_plan (subscription tier)
+  email: string;                 // User's email (synced from auth.users)
+  plan_expires_at?: string;      // Premium/Pro/Plus expiration date
   onboarding_completed: boolean; // Has completed onboarding
   preferences: {
-    currency?: 'USD' | 'USD';
+    currency?: 'USD' | 'MXN';
     theme?: 'light' | 'dark' | 'system';
     language?: 'es' | 'en';
   };
@@ -72,19 +73,25 @@ type UserProfile = {
 };
 ```
 
-### Role-Based Features
+**IMPORTANT CHANGE (v2.2.0):**
+- Column `role` has been renamed to `plan` and now uses ENUM type `user_plan`
+- Added `email` column to store user's email from `auth.users`
+- Migration `0001_add_user_plan_enum_and_triggers.sql` handles the data migration automatically
 
-| Feature | Free | Premium |
-|---------|------|---------|
-| Expenses/Incomes | ✅ Unlimited | ✅ Unlimited |
-| Categories | ✅ Up to 20 | ✅ Unlimited |
-| Payment Methods | ✅ 1 method | ✅ Multiple |
-| Dashboard Analytics | ✅ Basic | ✅ Advanced |
-| Export Data | ❌ | ✅ CSV/Excel |
-| Multi-currency | ❌ | ✅ |
-| Family Sharing | ❌ | ✅ (Future) |
+### Plan-Based Features
 
-**Default Role:** All new users start as `free`.
+| Feature | Free | Pro | Plus | Admin |
+|---------|------|-----|------|-------|
+| Expenses/Incomes | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited | ✅ Unlimited |
+| Categories | ✅ Up to 20 | ✅ Up to 50 | ✅ Unlimited | ✅ Unlimited |
+| Payment Methods | ✅ 1 method | ✅ 3 methods | ✅ Unlimited | ✅ Unlimited |
+| Dashboard Analytics | ✅ Basic | ✅ Advanced | ✅ Advanced + AI | ✅ All features |
+| Export Data | ❌ | ✅ CSV | ✅ CSV/Excel/PDF | ✅ All formats |
+| Multi-currency | ❌ | ✅ | ✅ | ✅ |
+| Family Sharing | ❌ | ❌ | ✅ (Future) | ✅ (Future) |
+| Admin Panel | ❌ | ❌ | ❌ | ✅ |
+
+**Default Plan:** All new users start as `'free'` (set by trigger `on_auth_user_created`).
 
 ---
 
@@ -212,12 +219,18 @@ if (user && !profile?.onboarding_completed) {
 
 ### Table: `user_profiles`
 
-**Migration:** `lib/drizzle/schema.ts`
+**Schema:** `lib/drizzle/schema.ts`
+**Migration:** `lib/drizzle/migrations/0001_add_user_plan_enum_and_triggers.sql`
 
 ```sql
+-- ENUM type for user plans
+CREATE TYPE "public"."user_plan" AS ENUM ('free', 'pro', 'plus', 'admin');
+
+-- user_profiles table
 CREATE TABLE user_profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  role TEXT NOT NULL DEFAULT 'free' CHECK (role IN ('free', 'premium')),
+  plan "public"."user_plan" NOT NULL DEFAULT 'free'::"public"."user_plan",
+  email TEXT,
   plan_expires_at TIMESTAMPTZ,
   onboarding_completed BOOLEAN NOT NULL DEFAULT false,
   preferences JSONB NOT NULL DEFAULT '{"currency": "USD", "theme": "system"}',
@@ -227,8 +240,9 @@ CREATE TABLE user_profiles (
 );
 
 -- Indexes
-CREATE INDEX idx_user_profiles_role ON user_profiles(role);
-CREATE INDEX idx_user_profiles_onboarding ON user_profiles(onboarding_completed);
+CREATE INDEX idx_user_profiles_plan ON user_profiles(plan);
+CREATE INDEX idx_user_profiles_email ON user_profiles(email);
+CREATE INDEX idx_user_profiles_onboarding_completed ON user_profiles(onboarding_completed);
 
 -- RLS Policies
 ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
@@ -245,25 +259,54 @@ CREATE POLICY "Users can insert own profile"
 
 ### Automatic Profile Creation
 
-**Trigger:** Automatically creates `user_profile` when a new user signs up via `auth.users` insert.
+**Migration:** `lib/drizzle/migrations/0001_add_user_plan_enum_and_triggers.sql`
 
-**Note:** The trigger is NOT created via Drizzle - it must be created manually in Supabase SQL Editor:
+Automatically creates `user_profile` when a new user signs up via the `on_auth_user_created` trigger.
 
+**Function:**
 ```sql
-CREATE OR REPLACE FUNCTION create_user_profile()
-RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION "public"."handle_new_user"()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = 'public'
+AS $$
 BEGIN
-  INSERT INTO user_profiles (id, role, onboarding_completed)
-  VALUES (NEW.id, 'free', false);
+  INSERT INTO "public"."user_profiles" (
+    "id",
+    "email",
+    "full_name",
+    "plan",
+    "created_at",
+    "updated_at"
+  )
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
+    'free'::"public"."user_plan",
+    now(),
+    now()
+  )
+  ON CONFLICT ("id") DO UPDATE SET
+    "email" = EXCLUDED."email",
+    "full_name" = COALESCE(EXCLUDED."full_name", "user_profiles"."full_name"),
+    "updated_at" = now();
+
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE FUNCTION create_user_profile();
+$$;
 ```
+
+**Trigger:**
+```sql
+CREATE TRIGGER "on_auth_user_created"
+  AFTER INSERT ON "auth"."users"
+  FOR EACH ROW
+  EXECUTE FUNCTION "public"."handle_new_user"();
+```
+
+**IMPORTANT:** This trigger is included in the Drizzle migration `0001_add_user_plan_enum_and_triggers.sql` and is applied automatically when running `pnpm db:migrate`.
 
 ---
 
@@ -416,8 +459,10 @@ LIMIT 10;
 **Issue:** "Profile not found" error
 
 **Solution:**
-- Run trigger creation SQL manually
-- Create profile manually: `INSERT INTO user_profiles (id, role, onboarding_completed) VALUES ('user-id', 'free', false);`
+- Ensure migration `0001_add_user_plan_enum_and_triggers.sql` has been applied
+- Run `pnpm db:migrate` to apply missing migrations
+- Verify trigger exists: `SELECT * FROM information_schema.triggers WHERE trigger_name = 'on_auth_user_created';`
+- Create profile manually (emergency): `INSERT INTO user_profiles (id, plan, onboarding_completed) VALUES ('user-id', 'free'::"public"."user_plan", false);`
 
 ---
 
@@ -449,12 +494,30 @@ LIMIT 10;
 
 ## Related Documentation
 
+- [Migration Guide](../MIGRATION-GUIDE.md) - **CRITICAL**: How to apply the user registration fix migration
 - [Database Setup Guide](./setup/SUPABASE.md)
+- [Deployment Guide](./DEPLOYMENT.md) - Production deployment with automatic migrations
 - [Design System](./design-system.md)
 - [Component Guide](./COMPONENT_GUIDE.md)
 - [Accessibility Audit](./ACCESSIBILITY-AUDIT.md)
 
 ---
 
-**Last Updated:** December 26, 2025
+**Last Updated:** December 27, 2025
 **Maintained by:** Gastos Development Team
+
+---
+
+## Changelog
+
+### v2.2.0 (December 27, 2025)
+- **CRITICAL FIX:** Fixed user registration bug ("type user_plan does not exist")
+- Migrated `role` column to `plan` with ENUM type `user_plan`
+- Added `email` column to `user_profiles`
+- Updated `handle_new_user()` function to use correct ENUM syntax
+- Migration `0001_add_user_plan_enum_and_triggers.sql` handles all changes automatically
+
+### v2.1.0 (December 26, 2025)
+- Documentation audit and updates
+- Removed obsolete NextAuth references
+- Updated environment variables

@@ -316,7 +316,7 @@ SUPABASE_ANON_KEY=your-anon-key-here
 
 4. **Configurar Base de Datos**
 
-La aplicación usa **Drizzle ORM** para migraciones automáticas. Tienes dos opciones:
+La aplicación usa **Drizzle ORM** para migraciones automáticas siguiendo un enfoque 100% Drizzle.
 
 **Opción A: Desarrollo (Push directo)**
 ```bash
@@ -328,7 +328,9 @@ pnpm db:push
 pnpm db:migrate
 ```
 
-Ver `/docs/DEPLOYMENT.md` para configuración en producción.
+**Importante:** Las migraciones de Drizzle incluyen todos los cambios de schema, triggers y funciones. La migración crítica `0001_add_user_plan_enum_and_triggers.sql` corrige el sistema de registro de usuarios.
+
+Ver `/docs/DEPLOYMENT.md` y `MIGRATION-GUIDE.md` para configuración en producción.
 
 5. **Iniciar servidor de desarrollo**
 
@@ -1017,6 +1019,7 @@ CREATE POLICY "Users can delete own data" ON expenses
 - **[README.md](./README.md)** - Este archivo, visión general del proyecto
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Guía para contribuir al proyecto
 - **[CLAUDE.md](./CLAUDE.md)** - Guía para trabajar con Claude Code
+- **[MIGRATION-GUIDE.md](./MIGRATION-GUIDE.md)** - Guía completa para aplicar migraciones de base de datos (CRÍTICO para producción)
 
 ### Product & Strategy
 

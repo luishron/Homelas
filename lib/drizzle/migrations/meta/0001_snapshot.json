@@ -1,0 +1,20 @@
+{
+  "id": "0001_add_user_plan_enum_and_triggers",
+  "prevId": "0000_amusing_misty_knight",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {},
+  "enums": {
+    "public.user_plan": {
+      "name": "user_plan",
+      "schema": "public",
+      "values": ["free", "pro", "plus", "admin"]
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

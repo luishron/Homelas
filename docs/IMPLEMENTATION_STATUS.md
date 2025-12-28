@@ -39,6 +39,25 @@ El proyecto Homelas ha completado las fases core de desarrollo: dashboard, UX/UI
 
 ## ✅ COMPLETADO (100%)
 
+### User Registration System Fix (Dec 27, 2025) ✅ COMPLETED
+
+**CRITICAL BUG FIX:** Fixed production user registration system
+
+- ✅ Created ENUM `user_plan` ('free', 'pro', 'plus', 'admin')
+- ✅ Migrated `user_profiles.role` → `user_profiles.plan` with ENUM type
+- ✅ Added `user_profiles.email` column
+- ✅ Updated `handle_new_user()` function to use correct ENUM syntax
+- ✅ Created trigger `on_auth_user_created` on `auth.users`
+- ✅ Migration applied successfully in DEV and PROD
+- ✅ User registration now works correctly
+
+**Migration:** `lib/drizzle/migrations/0001_add_user_plan_enum_and_triggers.sql`
+
+**100% Drizzle Approach:**
+- ALL database migrations now go through Drizzle
+- Triggers and functions included as raw SQL in migrations
+- No more manual SQL scripts outside of Drizzle
+
 ### FASE 1: Fundaciones del Sistema de Diseño
 
 **Estado:** Completada el 23 de Diciembre, 2025
@@ -801,7 +820,19 @@ _No hay features en progreso actualmente._
 
 _No hay bugs conocidos actualmente._
 
-**Última verificación:** 25 de Diciembre, 2025
+**Última verificación:** 27 de Diciembre, 2025
+
+### Bugs Resueltos Recientemente
+
+#### User Registration Error (Dec 27, 2025) ✅ FIXED
+
+**Síntoma:** "Database error saving new user" - type "user_plan" does not exist
+
+**Causa:** La función `handle_new_user()` intentaba usar el ENUM `user_plan` antes de que existiera.
+
+**Solución:** Migración `0001_add_user_plan_enum_and_triggers.sql` que crea el ENUM y actualiza el schema correctamente.
+
+**Estado:** ✅ Resuelto en v0.1.0-beta
 
 ---
 

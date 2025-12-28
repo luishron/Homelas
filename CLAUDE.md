@@ -12,6 +12,40 @@ Personal expense management web application built with Next.js 15, TypeScript, S
 
 ## Recent Changes
 
+### User Registration System Fix + 100% Drizzle Migration (Dec 27, 2025) ✅ COMPLETED
+
+**CRITICAL BUG FIX:** User registration was failing in production with error "Database error saving new user" - type "user_plan" does not exist
+
+**Root Cause:**
+- The `handle_new_user()` function attempted to use ENUM `user_plan` before it existed
+- The `user_profiles` table had `role text` instead of `plan user_plan`
+
+**Solution:**
+- Created migration `0001_add_user_plan_enum_and_triggers.sql` that:
+  - Creates ENUM `user_plan` ('free', 'pro', 'plus', 'admin')
+  - Migrates column `role` → `plan` with correct ENUM type
+  - Adds `email` column to `user_profiles`
+  - Creates function `handle_new_user()` with correct signature
+  - Creates trigger `on_auth_user_created` on `auth.users`
+
+**100% Drizzle Approach:**
+- ALL database migrations now go through Drizzle (`lib/drizzle/migrations/`)
+- Triggers and functions are included as raw SQL in Drizzle migrations
+- No more manual SQL scripts for migrations outside of Drizzle
+- Migration 0001 includes both DDL and database functions/triggers
+
+**Status:**
+- ✅ Successfully applied in DEV and PROD
+- ✅ User registration now works correctly in both environments
+
+**Pending Tasks:**
+- ⏳ Create Drizzle seed system (`lib/drizzle/seed.ts`)
+- ⏳ Add `pnpm db:seed` command
+- ⏳ Migrate `insert-categories.sql` to Drizzle seed
+- ⏳ Remove `insert-categories.sql` after migration
+
+See: `MIGRATION-GUIDE.md` for complete migration details
+
 ### Login Page UX/UI Improvements (Dec 27, 2025) ✅ COMPLETED
 
 - **Enhanced Onboarding Experience:**
@@ -156,6 +190,9 @@ npx tsc --noEmit         # Type check without emitting files
 ```
 
 ### Database Management
+
+**100% Drizzle Migration Approach** - All database changes go through Drizzle:
+
 ```bash
 pnpm db:generate     # Generate SQL migrations from Drizzle schemas
 pnpm db:push         # Apply schemas to database (direct push, no migration files)
@@ -163,7 +200,10 @@ pnpm db:migrate      # Run automatic migration script (with validation)
 pnpm build:prod      # Run migrations + build (for CI/CD deployments)
 ```
 
-**Note:** For production deployments, use `pnpm build:prod` which automatically applies database migrations before building. See `/docs/DEPLOYMENT.md` for detailed deployment instructions.
+**Key Migrations:**
+- `0001_add_user_plan_enum_and_triggers.sql` - **CRITICAL**: Fixes user registration by creating `user_plan` ENUM, migrating `role` → `plan`, and setting up auth triggers
+
+**Note:** For production deployments, use `pnpm build:prod` which automatically applies database migrations before building. See `/docs/DEPLOYMENT.md` and `MIGRATION-GUIDE.md` for detailed instructions.
 
 ## Architecture Overview
 
@@ -288,7 +328,7 @@ export async function saveExpense(formData: FormData): Promise<ActionResult> {
 ### Database Schema
 
 **Key Tables**:
-- `users` - User accounts (from Supabase Auth)
+- `user_profiles` - User profiles with plan type (ENUM: 'free', 'pro', 'plus', 'admin')
 - `categories` - Expense categories (user-scoped, with color/icon)
 - `income_categories` - Income categories (separate from expense categories)
 - `expenses` - All expenses (recurring templates + one-time)
@@ -297,10 +337,16 @@ export async function saveExpense(formData: FormData): Promise<ActionResult> {
 - `budgets` - Category budgets (month/year scoped)
 
 **Important Constraints**:
-- ALL tables have `user_id` foreign key to `users.id` with `ON DELETE CASCADE`
+- ALL tables have `user_id` foreign key to `users.id` (or `user_profiles.id`) with `ON DELETE CASCADE`
 - RLS policies ensure users can only access their own data
+- `user_profiles.plan`: Uses ENUM `user_plan` with values ('free', 'pro', 'plus', 'admin')
 - `payment_methods.is_default`: Only ONE can be true per user (enforced in code, not DB)
 - `expenses.payment_status`: Auto-marked 'vencido' if date < today and status != 'pagado'
+
+**Automatic Profile Creation**:
+- Trigger `on_auth_user_created` automatically creates `user_profiles` entry when a new user signs up
+- Function `handle_new_user()` populates email, full_name, and sets plan to 'free'
+- See migration `0001_add_user_plan_enum_and_triggers.sql` for implementation
 
 **Indexes**:
 - `idx_expenses_user_id`, `idx_expenses_date`, `idx_expenses_payment_status`
@@ -480,13 +526,14 @@ if (!category) throw new Error('Category not found')
 **Key Documentation Files:**
 - `/README.md` - Project overview and setup
 - `/CONTRIBUTING.md` - Contribution guidelines
+- `/MIGRATION-GUIDE.md` - **NEW**: Complete guide for applying database migrations (critical for production)
 - `/docs/PRD.md` - Product Requirements Document (vision, personas, metrics, roadmap)
 - `/docs/design-system.md` - OLEA design system
 - `/docs/COMPONENT_GUIDE.md` - Component catalog and usage
 - `/docs/ACCESSIBILITY-AUDIT.md` - WCAG 2.1 AA compliance audit
 - `/docs/IMPLEMENTATION_STATUS.md` - Feature tracking and roadmap
-- `/docs/AUTHENTICATION.md` - Magic Links, user roles, onboarding system
-- `/docs/DEPLOYMENT.md` - Production deployment with automatic migrations
+- `/docs/AUTHENTICATION.md` - Magic Links, user roles (plan ENUM), onboarding system
+- `/docs/DEPLOYMENT.md` - Production deployment with automatic migrations (updated for migration 0001)
 - `/docs/setup/SUPABASE.md` - Database setup guide
 - `/docs/setup/GITHUB_OAUTH.md` - OAuth configuration guide (Optional - for GitHub OAuth via Supabase Auth)
 
@@ -592,11 +639,18 @@ Scripts in `scripts/supabase/` directory:
 6. Add revalidation helper in `lib/action-helpers.ts` if needed
 
 ### Modifying Database Schema
-1. Create migration SQL in `scripts/supabase/migrations/`
-2. Run in Supabase SQL Editor (NOT via pnpm/npm)
-3. Update types in `lib/db.ts`
-4. Update affected queries
-5. Update Zod schemas if validation changes
+
+**100% Drizzle Approach** - ALL schema changes go through Drizzle:
+
+1. **Edit schema**: Modify `lib/drizzle/schema.ts`
+2. **Generate migration**: Run `pnpm db:generate`
+3. **Include triggers/functions**: If needed, add raw SQL to the generated migration file
+4. **Test in dev**: Run `pnpm db:migrate` to apply locally
+5. **Apply to prod**: Use `pnpm build:prod` or `DATABASE_URL=... pnpm db:migrate`
+6. **Update types**: Update `lib/db.ts` if needed
+7. **Update queries**: Update affected queries and Zod schemas
+
+**Example:** See `lib/drizzle/migrations/0001_add_user_plan_enum_and_triggers.sql` for how to include triggers and functions in migrations.
 
 ### Adding a New Page
 1. Create in `app/dashboard/[new-page]/page.tsx`
