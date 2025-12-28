@@ -12,6 +12,31 @@ Personal expense management web application built with Next.js 15, TypeScript, S
 
 ## Recent Changes
 
+### Login Page UX/UI Improvements (Dec 27, 2025) ✅ COMPLETED
+
+- **Enhanced Onboarding Experience:**
+  - Desktop branding panel with value propositions (Control total, Insights inteligentes, 100% seguro)
+  - Professional 2-column layout on desktop (lg+)
+  - "Recomendado" badge on Magic Link tab for user guidance
+
+- **Responsive Design:**
+  - Mobile (375px): Single column, optimized touch targets (h-11)
+  - Tablet (768px): Full text labels, visible badges
+  - Desktop (1440px+): Branding panel + form side-by-side
+
+- **UX Improvements:**
+  - Smooth animations (fade-in, shake for errors, pulse for success)
+  - Enhanced visual feedback (shadow-2xl, focus rings, transitions)
+  - Clear loading states and error messages
+  - Magic Link explanation panel with step-by-step guide
+
+- **Development Tools (INTERNAL USE ONLY):**
+  - "Modo desarrollo" section with auto-fill credentials
+  - Only visible when `NODE_ENV=development`
+  - Configured via `NEXT_PUBLIC_TEST_USER` and `NEXT_PUBLIC_TEST_PASSWORD`
+  - **IMPORTANT:** Automatically hidden in production builds
+  - See `.env.local` and `.env.example` for configuration details
+
 ### Landing Page + PRD Update (Dec 27, 2025) ✅ COMPLETED
 
 - **Landing Page**: 10-section conversion-focused landing page (Hero, Problem, Solution, Demo, Comparison, Social Proof, Pricing, FAQ, CTA)

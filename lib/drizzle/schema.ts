@@ -9,32 +9,50 @@ import {
   index,
   unique,
   boolean,
+  pgEnum,
+  check,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 //==============================================================================
-// TABLA: user_profiles (Perfiles de usuario con roles y onboarding)
+// ENUMS
+//==============================================================================
+export const userPlanEnum = pgEnum('user_plan', ['free', 'pro', 'plus', 'admin']);
+
+//==============================================================================
+// TABLA: user_profiles (Perfiles de usuario con sistema de planes)
 //==============================================================================
 export const userProfiles = pgTable(
   'user_profiles',
   {
     id: uuid('id').primaryKey(),
-    role: text('role').notNull().default('free'), // 'free' | 'premium'
-    planExpiresAt: timestamp('plan_expires_at', { withTimezone: true }),
-    onboardingCompleted: boolean('onboarding_completed').notNull().default(false),
-    preferences: jsonb('preferences').$type<{
-      currency?: 'USD' | 'USD';
-      theme?: 'light' | 'dark' | 'system';
-      language?: 'es' | 'en';
-      [key: string]: any;
-    }>().default({ currency: 'USD', theme: 'system' }),
+    email: text('email'),
     fullName: text('full_name'),
+    plan: userPlanEnum('plan').notNull().default('free'),
+    planExpiresAt: timestamp('plan_expires_at', { withTimezone: true }),
+
+    // Metadata
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
+    avatarUrl: text('avatar_url'),
+    timezone: text('timezone').default('America/Mexico_City'),
+    language: text('language').default('es'),
+
+    // Límites personalizables
+    maxMonthlyExpenses: integer('max_monthly_expenses'),
+    maxCategories: integer('max_categories'),
+
+    // Onboarding y preferences
+    onboardingCompleted: boolean('onboarding_completed').notNull().default(false),
+    preferences: jsonb('preferences').$type<{
+      currency?: 'USD' | 'MXN';
+      theme?: 'light' | 'dark' | 'system';
+      [key: string]: any;
+    }>().default({ currency: 'MXN', theme: 'system' }),
   },
   (table) => ({
-    roleIdx: index('idx_user_profiles_role').on(table.role),
-    onboardingIdx: index('idx_user_profiles_onboarding').on(table.onboardingCompleted),
+    planIdx: index('idx_user_profiles_plan').on(table.plan),
+    emailIdx: index('idx_user_profiles_email').on(table.email),
   })
 );
 

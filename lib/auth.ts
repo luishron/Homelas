@@ -25,11 +25,20 @@ export async function signIn(email: string, password: string) {
   return { user: data.user };
 }
 
-export async function signUp(email: string, password: string) {
+export async function signUp(
+  email: string,
+  password: string,
+  fullName?: string
+) {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        full_name: fullName || '',
+      },
+    },
   });
 
   if (error) {
