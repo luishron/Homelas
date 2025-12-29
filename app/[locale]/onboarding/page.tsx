@@ -17,19 +17,12 @@ import {
   ChevronLeft,
   Sparkles
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type OnboardingStep = 1 | 2 | 3 | 4;
 
-const CATEGORY_SUGGESTIONS = [
-  { name: 'Alimentos', color: '#10B981', icon: 'Utensils' },
-  { name: 'Transporte', color: '#3B82F6', icon: 'Car' },
-  { name: 'Entretenimiento', color: '#F59E0B', icon: 'Film' },
-  { name: 'Servicios', color: '#8B5CF6', icon: 'Zap' },
-  { name: 'Salud', color: '#EF4444', icon: 'Heart' },
-  { name: 'Educación', color: '#6366F1', icon: 'GraduationCap' },
-];
-
 export default function OnboardingPage() {
+  const t = useTranslations('pages.onboarding');
   const router = useRouter();
   const [step, setStep] = useState<OnboardingStep>(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +37,15 @@ export default function OnboardingPage() {
   // Step 3: Payment Method
   const [paymentName, setPaymentName] = useState('');
   const [paymentType, setPaymentType] = useState<'tarjeta_credito' | 'tarjeta_debito' | 'efectivo'>('tarjeta_credito');
+
+  const CATEGORY_SUGGESTIONS = [
+    { key: 'food', name: t('step2.categories.food'), color: '#10B981', icon: 'Utensils' },
+    { key: 'transport', name: t('step2.categories.transport'), color: '#3B82F6', icon: 'Car' },
+    { key: 'entertainment', name: t('step2.categories.entertainment'), color: '#F59E0B', icon: 'Film' },
+    { key: 'services', name: t('step2.categories.services'), color: '#8B5CF6', icon: 'Zap' },
+    { key: 'health', name: t('step2.categories.health'), color: '#EF4444', icon: 'Heart' },
+    { key: 'education', name: t('step2.categories.education'), color: '#6366F1', icon: 'GraduationCap' },
+  ];
 
   const handleNextStep = async () => {
     setError('');
@@ -65,8 +67,8 @@ export default function OnboardingPage() {
         setStep(2);
       } else if (step === 2) {
         // Create selected categories
-        for (const categoryName of selectedCategories) {
-          const category = CATEGORY_SUGGESTIONS.find(c => c.name === categoryName);
+        for (const categoryKey of selectedCategories) {
+          const category = CATEGORY_SUGGESTIONS.find(c => c.key === categoryKey);
           if (category) {
             const formData = new FormData();
             formData.append('name', category.name);
@@ -100,7 +102,7 @@ export default function OnboardingPage() {
         router.refresh();
       }
     } catch (err) {
-      setError('Ocurrió un error. Por favor intenta de nuevo.');
+      setError(t('error'));
     } finally {
       setIsLoading(false);
     }
@@ -112,11 +114,11 @@ export default function OnboardingPage() {
     }
   };
 
-  const toggleCategory = (categoryName: string) => {
+  const toggleCategory = (categoryKey: string) => {
     setSelectedCategories(prev =>
-      prev.includes(categoryName)
-        ? prev.filter(c => c !== categoryName)
-        : [...prev, categoryName]
+      prev.includes(categoryKey)
+        ? prev.filter(c => c !== categoryKey)
+        : [...prev, categoryKey]
     );
   };
 
@@ -150,9 +152,9 @@ export default function OnboardingPage() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 ring-4 ring-primary/20">
                   <User className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="text-3xl text-center">¡Bienvenido a Gastos!</CardTitle>
+                <CardTitle className="text-3xl text-center">{t('step1.title')}</CardTitle>
                 <CardDescription className="text-center text-base">
-                  Empecemos configurando tu perfil
+                  {t('step1.subtitle')}
                 </CardDescription>
               </>
             )}
@@ -161,9 +163,9 @@ export default function OnboardingPage() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 ring-4 ring-primary/20">
                   <Tag className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="text-3xl text-center">Categorías iniciales</CardTitle>
+                <CardTitle className="text-3xl text-center">{t('step2.title')}</CardTitle>
                 <CardDescription className="text-center text-base">
-                  Selecciona las categorías que más uses (puedes agregar más después)
+                  {t('step2.subtitle')}
                 </CardDescription>
               </>
             )}
@@ -172,9 +174,9 @@ export default function OnboardingPage() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 ring-4 ring-primary/20">
                   <CreditCard className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="text-3xl text-center">Método de pago</CardTitle>
+                <CardTitle className="text-3xl text-center">{t('step3.title')}</CardTitle>
                 <CardDescription className="text-center text-base">
-                  Agrega tu método de pago principal
+                  {t('step3.subtitle')}
                 </CardDescription>
               </>
             )}
@@ -183,9 +185,9 @@ export default function OnboardingPage() {
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 ring-4 ring-primary/20">
                   <Sparkles className="h-8 w-8 text-primary" />
                 </div>
-                <CardTitle className="text-3xl text-center">¡Todo listo!</CardTitle>
+                <CardTitle className="text-3xl text-center">{t('step4.title')}</CardTitle>
                 <CardDescription className="text-center text-base">
-                  Ya puedes empezar a gestionar tus finanzas
+                  {t('step4.subtitle')}
                 </CardDescription>
               </>
             )}
@@ -197,12 +199,12 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="fullName" className="text-base">
-                    ¿Cómo te llamas?
+                    {t('step1.label')}
                   </Label>
                   <Input
                     id="fullName"
                     type="text"
-                    placeholder="Tu nombre completo"
+                    placeholder={t('step1.placeholder')}
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     className="h-11 text-base"
@@ -217,10 +219,10 @@ export default function OnboardingPage() {
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {CATEGORY_SUGGESTIONS.map((category) => (
                   <button
-                    key={category.name}
-                    onClick={() => toggleCategory(category.name)}
+                    key={category.key}
+                    onClick={() => toggleCategory(category.key)}
                     className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 transition-all hover:scale-105 ${
-                      selectedCategories.includes(category.name)
+                      selectedCategories.includes(category.key)
                         ? 'border-primary bg-primary/10 ring-2 ring-primary/30'
                         : 'border-border bg-background'
                     }`}
@@ -232,7 +234,7 @@ export default function OnboardingPage() {
                       <Tag className="h-6 w-6" style={{ color: category.color }} />
                     </div>
                     <span className="text-sm font-medium">{category.name}</span>
-                    {selectedCategories.includes(category.name) && (
+                    {selectedCategories.includes(category.key) && (
                       <Check className="h-5 w-5 text-primary" />
                     )}
                   </button>
@@ -245,12 +247,12 @@ export default function OnboardingPage() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="paymentName" className="text-base">
-                    Nombre del método de pago
+                    {t('step3.nameLabel')}
                   </Label>
                   <Input
                     id="paymentName"
                     type="text"
-                    placeholder="Ej: Tarjeta principal, Efectivo, etc."
+                    placeholder={t('step3.namePlaceholder')}
                     value={paymentName}
                     onChange={(e) => setPaymentName(e.target.value)}
                     className="h-11 text-base"
@@ -258,13 +260,13 @@ export default function OnboardingPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-base">Tipo</Label>
+                  <Label className="text-base">{t('step3.typeLabel')}</Label>
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { value: 'tarjeta_credito' as const, label: 'Crédito', icon: CreditCard },
-                      { value: 'tarjeta_debito' as const, label: 'Débito', icon: CreditCard },
-                      { value: 'efectivo' as const, label: 'Efectivo', icon: Wallet },
-                    ].map(({ value, label, icon: Icon }) => (
+                      { value: 'tarjeta_credito' as const, labelKey: 'credit', icon: CreditCard },
+                      { value: 'tarjeta_debito' as const, labelKey: 'debit', icon: CreditCard },
+                      { value: 'efectivo' as const, labelKey: 'cash', icon: Wallet },
+                    ].map(({ value, labelKey, icon: Icon }) => (
                       <button
                         key={value}
                         onClick={() => setPaymentType(value)}
@@ -275,7 +277,7 @@ export default function OnboardingPage() {
                         }`}
                       >
                         <Icon className="h-6 w-6" />
-                        <span className="text-sm font-medium">{label}</span>
+                        <span className="text-sm font-medium">{t(`step3.types.${labelKey}`)}</span>
                       </button>
                     ))}
                   </div>
@@ -288,40 +290,40 @@ export default function OnboardingPage() {
               <div className="space-y-6 text-center">
                 <div className="rounded-lg bg-primary/5 p-6 space-y-2">
                   <p className="text-lg font-semibold">
-                    ¡Hola, {fullName}!
+                    {t('step4.greeting', { name: fullName })}
                   </p>
                   <p className="text-muted-foreground">
-                    Has configurado {selectedCategories.length} categorías y 1 método de pago.
+                    {t('step4.summary', { categories: selectedCategories.length })}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Puedes personalizar todo desde el dashboard.
+                    {t('step4.note')}
                   </p>
                 </div>
                 <div className="grid gap-3 text-left">
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Check className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Crea tu primer gasto</p>
+                      <p className="font-medium">{t('step4.nextSteps.expense.title')}</p>
                       <p className="text-sm text-muted-foreground">
-                        Empieza a registrar tus gastos diarios
+                        {t('step4.nextSteps.expense.description')}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Check className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Ve tus estadísticas</p>
+                      <p className="font-medium">{t('step4.nextSteps.stats.title')}</p>
                       <p className="text-sm text-muted-foreground">
-                        Analiza tus gastos con gráficas y métricas
+                        {t('step4.nextSteps.stats.description')}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Check className="h-5 w-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Configura presupuestos</p>
+                      <p className="font-medium">{t('step4.nextSteps.budgets.title')}</p>
                       <p className="text-sm text-muted-foreground">
-                        Establece límites de gasto por categoría
+                        {t('step4.nextSteps.budgets.description')}
                       </p>
                     </div>
                   </div>
@@ -348,7 +350,7 @@ export default function OnboardingPage() {
                   disabled={isLoading}
                 >
                   <ChevronLeft className="h-4 w-4 mr-2" />
-                  Anterior
+                  {t('previous')}
                 </Button>
               )}
               <Button
@@ -359,16 +361,16 @@ export default function OnboardingPage() {
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent" />
-                    Procesando...
+                    {t('processing')}
                   </span>
                 ) : step === 4 ? (
                   <span className="flex items-center gap-2">
-                    Ir al Dashboard
+                    {t('goToDashboard')}
                     <ChevronRight className="h-4 w-4" />
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
-                    Continuar
+                    {t('continue')}
                     <ChevronRight className="h-4 w-4" />
                   </span>
                 )}
@@ -380,13 +382,13 @@ export default function OnboardingPage() {
         {/* Skip Option */}
         {step < 4 && (
           <p className="text-center text-sm text-muted-foreground">
-            Paso {step} de 4 •{' '}
+            {t('progress', { step })} •{' '}
             <button
               onClick={() => setStep(4)}
               className="text-primary hover:underline font-medium"
               disabled={isLoading}
             >
-              Saltar configuración
+              {t('skip')}
             </button>
           </p>
         )}

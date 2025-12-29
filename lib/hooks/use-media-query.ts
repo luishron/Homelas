@@ -18,8 +18,10 @@ import * as React from 'react';
  */
 export function useMediaQuery(query: string) {
   const [matches, setMatches] = React.useState<boolean>(false);
+  const [mounted, setMounted] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    setMounted(true);
     const media = window.matchMedia(query);
 
     // Set initial value
@@ -49,5 +51,6 @@ export function useMediaQuery(query: string) {
     };
   }, [query]);
 
-  return matches;
+  // Return false during SSR and initial render to prevent hydration mismatch
+  return mounted ? matches : false;
 }

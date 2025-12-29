@@ -7,7 +7,7 @@ const testimonials = [
     location: "CDMX",
     rating: 5,
     review:
-      "Antes gastaba horas en Excel. Con Homelas veo mi situación financiera en 5 segundos. El dashboard es hermoso y funcional.",
+      "Antes gastaba horas en Excel. Con Tallify veo mi situación financiera en 5 segundos. El dashboard es hermoso y funcional.",
   },
   {
     name: "Carlos Ramírez",

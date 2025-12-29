@@ -186,7 +186,7 @@ El dashboard ahora ofrece una vista completa de tu situación financiera:
 
 **Transformación completa del diseño** inspirada en Wise para máxima claridad y accesibilidad:
 
-**FASE 1: Sistema de Diseño Homelas**
+**FASE 1: Sistema de Diseño Tallify**
 - Paleta de colores con verde vibrante (#9FFF66) como primary
 - Colores semánticos para transacciones (income, expense, transfer)
 - Sistema de iconos con 30+ categorías
@@ -1039,7 +1039,7 @@ CREATE POLICY "Users can delete own data" ON expenses
 
 ### Diseño y Componentes
 
-- **[docs/design-system.md](./docs/design-system.md)** - Sistema de diseño Homelas (colores, tipografía, animaciones)
+- **[docs/design-system.md](./docs/design-system.md)** - Sistema de diseño Tallify (colores, tipografía, animaciones)
 - **[docs/COMPONENT_GUIDE.md](./docs/COMPONENT_GUIDE.md)** - Catálogo de componentes UI con ejemplos
 - **[docs/ACCESSIBILITY-AUDIT.md](./docs/ACCESSIBILITY-AUDIT.md)** - Auditoría WCAG 2.1 AA compliance
 - **[docs/ui-improvements.md](./docs/ui-improvements.md)** - Mejoras UI implementadas

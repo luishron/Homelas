@@ -13,7 +13,7 @@ const features = [
     icon: RefreshCw,
     title: "Gastos Recurrentes",
     description:
-      "Configura Netflix una vez, Homelas calcula automáticamente los próximos meses. Sin duplicar trabajo.",
+      "Configura Netflix una vez, Tallify calcula automáticamente los próximos meses. Sin duplicar trabajo.",
     iconColor: "hsl(142 76% 55%)", // Verde
   },
   {

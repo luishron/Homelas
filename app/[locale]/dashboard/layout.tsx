@@ -29,12 +29,17 @@ import { QuickAddFAB } from './quick-add-fab';
 import { getCategoriesByUser, getPaymentMethodsByUser, getExpensesByUser, getIncomesByUser } from '@/lib/db';
 import { getUser } from '@/lib/auth';
 import { GlobalSearchProvider, GlobalSearchTrigger } from '@/components/global-search-provider';
+import { getTranslations } from 'next-intl/server';
 
 export default async function DashboardLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
+  // Obtener traducciones
+  const t = await getTranslations('pages.dashboard');
+  const brandT = await getTranslations('brand');
+
   // Obtener datos para Quick Add y búsqueda global
   const user = await getUser();
   const categories = user ? await getCategoriesByUser(user.id) : [];
@@ -55,11 +60,11 @@ export default async function DashboardLayout({
     <Providers>
       <GlobalSearchProvider data={searchData}>
         <main className="flex min-h-screen w-full flex-col bg-muted/40">
-          <DesktopNav />
+          <DesktopNav t={t} brandName={brandT('name')} />
           <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-60">
             <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-              <MobileNav />
-              <DashboardBreadcrumb />
+              <MobileNav t={t} brandName={brandT('name')} />
+              <DashboardBreadcrumb t={t} brandName={brandT('name')} />
               <GlobalSearchTrigger />
               <div className="ml-auto" />
               <User />
@@ -80,7 +85,7 @@ export default async function DashboardLayout({
   );
 }
 
-function DesktopNav() {
+function DesktopNav({ t, brandName }: { t: any; brandName: string }) {
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-background sm:flex">
       <div className="flex h-full flex-col gap-2">
@@ -90,30 +95,30 @@ function DesktopNav() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
               <Wallet className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-lg">homelas</span>
+            <span className="text-lg">{brandName}</span>
           </Link>
         </div>
 
         {/* Navigation Items */}
         <div className="flex-1 overflow-auto py-2">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <NavItem href="/dashboard" label="Dashboard">
+            <NavItem href="/dashboard" label={t('navigation.dashboard')}>
               <Home className="h-4 w-4" />
             </NavItem>
 
-            <NavItem href="/dashboard/gastos" label="Gastos">
+            <NavItem href="/dashboard/gastos" label={t('navigation.expenses')}>
               <DollarSign className="h-4 w-4" />
             </NavItem>
 
-            <NavItem href="/dashboard/categorias" label="Categorías">
+            <NavItem href="/dashboard/categorias" label={t('navigation.categories')}>
               <FolderOpen className="h-4 w-4" />
             </NavItem>
 
-            <NavItem href="/dashboard/metodos-pago" label="Métodos de Pago">
+            <NavItem href="/dashboard/metodos-pago" label={t('navigation.paymentMethods')}>
               <CreditCard className="h-4 w-4" />
             </NavItem>
 
-            <NavItem href="/dashboard/ingresos" label="Ingresos">
+            <NavItem href="/dashboard/ingresos" label={t('navigation.income')}>
               <TrendingUp className="h-4 w-4" />
             </NavItem>
           </nav>
@@ -123,15 +128,15 @@ function DesktopNav() {
   );
 }
 
-function MobileNav() {
+function MobileNav({ t, brandName }: { t: any; brandName: string }) {
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 
   const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: Home },
-    { href: '/dashboard/gastos', label: 'Gastos', icon: DollarSign },
-    { href: '/dashboard/categorias', label: 'Categorías', icon: FolderOpen },
-    { href: '/dashboard/metodos-pago', label: 'Métodos de Pago', icon: CreditCard },
-    { href: '/dashboard/ingresos', label: 'Ingresos', icon: TrendingUp }
+    { href: '/dashboard', labelKey: 'navigation.dashboard', icon: Home },
+    { href: '/dashboard/gastos', labelKey: 'navigation.expenses', icon: DollarSign },
+    { href: '/dashboard/categorias', labelKey: 'navigation.categories', icon: FolderOpen },
+    { href: '/dashboard/metodos-pago', labelKey: 'navigation.paymentMethods', icon: CreditCard },
+    { href: '/dashboard/ingresos', labelKey: 'navigation.income', icon: TrendingUp }
   ];
 
   return (
@@ -139,7 +144,7 @@ function MobileNav() {
       <SheetTrigger asChild>
         <Button size="icon" variant="outline" className="sm:hidden">
           <PanelLeft className="h-5 w-5" />
-          <span className="sr-only">Toggle Menu</span>
+          <span className="sr-only">{t('navigation.toggleMenu')}</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
@@ -150,14 +155,14 @@ function MobileNav() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                 <Wallet className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="text-lg">homelas</span>
+              <span className="text-lg">{brandName}</span>
             </Link>
           </div>
 
           {/* Navigation */}
           <nav className="flex-1 overflow-auto py-4">
             <div className="grid gap-1 px-2 text-sm font-medium">
-              {navLinks.map(({ href, label, icon: Icon }) => {
+              {navLinks.map(({ href, labelKey, icon: Icon }) => {
                 const isActive = pathname === href;
                 return (
                   <Link
@@ -169,7 +174,7 @@ function MobileNav() {
                     )}
                   >
                     <Icon className="h-4 w-4" />
-                    {label}
+                    {t(labelKey)}
                   </Link>
                 );
               })}
@@ -181,18 +186,18 @@ function MobileNav() {
   );
 }
 
-function DashboardBreadcrumb() {
+function DashboardBreadcrumb({ t, brandName }: { t: any; brandName: string }) {
   return (
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/dashboard">{t('navigation.dashboard')}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>homelas</BreadcrumbPage>
+          <BreadcrumbPage>{brandName}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

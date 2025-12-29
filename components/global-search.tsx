@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {
   Command,
   CommandEmpty,
@@ -115,6 +115,7 @@ export function GlobalSearch({ data, isOpen, onClose }: GlobalSearchProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl p-0 gap-0 overflow-hidden">
+        <DialogTitle className="sr-only">Búsqueda global</DialogTitle>
         <Command className="rounded-lg border-none">
           <CommandInput
             placeholder="Buscar gastos, ingresos, categorías..."

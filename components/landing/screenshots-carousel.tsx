@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/button";
 const screenshots = [
   {
     src: "/screenshots/dashboard-light.png",
-    alt: "Dashboard de Homelas en modo claro mostrando KPIs y resumen financiero",
+    alt: "Dashboard de Tallify en modo claro mostrando KPIs y resumen financiero",
     title: "Dashboard Principal",
   },
   {
     src: "/screenshots/dashboard-dark.png",
-    alt: "Dashboard de Homelas en modo oscuro con visualización de gastos",
+    alt: "Dashboard de Tallify en modo oscuro con visualización de gastos",
     title: "Modo Oscuro",
   },
   {
@@ -94,7 +94,7 @@ export function ScreenshotsCarousel() {
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Mira <span className="text-primary">Homelas</span> en acción
+            Mira <span className="text-primary">Tallify</span> en acción
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             Interfaz moderna diseñada para claridad y velocidad

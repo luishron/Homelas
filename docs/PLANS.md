@@ -1,4 +1,4 @@
-# Sistema de Planes y Permisos - Homelas
+# Sistema de Planes y Permisos - Tallify
 
 ## Tabla de Contenidos
 
@@ -15,7 +15,7 @@
 
 ## Overview
 
-Homelas implementa un sistema de **4 planes** con límites y funcionalidades escalables:
+Tallify implementa un sistema de **4 planes** con límites y funcionalidades escalables:
 
 - **Free**: Plan gratuito para usuarios individuales
 - **Pro**: Plan profesional con límites ampliados

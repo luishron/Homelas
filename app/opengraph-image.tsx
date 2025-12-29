@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Image metadata
-export const alt = "Homelas - Control financiero simple sin complicaciones";
+export const alt = "Tallify - Haz que tu dinero cuente";
 export const size = {
   width: 1200,
   height: 630,
@@ -59,7 +59,7 @@ export default async function Image() {
                 fontSize: "48px",
               }}
             >
-              🏠
+              📊
             </div>
             <div
               style={{
@@ -69,7 +69,7 @@ export default async function Image() {
                 letterSpacing: "-2px",
               }}
             >
-              Homelas
+              Tallify
             </div>
           </div>
 
@@ -84,7 +84,7 @@ export default async function Image() {
               lineHeight: 1.2,
             }}
           >
-            Control financiero simple
+            Haz que tu dinero cuente
           </div>
 
           {/* Subtitle */}

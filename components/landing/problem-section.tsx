@@ -1,37 +1,33 @@
+'use client';
+
 import { AlertCircle, TrendingDown, Calendar } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
-const problems = [
+const problemsConfig = [
   {
+    key: 'doubt',
     icon: AlertCircle,
-    title: "Dudas antes de gastar",
-    description: "¿Me alcanza? ¿Estoy gastando de más?",
-    highlight: "No tienes claridad financiera",
     color: "hsl(45 93% 47%)", // Amarillo
     image: "/images/problem-1-doubt.png",
-    imageAlt: "Persona con dudas antes de realizar una compra",
   },
   {
+    key: 'visibility',
     icon: TrendingDown,
-    title: "El dinero se diluye",
-    description: "Ganas bien, pero no sabes a dónde va tu dinero.",
-    highlight: "Falta de visibilidad total",
     color: "hsl(0 72% 50%)", // Rojo
     image: "/images/problem-2-visibility.png",
-    imageAlt: "Dinero dispersándose sin control",
   },
   {
+    key: 'consequences',
     icon: Calendar,
-    title: "Olvidos que cuestan",
-    description: "Recargos, intereses y decisiones que pesan.",
-    highlight: "Consecuencias evitables",
     color: "hsl(280 83% 63%)", // Morado
     image: "/images/problem-3-consequences.png",
-    imageAlt: "Calendario con pagos olvidados",
   },
 ];
 
 export function ProblemSection() {
+  const t = useTranslations('pages.home.problem');
+
   return (
     <section
       className="py-16 md:py-20 bg-muted/30"
@@ -44,20 +40,20 @@ export function ProblemSection() {
             id="problem-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
           >
-            ¿Te suena <span className="text-primary">familiar?</span>
+            {t('headline')} <span className="text-primary">{t('headlineHighlight')}</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            ¿Te identificas con alguno? Homelas es para ti.
+            {t('subtitle')}
           </p>
         </div>
 
         {/* Problem Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-          {problems.map((problem, index) => {
+          {problemsConfig.map((problem, index) => {
             const Icon = problem.icon;
             return (
               <div
-                key={problem.title}
+                key={problem.key}
                 className="group animate-fade-in-up bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-2"
                 style={{
                   animationDelay: `${index * 100}ms`,
@@ -103,7 +99,7 @@ export function ProblemSection() {
                         </svg>
                       </div>
                       <p className="text-xs font-medium opacity-50" style={{ color: problem.color }}>
-                        {problem.imageAlt}
+                        {t(`problems.${problem.key}.imageAlt`)}
                       </p>
                     </div>
                   </div>
@@ -111,7 +107,7 @@ export function ProblemSection() {
                   {/* Uncomment when images are ready */}
                   {/* <Image
                     src={problem.image}
-                    alt={problem.imageAlt}
+                    alt={t(`problems.${problem.key}.imageAlt`)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   /> */}
@@ -120,11 +116,11 @@ export function ProblemSection() {
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-foreground mb-2">
-                    {problem.title}
+                    {t(`problems.${problem.key}.title`)}
                   </h3>
 
                   <p className="text-sm text-muted-foreground mb-3">
-                    {problem.description}
+                    {t(`problems.${problem.key}.description`)}
                   </p>
 
                   {/* Highlight badge */}
@@ -137,7 +133,7 @@ export function ProblemSection() {
                     }}
                   >
                     <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: problem.color }} />
-                    {problem.highlight}
+                    {t(`problems.${problem.key}.highlight`)}
                   </div>
                 </div>
               </div>

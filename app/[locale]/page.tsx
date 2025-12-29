@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Logo } from "@/components/landing/logo";
 import { HeroSection } from "@/components/landing/hero-section";
 import { ProblemSection } from "@/components/landing/problem-section";
@@ -17,6 +19,7 @@ import { Button } from "@/components/ui/button";
 
 export default async function HomePage() {
   const user = await getUser();
+  const t = await getTranslations();
 
   // Si el usuario está autenticado, redirigir al dashboard
   if (user) {
@@ -27,7 +30,7 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Homelas",
+    name: "Tallify",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     offers: {
@@ -45,8 +48,8 @@ export default async function HomePage() {
     },
     description:
       "Gestiona tus gastos e ingresos, visualiza tu situación financiera en tiempo real. Gratis para siempre.",
-    url: "https://homelas.com",
-    screenshot: "https://homelas.com/screenshots/dashboard-light.png",
+    url: "https://tallify.com",
+    screenshot: "https://tallify.com/screenshots/dashboard-light.png",
     featureList: [
       "Dashboard inteligente con KPIs en tiempo real",
       "Gastos recurrentes virtuales",
@@ -77,10 +80,10 @@ export default async function HomePage() {
               href="/login"
               className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-block"
             >
-              Iniciar Sesión
+              {t('navigation.login')}
             </Link>
             <Button asChild size="default" className="h-11">
-              <Link href="/login">Comenzar gratis</Link>
+              <Link href="/login">{t('navigation.getStarted')}</Link>
             </Button>
           </div>
         </nav>
@@ -100,7 +103,7 @@ export default async function HomePage() {
         {/* 4. Demo Visual - Screenshots */}
         <ScreenshotsCarousel />
 
-        {/* 5. Comparación - Por qué Homelas */}
+        {/* 5. Comparación - Por qué Tallify */}
         <ComparisonSection />
 
         {/* 6. Quote - Lo que no se mide, se descontrola */}

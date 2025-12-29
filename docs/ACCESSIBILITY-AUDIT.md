@@ -1,4 +1,4 @@
-# Auditoría de Accesibilidad - Proyecto Homelas
+# Auditoría de Accesibilidad - Proyecto Tallify
 **Fecha:** 25 de Diciembre, 2025
 **Estándar:** WCAG 2.1 Nivel AA
 **Fase:** FASE 5 - Responsive & Accessibility Audit
@@ -335,7 +335,7 @@ El contenido debe ser robusto para funcionar con tecnologías asistivas.
 
 ## ✅ Conclusión
 
-El proyecto **Homelas** cumple con **WCAG 2.1 Nivel AA** después de las correcciones aplicadas en FASE 5. Todos los criterios críticos han sido verificados y corregidos:
+El proyecto **Tallify** cumple con **WCAG 2.1 Nivel AA** después de las correcciones aplicadas en FASE 5. Todos los criterios críticos han sido verificados y corregidos:
 
 - ✅ Touch targets ≥ 44px
 - ✅ Contraste de colores ≥ 4.5:1

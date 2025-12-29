@@ -1,4 +1,4 @@
-# 🎴 Plan: Cards Distintivas para Homelas
+# 🎴 Plan: Cards Distintivas para Tallify
 
 > Transformar las cards genéricas en componentes con personalidad financiera moderna
 
@@ -37,7 +37,7 @@
 **Problemas identificados:**
 - ❌ Aspecto genérico (podrían ser de cualquier app)
 - ❌ Falta personalidad financiera
-- ❌ No comunican la marca Homelas
+- ❌ No comunican la marca Tallify
 - ❌ Bordes y sombras muy estándar
 - ❌ Sin micro-interacciones significativas
 - ❌ No aprovechan la paleta verde vibrante
@@ -93,7 +93,7 @@
 
 ## 🎨 Propuestas de Mejora
 
-### 1. **Borde de Acento Verde** (Signature Homelas)
+### 1. **Borde de Acento Verde** (Signature Tallify)
 
 Agregar una barra de acento verde en la parte superior o izquierda:
 
@@ -112,7 +112,7 @@ Agregar una barra de acento verde en la parte superior o izquierda:
 </Card>
 ```
 
-**Resultado:** Cada card tiene un toque de verde vibrante que las hace reconocibles como "Homelas".
+**Resultado:** Cada card tiene un toque de verde vibrante que las hace reconocibles como "Tallify".
 
 ---
 
@@ -669,7 +669,7 @@ export function CardSkeleton() {
 
 | Aspecto | Antes | Después |
 |---------|-------|---------|
-| **Personalidad** | Genéricas | Distintivas "Homelas" |
+| **Personalidad** | Genéricas | Distintivas "Tallify" |
 | **Color de Marca** | Solo en iconos | Integrado (bordes, fondos, separadores) |
 | **Interactividad** | Hover básico | Micro-interacciones + feedback visual |
 | **Legibilidad** | Buena | Excelente (tipografía mono para montos) |
@@ -752,5 +752,5 @@ export function CardSkeleton() {
 ---
 
 <div align="center">
-  <strong>Homelas Card System v2.0 - Diseño Financiero Moderno</strong>
+  <strong>Tallify Card System v2.0 - Diseño Financiero Moderno</strong>
 </div>

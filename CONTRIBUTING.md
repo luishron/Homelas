@@ -1,8 +1,8 @@
-# Contribuyendo a Homelas
+# Contribuyendo a Tallify
 
 ## 🌟 ¡Gracias por tu interés en contribuir!
 
-Este documento te guiará para contribuir efectivamente al proyecto Homelas. Valoramos todas las contribuciones, desde corrección de bugs hasta nuevas features.
+Este documento te guiará para contribuir efectivamente al proyecto Tallify. Valoramos todas las contribuciones, desde corrección de bugs hasta nuevas features.
 
 ---
 
@@ -31,7 +31,7 @@ Al participar en este proyecto, te comprometes a:
 
 ## Cómo Contribuir
 
-Hay muchas formas de contribuir a Homelas:
+Hay muchas formas de contribuir a Tallify:
 
 1. **Reportar bugs** - Encuentra y reporta problemas
 2. **Proponer features** - Sugiere nuevas funcionalidades
@@ -194,7 +194,7 @@ async function createExpense(formData: FormData) {
   Guardar
 </button>
 
-// ✅ HACER: Usar paleta Homelas
+// ✅ HACER: Usar paleta Tallify
 <div className="text-foreground bg-background">
   {/* Verde vibrante #9FFF66 */}
   <span className="text-primary">Destacado</span>
@@ -208,7 +208,7 @@ async function createExpense(formData: FormData) {
 
 **Reglas de estilo:**
 - ✅ Tailwind CSS con design tokens de `globals.css`
-- ✅ Paleta Homelas (ver [design-system.md](./docs/design-system.md))
+- ✅ Paleta Tallify (ver [design-system.md](./docs/design-system.md))
 - ✅ Touch targets ≥ 44px (WCAG 2.1 AA)
 - ✅ Contraste de colores ≥ 4.5:1
 - ✅ Dark mode support (automático con design tokens)
@@ -534,7 +534,7 @@ Usa la etiqueta `enhancement`:
 ### Documentación del Proyecto
 
 - **[README.md](./README.md)** - Visión general y setup
-- **[design-system.md](./docs/design-system.md)** - Sistema de diseño Homelas
+- **[design-system.md](./docs/design-system.md)** - Sistema de diseño Tallify
 - **[COMPONENT_GUIDE.md](./docs/COMPONENT_GUIDE.md)** - Guía de componentes
 - **[ACCESSIBILITY-AUDIT.md](./docs/ACCESSIBILITY-AUDIT.md)** - Auditoría de accesibilidad
 - **[IMPLEMENTATION_STATUS.md](./docs/IMPLEMENTATION_STATUS.md)** - Estado de features
@@ -565,7 +565,7 @@ Usa la etiqueta `enhancement`:
 
 ## ¡Gracias por Contribuir!
 
-Tu contribución hace que Homelas sea mejor para todos. Si tienes preguntas, no dudes en:
+Tu contribución hace que Tallify sea mejor para todos. Si tienes preguntas, no dudes en:
 
 - Abrir un issue en GitHub
 - Contactar a los maintainers
@@ -575,7 +575,7 @@ Tu contribución hace que Homelas sea mejor para todos. Si tienes preguntas, no 
 
 ---
 
-**Proyecto:** Homelas - Expense Tracking App
+**Proyecto:** Tallify - Expense Tracking App
 **Versión:** 2.0.0
 **Licencia:** MIT
 **Última actualización:** 25 de Diciembre, 2025

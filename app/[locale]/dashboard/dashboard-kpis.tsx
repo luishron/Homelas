@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, TrendingDown, AlertTriangle, DollarSign, Wallet, Eye, EyeOff } from 'lucide-react';
 import type { MonthlySummary, OverdueExpensesSummary } from '@/lib/db';
+import { useTranslations } from 'next-intl';
 
 interface DashboardKPIsProps {
   currentMonth: MonthlySummary;
@@ -11,6 +12,7 @@ interface DashboardKPIsProps {
 }
 
 export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: DashboardKPIsProps) {
+  const t = useTranslations('pages.dashboard');
   const [hideIncome, setHideIncome] = useState(false);
   const [hideBalance, setHideBalance] = useState(false);
 
@@ -88,14 +90,14 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-medium text-muted-foreground">
-            Gastos del Mes
+            {t('kpis.monthlyExpenses.label')}
           </h3>
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </div>
         <div className="space-y-1">
           <p className="text-2xl font-bold tracking-tight">{formatCurrency(currentMonth.totalExpenses)}</p>
           <p className="text-xs text-muted-foreground">
-            {currentMonth.expensesCount} {currentMonth.expensesCount === 1 ? 'gasto' : 'gastos'}
+            {currentMonth.expensesCount} {currentMonth.expensesCount === 1 ? t('pluralization.expense.singular') : t('pluralization.expense.plural')}
           </p>
         </div>
         {expensesChange !== null && (
@@ -109,13 +111,13 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-medium text-muted-foreground">
-            Ingresos del Mes
+            {t('kpis.monthlyIncome.label')}
           </h3>
           <div className="flex items-center gap-1">
             <button
               onClick={toggleHideIncome}
               className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-md hover:bg-muted"
-              aria-label={hideIncome ? 'Mostrar ingresos' : 'Ocultar ingresos'}
+              aria-label={hideIncome ? t('kpis.monthlyIncome.show') : t('kpis.monthlyIncome.hide')}
             >
               {hideIncome ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -127,7 +129,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
             {hideIncome ? '••••••' : formatCurrency(currentMonth.totalIncome)}
           </p>
           <p className="text-xs text-muted-foreground">
-            {currentMonth.incomesCount} {currentMonth.incomesCount === 1 ? 'ingreso' : 'ingresos'}
+            {currentMonth.incomesCount} {currentMonth.incomesCount === 1 ? t('pluralization.income.singular') : t('pluralization.income.plural')}
           </p>
         </div>
         {!hideIncome && incomesChange !== null && (
@@ -141,13 +143,13 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
       <div className="rounded-lg border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-medium text-muted-foreground">
-            Balance del Mes
+            {t('kpis.monthlyBalance.label')}
           </h3>
           <div className="flex items-center gap-1">
             <button
               onClick={toggleHideBalance}
               className="text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-md hover:bg-muted"
-              aria-label={hideBalance ? 'Mostrar balance' : 'Ocultar balance'}
+              aria-label={hideBalance ? t('kpis.monthlyBalance.show') : t('kpis.monthlyBalance.hide')}
             >
               {hideBalance ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -161,7 +163,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
             {hideBalance ? '••••••' : formatCurrency(currentMonth.balance)}
           </p>
           <p className="text-xs text-muted-foreground">
-            {currentMonth.balance >= 0 ? 'Superávit' : 'Déficit'}
+            {currentMonth.balance >= 0 ? t('kpis.monthlyBalance.surplus') : t('kpis.monthlyBalance.deficit')}
           </p>
         </div>
         {!hideBalance && balanceChange !== null && (
@@ -179,7 +181,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
           <h3 className={`text-sm font-medium ${
             overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`}>
-            Gastos Vencidos
+            {t('kpis.overdueExpenses.label')}
           </h3>
           <AlertTriangle className={`h-4 w-4 ${
             overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
@@ -194,7 +196,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses }: 
           <p className={`text-xs ${
             overdueExpenses.count > 0 ? 'text-destructive/80' : 'text-muted-foreground'
           }`}>
-            {overdueExpenses.count} {overdueExpenses.count === 1 ? 'gasto vencido' : 'gastos vencidos'}
+            {overdueExpenses.count} {overdueExpenses.count === 1 ? t('kpis.overdueExpenses.singular') : t('kpis.overdueExpenses.plural')}
           </p>
         </div>
       </div>

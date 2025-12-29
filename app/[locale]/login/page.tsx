@@ -15,9 +15,11 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { signIn, signInWithMagicLink } from '@/lib/auth-actions';
 import { Mail, Sparkles, Wallet, KeyRound, Zap, Shield, TrendingUp, UserPlus } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 function LoginForm() {
+  const t = useTranslations('pages.login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -45,7 +47,7 @@ function LoginForm() {
         router.refresh();
       }
     } catch (error) {
-      setError('Error al iniciar sesión');
+      setError(t('errors.signIn'));
     } finally {
       setIsLoading(false);
     }
@@ -65,7 +67,7 @@ function LoginForm() {
         setEmailSent(true);
       }
     } catch (error) {
-      setError('Error al enviar el enlace mágico');
+      setError(t('errors.magicLink'));
     } finally {
       setIsLoading(false);
     }
@@ -80,18 +82,17 @@ function LoginForm() {
               <Mail className="h-10 w-10 text-primary animate-pulse" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold">
-              Revisa tu email
+              {t('emailSent.title')}
             </CardTitle>
             <CardDescription className="text-base sm:text-lg">
-              Te enviamos un enlace mágico a<br />
+              {t('emailSent.subtitle')}<br />
               <strong className="text-foreground">{email}</strong>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Haz clic en el enlace del email para iniciar sesión. El enlace
-                expira en <strong className="text-foreground">1 hora</strong>.
+                {t('emailSent.instructions')} <strong className="text-foreground">{t('emailSent.expiresIn')}</strong>.
               </p>
             </div>
             <Button
@@ -99,7 +100,7 @@ function LoginForm() {
               variant="outline"
               className="w-full h-11"
             >
-              Enviar otro enlace
+              {t('emailSent.sendAnother')}
             </Button>
           </CardContent>
         </Card>
@@ -116,10 +117,10 @@ function LoginForm() {
             <Wallet className="h-8 w-8 text-primary-foreground" />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-foreground">
-            Homelas
+            {t('branding.title')}
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Gestiona tus finanzas personales de manera simple y efectiva
+            {t('branding.description')}
           </p>
 
           <div className="space-y-6">
@@ -128,9 +129,9 @@ function LoginForm() {
                 <Zap className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Control total</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.control.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Rastrea cada gasto e ingreso en tiempo real
+                  {t('branding.benefits.control.description')}
                 </p>
               </div>
             </div>
@@ -140,9 +141,9 @@ function LoginForm() {
                 <TrendingUp className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Insights inteligentes</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.insights.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Visualiza tendencias y proyecciones mensuales
+                  {t('branding.benefits.insights.description')}
                 </p>
               </div>
             </div>
@@ -152,9 +153,9 @@ function LoginForm() {
                 <Shield className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">100% seguro</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.secure.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Tus datos protegidos con encriptación de nivel bancario
+                  {t('branding.benefits.secure.description')}
                 </p>
               </div>
             </div>
@@ -171,10 +172,10 @@ function LoginForm() {
               <Wallet className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold">
-              Bienvenido de nuevo
+              {t('title')}
             </CardTitle>
             <CardDescription className="text-sm sm:text-base">
-              Inicia sesión para continuar
+              {t('subtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -190,14 +191,14 @@ function LoginForm() {
               <TabsList className="grid w-full grid-cols-2 h-11">
                 <TabsTrigger value="password" className="gap-2 text-xs sm:text-sm">
                   <KeyRound className="h-4 w-4" />
-                  <span className="hidden sm:inline">Email & Contraseña</span>
-                  <span className="sm:hidden">Contraseña</span>
+                  <span className="hidden sm:inline">{t('tabs.password')}</span>
+                  <span className="sm:hidden">{t('tabs.passwordShort')}</span>
                 </TabsTrigger>
                 <TabsTrigger value="magic" className="gap-2 text-xs sm:text-sm">
                   <Sparkles className="h-4 w-4" />
-                  Magic Link
+                  {t('tabs.magicLink')}
                   <span className="ml-1 text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded-full hidden sm:inline">
-                    Recomendado
+                    {t('tabs.recommended')}
                   </span>
                 </TabsTrigger>
               </TabsList>
@@ -207,12 +208,12 @@ function LoginForm() {
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="email-password" className="text-sm sm:text-base">
-                      Email
+                      {t('emailLabel')}
                     </Label>
                     <Input
                       id="email-password"
                       type="email"
-                      placeholder="tu@email.com"
+                      placeholder={t('emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -224,12 +225,12 @@ function LoginForm() {
 
                   <div className="space-y-2">
                     <Label htmlFor="password" className="text-sm sm:text-base">
-                      Contraseña
+                      {t('passwordLabel')}
                     </Label>
                     <Input
                       id="password"
                       type="password"
-                      placeholder="••••••••"
+                      placeholder={t('passwordPlaceholder')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
@@ -246,12 +247,12 @@ function LoginForm() {
                     {isLoading ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        Iniciando sesión...
+                        {t('submitting')}
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
                         <KeyRound className="h-5 w-5" />
-                        Iniciar sesión
+                        {t('submitButton')}
                       </span>
                     )}
                   </Button>
@@ -263,12 +264,12 @@ function LoginForm() {
                 <form onSubmit={handleMagicLinkSubmit} className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="email-magic" className="text-sm sm:text-base">
-                      Email
+                      {t('emailLabel')}
                     </Label>
                     <Input
                       id="email-magic"
                       type="email"
-                      placeholder="tu@email.com"
+                      placeholder={t('emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -285,12 +286,12 @@ function LoginForm() {
                     {isLoading ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        Enviando...
+                        {t('magicLink.sending')}
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
                         <Sparkles className="h-5 w-5" />
-                        Enviar enlace mágico
+                        {t('magicLink.submit')}
                       </span>
                     )}
                   </Button>
@@ -300,21 +301,21 @@ function LoginForm() {
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="h-4 w-4 text-primary" />
                     <p className="text-sm font-semibold text-foreground">
-                      ¿Cómo funciona?
+                      {t('magicLink.howItWorks')}
                     </p>
                   </div>
                   <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
                     <li className="flex items-start gap-2">
                       <span className="text-primary font-bold text-sm">1.</span>
-                      <span>Ingresa tu email y haz clic en "Enviar"</span>
+                      <span>{t('magicLink.step1')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary font-bold text-sm">2.</span>
-                      <span>Revisa tu email y haz clic en el enlace</span>
+                      <span>{t('magicLink.step2')}</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary font-bold text-sm">3.</span>
-                      <span>¡Listo! Acceso automático sin contraseñas</span>
+                      <span>{t('magicLink.step3')}</span>
                     </li>
                   </ul>
                 </div>
@@ -327,15 +328,15 @@ function LoginForm() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  ¿No tienes cuenta?
+                  {t('noAccount')}
                 </span>
               </div>
             </div>
 
-            <Link href="/registro" className="block">
+            <Link href="/register" className="block">
               <Button variant="outline" className="w-full h-11">
                 <UserPlus className="h-4 w-4 mr-2" />
-                Crear cuenta gratis
+                {t('createAccount')}
               </Button>
             </Link>
           </CardContent>
@@ -345,18 +346,21 @@ function LoginForm() {
   );
 }
 
+function LoadingFallback() {
+  const t = useTranslations('pages.login');
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5">
+      <div className="flex flex-col items-center gap-4">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <p className="text-sm text-muted-foreground">{t('loading')}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function LoginPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5">
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            <p className="text-sm text-muted-foreground">Cargando...</p>
-          </div>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <LoginForm />
     </Suspense>
   );

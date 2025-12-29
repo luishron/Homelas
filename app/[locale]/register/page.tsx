@@ -14,9 +14,11 @@ import {
 } from '@/components/ui/card';
 import { signUp } from '@/lib/auth-actions';
 import { Mail, Wallet, Zap, Shield, TrendingUp, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 function SignUpForm() {
+  const t = useTranslations('pages.register');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -37,13 +39,13 @@ function SignUpForm() {
 
     // Validaciones
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      setError(t('errors.passwordMismatch'));
       setIsLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      setError(t('errors.passwordTooShort'));
       setIsLoading(false);
       return;
     }
@@ -57,7 +59,7 @@ function SignUpForm() {
         setSuccess(true);
       }
     } catch (error) {
-      setError('Error al crear la cuenta');
+      setError(t('errors.signUp'));
     } finally {
       setIsLoading(false);
     }
@@ -72,26 +74,26 @@ function SignUpForm() {
               <Mail className="h-10 w-10 text-primary animate-pulse" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold">
-              ¡Revisa tu email!
+              {t('success.title')}
             </CardTitle>
             <CardDescription className="text-base sm:text-lg">
-              Te enviamos un correo de confirmación a<br />
+              {t('success.subtitle')}<br />
               <strong className="text-foreground">{email}</strong>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
               <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                Haz clic en el enlace del email para verificar tu cuenta y comenzar a usar Homelas.
+                {t('success.instructions')}
               </p>
               <p className="text-xs text-muted-foreground">
-                <strong>Nota:</strong> Revisa también tu carpeta de spam si no ves el email.
+                <strong>{t('success.note')}</strong> {t('success.noteText')}
               </p>
             </div>
             <Link href="/login" className="block">
               <Button variant="outline" className="w-full h-11">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Volver al inicio de sesión
+                {t('success.backToLogin')}
               </Button>
             </Link>
           </CardContent>
@@ -109,10 +111,10 @@ function SignUpForm() {
             <Wallet className="h-8 w-8 text-primary-foreground" />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-foreground">
-            Únete a Homelas
+            {t('branding.title')}
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Comienza a gestionar tus finanzas personales de manera simple y efectiva
+            {t('branding.description')}
           </p>
 
           <div className="space-y-6">
@@ -121,9 +123,9 @@ function SignUpForm() {
                 <Zap className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Gratis para siempre</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.free.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Plan Free con todas las funciones básicas incluidas
+                  {t('branding.benefits.free.description')}
                 </p>
               </div>
             </div>
@@ -133,9 +135,9 @@ function SignUpForm() {
                 <TrendingUp className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Sin tarjeta requerida</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.noCard.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Crea tu cuenta en segundos, sin compromisos
+                  {t('branding.benefits.noCard.description')}
                 </p>
               </div>
             </div>
@@ -145,9 +147,9 @@ function SignUpForm() {
                 <Shield className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="font-semibold mb-1">100% seguro</h3>
+                <h3 className="font-semibold mb-1">{t('branding.benefits.secure.title')}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Tus datos protegidos con encriptación de nivel bancario
+                  {t('branding.benefits.secure.description')}
                 </p>
               </div>
             </div>
@@ -164,10 +166,10 @@ function SignUpForm() {
               <Wallet className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-2xl sm:text-3xl font-bold">
-              Crea tu cuenta
+              {t('title')}
             </CardTitle>
             <CardDescription className="text-sm sm:text-base">
-              Comienza gratis, sin tarjeta de crédito
+              {t('subtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -182,12 +184,12 @@ function SignUpForm() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="text-sm sm:text-base">
-                  Nombre completo
+                  {t('nameLabel')}
                 </Label>
                 <Input
                   id="fullName"
                   type="text"
-                  placeholder="Juan Pérez"
+                  placeholder={t('namePlaceholder')}
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required
@@ -199,12 +201,12 @@ function SignUpForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-sm sm:text-base">
-                  Email
+                  {t('emailLabel')}
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="tu@email.com"
+                  placeholder={t('emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -215,12 +217,12 @@ function SignUpForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm sm:text-base">
-                  Contraseña
+                  {t('passwordLabel')}
                 </Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -228,18 +230,18 @@ function SignUpForm() {
                   className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                 />
                 <p className="text-xs text-muted-foreground">
-                  Mínimo 6 caracteres
+                  {t('passwordHint')}
                 </p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-sm sm:text-base">
-                  Confirmar contraseña
+                  {t('confirmPasswordLabel')}
                 </Label>
                 <Input
                   id="confirmPassword"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder')}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -256,12 +258,12 @@ function SignUpForm() {
                 {isLoading ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                    Creando cuenta...
+                    {t('submitting')}
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <Wallet className="h-5 w-5" />
-                    Crear cuenta gratis
+                    {t('submitButton')}
                   </span>
                 )}
               </Button>
@@ -273,7 +275,7 @@ function SignUpForm() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  ¿Ya tienes cuenta?
+                  {t('hasAccount')}
                 </span>
               </div>
             </div>
@@ -281,18 +283,18 @@ function SignUpForm() {
             <Link href="/login" className="block">
               <Button variant="outline" className="w-full h-11">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Iniciar sesión
+                {t('login')}
               </Button>
             </Link>
 
             <p className="text-xs text-center text-muted-foreground">
-              Al crear una cuenta, aceptas nuestros{' '}
-              <Link href="/terminos" className="text-primary hover:underline">
-                Términos de Servicio
+              {t('terms')}{' '}
+              <Link href="/terms" className="text-primary hover:underline">
+                {t('termsLink')}
               </Link>{' '}
-              y{' '}
-              <Link href="/privacidad" className="text-primary hover:underline">
-                Política de Privacidad
+              {t('and')}{' '}
+              <Link href="/privacy" className="text-primary hover:underline">
+                {t('privacyLink')}
               </Link>
             </p>
           </CardContent>
@@ -302,18 +304,21 @@ function SignUpForm() {
   );
 }
 
+function LoadingFallback() {
+  const t = useTranslations('pages.register');
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5">
+      <div className="flex flex-col items-center gap-4">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <p className="text-sm text-muted-foreground">{t('loading')}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function SignUpPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5">
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            <p className="text-sm text-muted-foreground">Cargando...</p>
-          </div>
-        </div>
-      }
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <SignUpForm />
     </Suspense>
   );

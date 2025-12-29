@@ -15,18 +15,21 @@ import { DashboardKPIs } from './dashboard-kpis';
 import { MonthlyComparisonCard } from './monthly-comparison-card';
 import { UpcomingExpensesWidget } from './upcoming-expenses-widget';
 import { TopCategoriesChart } from './top-categories-chart';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
+  const t = await getTranslations('pages.dashboard');
   const user = await getUser();
 
   if (!user) {
+    const authT = await getTranslations('pages.login');
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px]">
-        <p className="text-lg text-muted-foreground">No autenticado</p>
+        <p className="text-lg text-muted-foreground">{authT('title')}</p>
         <Button className="mt-4" asChild>
-          <Link href="/login">Iniciar sesión</Link>
+          <Link href="/login">{authT('submitButton')}</Link>
         </Button>
       </div>
     );
@@ -59,11 +62,11 @@ export default async function DashboardPage() {
   ]);
 
   const getMonthName = (month: number) => {
-    const months = [
-      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    const monthKeys = [
+      'january', 'february', 'march', 'april', 'may', 'june',
+      'july', 'august', 'september', 'october', 'november', 'december'
     ];
-    return months[month - 1];
+    return t(`months.${monthKeys[month - 1]}`);
   };
 
   // Verificar si es el primer uso (sin datos)
@@ -75,9 +78,9 @@ export default async function DashboardPage() {
       <div className="flex flex-col gap-6 animate-fade-in">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <h1 className="text-3xl font-bold">{t('navigation.dashboard')}</h1>
             <p className="text-muted-foreground mt-1">
-              Bienvenido a tu control de gastos
+              {t('emptyState.welcome')}
             </p>
           </div>
         </div>
@@ -89,14 +92,14 @@ export default async function DashboardPage() {
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <PlusCircle className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Comienza registrando gastos</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('emptyState.description')}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Agrega tus primeros gastos para comenzar a visualizar tus finanzas
+                {t('emptyState.description')}
               </p>
               <Button asChild>
                 <Link href="/dashboard/gastos">
                   <PlusCircle className="mr-2 h-4 w-4" />
-                  Agregar Primer Gasto
+                  {t('emptyState.cta')}
                 </Link>
               </Button>
             </div>
@@ -107,14 +110,14 @@ export default async function DashboardPage() {
               <div className="h-12 w-12 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
                 <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Registra tus ingresos</h3>
+              <h3 className="text-lg font-semibold mb-2">{t('navigation.income')}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Lleva un control completo agregando también tus ingresos
+                {t('emptyState.description')}
               </p>
               <Button variant="outline" asChild>
                 <Link href="/dashboard/ingresos">
                   <TrendingUp className="mr-2 h-4 w-4" />
-                  Agregar Ingresos
+                  {t('navigation.income')}
                 </Link>
               </Button>
             </div>
@@ -123,23 +126,19 @@ export default async function DashboardPage() {
 
         {/* Guía rápida */}
         <div className="rounded-lg border bg-muted/50 p-6 animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-          <h3 className="font-semibold mb-3">Pasos para comenzar:</h3>
+          <h3 className="font-semibold mb-3">{t('emptyState.guide.title')}</h3>
           <ol className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="font-bold text-primary">1.</span>
-              <span>Crea categorías para organizar tus gastos (ej: Comida, Transporte, Vivienda)</span>
+              <span>{t('emptyState.guide.step1.description')}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="font-bold text-primary">2.</span>
-              <span>Configura tus métodos de pago (tarjetas, efectivo, etc.)</span>
+              <span>{t('emptyState.guide.step2.description')}</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="font-bold text-primary">3.</span>
-              <span>Registra tus gastos e ingresos diarios</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="font-bold text-primary">4.</span>
-              <span>Visualiza tu resumen financiero y toma mejores decisiones</span>
+              <span>{t('emptyState.guide.step3.description')}</span>
             </li>
           </ol>
         </div>
@@ -151,9 +150,9 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-4 sm:gap-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-3xl font-bold">{t('navigation.dashboard')}</h1>
           <p className="text-muted-foreground mt-1">
-            Resumen de {getMonthName(currentMonth)} {currentYear}
+            {t('summary.title', { month: getMonthName(currentMonth), year: currentYear })}
           </p>
         </div>
       </div>

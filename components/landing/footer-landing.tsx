@@ -1,8 +1,12 @@
+'use client';
+
 import Link from "next/link";
 import { Logo } from "./logo";
+import { useTranslations } from 'next-intl';
 
 export function FooterLanding() {
   const currentYear = new Date().getFullYear();
+  const t = useTranslations('footer');
 
   return (
     <footer
@@ -14,7 +18,7 @@ export function FooterLanding() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           {/* Copyright */}
           <p className="text-center md:text-left">
-            © {currentYear} Homelas. Tu control financiero personal.
+            {t('copyright', { year: currentYear })}
           </p>
 
           {/* Legal Links */}
@@ -23,13 +27,13 @@ export function FooterLanding() {
               href="#"
               className="hover:text-foreground transition-colors"
             >
-              Privacidad
+              {t('privacy')}
             </Link>
             <Link
               href="#"
               className="hover:text-foreground transition-colors"
             >
-              Términos
+              {t('terms')}
             </Link>
           </div>
         </div>

@@ -1,4 +1,4 @@
-# 🧩 Guía de Componentes - Homelas
+# 🧩 Guía de Componentes - Tallify
 
 **Versión:** 2.0.0
 **Última actualización:** 25 de Diciembre, 2025
@@ -1136,7 +1136,7 @@ Ver [ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md) para detalles completos.
 
 ## 📚 Recursos Adicionales
 
-- **[design-system.md](./design-system.md)** - Sistema de diseño Homelas completo
+- **[design-system.md](./design-system.md)** - Sistema de diseño Tallify completo
 - **[ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md)** - Auditoría de accesibilidad
 - **[shadcn/ui Docs](https://ui.shadcn.com/)** - Documentación oficial de shadcn/ui
 - **[Tailwind CSS](https://tailwindcss.com/docs)** - Documentación de Tailwind
@@ -1144,6 +1144,6 @@ Ver [ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md) para detalles completos.
 
 ---
 
-**Proyecto:** Homelas - Expense Tracking App
+**Proyecto:** Tallify - Expense Tracking App
 **Versión:** 2.0.0
 **Última actualización:** 25 de Diciembre, 2025

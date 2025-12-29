@@ -1,4 +1,4 @@
-# Business Requirements Document - Homelas
+# Business Requirements Document - Tallify
 ## Tu Control Financiero Personal, Simplificado
 
 **Versión:** 2.0.0
@@ -12,7 +12,7 @@
 
 - [Executive Summary](#executive-summary)
 - [El Problema del Usuario](#el-problema-del-usuario)
-- [La Solución: Homelas](#la-solución-homelas)
+- [La Solución: Tallify](#la-solución-homelas)
 - [Beneficios Clave para el Usuario](#beneficios-clave-para-el-usuario)
 - [Features y Su Valor](#features-y-su-valor)
 - [Casos de Uso del Mundo Real](#casos-de-uso-del-mundo-real)
@@ -25,9 +25,9 @@
 
 ## Executive Summary
 
-### ¿Qué es Homelas?
+### ¿Qué es Tallify?
 
-**Homelas** es una aplicación web moderna de gestión de gastos personales diseñada específicamente para profesionistas del mercado hispano que quieren:
+**Tallify** es una aplicación web moderna de gestión de gastos personales diseñada específicamente para profesionistas del mercado hispano que quieren:
 - **Tomar control de sus finanzas** sin complicaciones contables
 - **Visualizar su situación financiera** en tiempo real
 - **Planificar gastos futuros** sin sorpresas de última hora
@@ -35,7 +35,7 @@
 
 ### ¿Para Quién?
 
-Homelas está diseñada para **profesionistas urbanos de 22-35 años** que:
+Tallify está diseñada para **profesionistas urbanos de 22-35 años** que:
 - Reciben quincenas o ingresos variables (freelancers)
 - Tienen gastos recurrentes (rentas, suscripciones, servicios)
 - Quieren saber si pueden hacer esa compra sin afectar su presupuesto
@@ -131,11 +131,11 @@ Según encuestas con usuarios objetivo (profesionistas 25-35 años):
 
 ---
 
-## La Solución: Homelas
+## La Solución: Tallify
 
 ### Filosofía de Diseño
 
-Homelas se basa en **3 principios fundamentales**:
+Tallify se basa en **3 principios fundamentales**:
 
 1. **Velocidad sobre complejidad**
    - Agregar gasto: < 15 segundos
@@ -155,10 +155,10 @@ Homelas se basa en **3 principios fundamentales**:
 ### Propuesta de Valor
 
 **Para Ana (Marketing Manager):**
-> "Abre Homelas. Ve tu balance. Dice +$3,500 hasta quincena. Los zapatos cuestan $1,200. Compra con confianza."
+> "Abre Tallify. Ve tu balance. Dice +$3,500 hasta quincena. Los zapatos cuestan $1,200. Compra con confianza."
 
 **Para Carlos (Freelancer):**
-> "Después de 1 mes usando Homelas, descubre que gasta 40% de su ingreso en delivery y café. Cambia hábitos. Ahorra $5,000/mes."
+> "Después de 1 mes usando Tallify, descubre que gasta 40% de su ingreso en delivery y café. Cambia hábitos. Ahorra $5,000/mes."
 
 **Para Lupita (Estudiante):**
 > "Widget de 'Próximos Gastos' le recuerda 3 días antes: 'Renta $4,000 vence en 3 días'. Nunca más recargos."
@@ -174,12 +174,12 @@ Homelas se basa en **3 principios fundamentales**:
 2. CONFIGURA GASTOS RECURRENTES (una sola vez)
    ↓
    "Netflix $139/mes" → Marcar recurrente
-   Homelas calcula automáticamente próximos meses
+   Tallify calcula automáticamente próximos meses
 
 3. AGREGA TUS INGRESOS
    ↓
    "Salario $18,000" → Cada quincena
-   Homelas sabe cuándo entra dinero
+   Tallify sabe cuándo entra dinero
 
 4. CONSULTA TU DASHBOARD (todos los días)
    ↓
@@ -199,12 +199,12 @@ Homelas se basa en **3 principios fundamentales**:
 
 ### 1. 💚 Paz Mental Financiera
 
-**Antes de Homelas:**
+**Antes de Tallify:**
 - Ansiedad constante: "¿Tendré dinero suficiente?"
 - Miedo a revisar cuenta bancaria
 - Sorpresas desagradables (cargos olvidados)
 
-**Con Homelas:**
+**Con Tallify:**
 - Balance claro en todo momento
 - Gastos futuros visibles y planificados
 - Confianza para tomar decisiones
@@ -216,14 +216,14 @@ Homelas se basa en **3 principios fundamentales**:
 
 ### 2. ⏱️ Ahorro de Tiempo
 
-**Sin Homelas:**
+**Sin Tallify:**
 - 20 min/semana manteniendo Excel
 - 10 min/día calculando mentalmente si puedes gastar
 - 15 min/mes recordando qué pagaste y qué falta
 
 **Total: ~3 horas/mes perdidas**
 
-**Con Homelas:**
+**Con Tallify:**
 - 15 segundos/gasto registrado (automatización de recurrentes)
 - 5 segundos para ver balance
 - 0 minutos calculando (automático)
@@ -236,7 +236,7 @@ Homelas se basa en **3 principios fundamentales**:
 
 ### 3. 💰 Ahorro Real de Dinero
 
-**Gastos que detectas y reduces con Homelas:**
+**Gastos que detectas y reduces con Tallify:**
 
 1. **Suscripciones olvidadas**
    - Gym que no usas: $800/mes
@@ -260,7 +260,7 @@ Homelas se basa en **3 principios fundamentales**:
 
 ### 4. 📊 Claridad para Tomar Decisiones
 
-**Decisiones que Homelas te ayuda a tomar:**
+**Decisiones que Tallify te ayuda a tomar:**
 
 ✅ ¿Puedo comprar esto sin problemas?
 ✅ ¿Dónde estoy gastando demás?
@@ -284,7 +284,7 @@ Respuesta: No, te quedarías con $-150 antes de quincena
 
 ### 5. 🎯 Cambio de Comportamiento
 
-**Homelas no solo muestra datos, cambia hábitos:**
+**Tallify no solo muestra datos, cambia hábitos:**
 
 **Mes 1: Awareness (Consciencia)**
 - Usuario descubre patrones de gasto
@@ -359,7 +359,7 @@ Respuesta en 5 segundos:
 #### 2. Gastos Recurrentes Inteligentes
 
 **Qué es:**
-Configuras un gasto una vez (ej. Netflix $139/mes) y Homelas automáticamente:
+Configuras un gasto una vez (ej. Netflix $139/mes) y Tallify automáticamente:
 - Calcula próximas fechas de pago
 - Te recuerda 3-7 días antes
 - Proyecta gastos futuros
@@ -369,7 +369,7 @@ Configuras un gasto una vez (ej. Netflix $139/mes) y Homelas automáticamente:
 ```
 Configuras: "Renta $8,000 - Cada día 5"
 
-Homelas genera:
+Tallify genera:
 - 5 Ene 2026: $8,000 (vence en 9 días)
 - 5 Feb 2026: $8,000 (vence en 40 días)
 - 5 Mar 2026: $8,000 (vence en 68 días)
@@ -635,7 +635,7 @@ Diseño optimizado para móvil, tablet y desktop.
 ```
 Usuario en tienda viendo producto:
   1. Saca celular
-  2. Abre Homelas (carga en 2 segundos)
+  2. Abre Tallify (carga en 2 segundos)
   3. Ve balance: +$3,500
   4. Producto: $1,200
   5. Decisión: Comprar ✅
@@ -709,7 +709,7 @@ Modo oscuro completo con colores optimizados.
 - Tenía ansiedad antes de cada compra
 - No lograba ahorrar consistentemente
 
-**Cómo usa Homelas:**
+**Cómo usa Tallify:**
 
 **Semana 1:**
 ```
@@ -787,7 +787,7 @@ Meta de viaje ($30,000) en 4 meses vs 6 planeados
 - Meses malos sufría
 - No sabía cuánto necesitaba ganar mensualmente
 
-**Cómo usa Homelas:**
+**Cómo usa Tallify:**
 
 **Setup Inicial:**
 ```
@@ -872,7 +872,7 @@ Mes 6: Colchón = $50,000 (2.3 meses de gastos)
 - Olvida en qué gastó el efectivo
 - No sabe si puede salir con amigos sin afectar comida
 
-**Cómo usa Homelas:**
+**Cómo usa Tallify:**
 
 **Registro Disciplinado:**
 ```
@@ -937,11 +937,11 @@ Gasto: $80 (palomitas + refrescos)
 
 ## Diferenciadores Competitivos
 
-### Homelas vs Competencia
+### Tallify vs Competencia
 
 #### vs Apps Bancarias (BBVA, Santander, Nu)
 
-| Característica | Apps Bancarias | Homelas |
+| Característica | Apps Bancarias | Tallify |
 |----------------|----------------|---------|
 | **Saldo actual** | ✅ Sí | ✅ Sí |
 | **Gastos futuros** | ❌ No | ✅ Sí (recurrentes + próximos) |
@@ -951,13 +951,13 @@ Gasto: $80 (palomitas + refrescos)
 | **Balance real** | ⚠️ Solo muestra saldo | ✅ Saldo - gastos pendientes |
 | **UX/UI** | ⚠️ Funcional pero anticuada | ✅ Wise-inspired, moderna |
 
-**Ventaja de Homelas:** Control total, visión completa del futuro
+**Ventaja de Tallify:** Control total, visión completa del futuro
 
 ---
 
 #### vs Apps Internacionales (Mint, YNAB, PocketGuard)
 
-| Característica | Mint/YNAB | Homelas |
+| Característica | Mint/YNAB | Tallify |
 |----------------|-----------|---------|
 | **Soporte USD** | ❌ USD/EUR principalmente | ✅ USD nativo |
 | **Cultura de quincena** | ❌ No contempla | ✅ Diseñado para quincenas |
@@ -967,13 +967,13 @@ Gasto: $80 (palomitas + refrescos)
 | **Idioma** | ⚠️ Inglés (o español traducido) | ✅ Español nativo |
 | **Mobile UX** | ⚠️ Funcional | ✅ Mobile-first |
 
-**Ventaja de Homelas:** Diseñada específicamente para el mercado hispano, simple y gratis
+**Ventaja de Tallify:** Diseñada específicamente para el mercado hispano, simple y gratis
 
 ---
 
 #### vs Excel / Google Sheets
 
-| Característica | Excel/Sheets | Homelas |
+| Característica | Excel/Sheets | Tallify |
 |----------------|--------------|---------|
 | **Flexibilidad** | ✅ Total | ⚠️ Opinionada (pero suficiente) |
 | **Mantenimiento** | ❌ Tedioso, requiere disciplina | ✅ Simple, rápido |
@@ -983,13 +983,13 @@ Gasto: $80 (palomitas + refrescos)
 | **Curva de aprendizaje** | ⚠️ Media-alta | ✅ Baja |
 | **Gastos recurrentes** | ❌ Duplicar cada mes | ✅ Una vez, forever |
 
-**Ventaja de Homelas:** Diseñada para el caso de uso, no requiere setup
+**Ventaja de Tallify:** Diseñada para el caso de uso, no requiere setup
 
 ---
 
 #### vs Apps Mexicanas (Finerio, Monefy)
 
-| Característica | Finerio/Monefy | Homelas |
+| Característica | Finerio/Monefy | Tallify |
 |----------------|----------------|---------|
 | **UX Moderna** | ⚠️ UI anticuada (2015) | ✅ Wise-inspired (2025) |
 | **Accesibilidad** | ❌ No WCAG compliant | ✅ 100% WCAG 2.1 AA |
@@ -1000,13 +1000,13 @@ Gasto: $80 (palomitas + refrescos)
 | **Velocidad** | ⚠️ Lenta | ✅ < 2s load |
 | **Open source** | ❌ No | ✅ Sí (potencial) |
 
-**Ventaja de Homelas:** UX/UI moderna + features superiores
+**Ventaja de Tallify:** UX/UI moderna + features superiores
 
 ---
 
 ### Cuadro Comparativo Completo
 
-|  | Apps Bancarias | Mint/YNAB | Excel | Apps MX | **Homelas** |
+|  | Apps Bancarias | Mint/YNAB | Excel | Apps MX | **Tallify** |
 |--|----------------|-----------|-------|---------|-------------|
 | **Gratis** | ✅ | ❌ | ✅ | ✅ | ✅ |
 | **USD nativo** | ✅ | ❌ | ✅ | ✅ | ✅ |
@@ -1024,7 +1024,7 @@ Gasto: $80 (palomitas + refrescos)
 - Mint/YNAB: 6/10
 - Excel: 4/10
 - Apps MX: 5/10
-- **Homelas: 9.5/10** ⭐
+- **Tallify: 9.5/10** ⭐
 
 ---
 
@@ -1142,7 +1142,7 @@ Hola Ana,
 
 Te recordamos que tu gasto "Renta $8,000" vence el 5 de Enero.
 
-[Marcar como Pagado] [Ver en Homelas]
+[Marcar como Pagado] [Ver en Tallify]
 ```
 
 **Valor:**
@@ -1216,12 +1216,12 @@ Sugerencia: [Reducir Delivery 50%]
 
 ## Argumentos de Compra/Prueba
 
-### ¿Por qué deberías probar Homelas HOY?
+### ¿Por qué deberías probar Tallify HOY?
 
 #### 1. Es 100% Gratis
 
 ```
-Homelas: $0/mes
+Tallify: $0/mes
 Mint: $10 USD/mes ($180/año)
 YNAB: $15 USD/mes ($270/año)
 Contador personal: $2,000+ USD/mes
@@ -1253,7 +1253,7 @@ TOTAL: 5 minutos hasta primer valor
 **Comparación:**
 - YNAB: 2 horas entendiendo "envelope budgeting"
 - Excel: 30 minutos configurando fórmulas
-- Homelas: 5 minutos y listo
+- Tallify: 5 minutos y listo
 
 ---
 
@@ -1298,7 +1298,7 @@ AHORRO TOTAL: ~$4,000/mes = $48,000/año
 
 #### 5. Diseñado para Ti (Mercado Hispano)
 
-**Homelas entiende tu contexto:**
+**Tallify entiende tu contexto:**
 - ✅ Quincenas (días 15 y 30/31)
 - ✅ USD con formato correcto ($1,234.56)
 - ✅ Cultura de efectivo (muchas compras sin recibo)
@@ -1330,14 +1330,14 @@ Opción A - Excel:
   5. Agregar fila
   6. Resultado: Se te olvida, nunca registras
 
-Opción B - Homelas:
+Opción B - Tallify:
   1. Saca celular
   2. Click en botón verde
   3. "Latte $75" → Guardar
   4. Resultado: 10 segundos, registrado
 ```
 
-**80% de uso es móvil** - Homelas está optimizada para eso.
+**80% de uso es móvil** - Tallify está optimizada para eso.
 
 ---
 
@@ -1362,7 +1362,7 @@ Opción B - Homelas:
 
 **Desafío:**
 ```
-Usa Homelas durante 30 días consecutivos:
+Usa Tallify durante 30 días consecutivos:
   1. Registra TODOS tus gastos (incluso los pequeños)
   2. Configura tus gastos recurrentes
   3. Registra tus ingresos
@@ -1375,7 +1375,7 @@ Después de 30 días, evalúa:
   ✅ ¿Redujiste ansiedad financiera?
 
 Si respondes SÍ a 3+ preguntas:
-  Homelas funcionó para ti. Sigue usándola.
+  Tallify funcionó para ti. Sigue usándola.
 
 Si respondes NO:
   Exporta tus datos, elimina cuenta. No perdiste nada.
@@ -1392,14 +1392,14 @@ Si respondes NO:
 
 ### Generales
 
-**Q: ¿Homelas es gratis? ¿Por cuánto tiempo?**
+**Q: ¿Tallify es gratis? ¿Por cuánto tiempo?**
 A: Sí, 100% gratis sin límites. No hay planes de cobrar en el futuro cercano. Si algún día hay un plan premium, las features actuales seguirán gratis.
 
 **Q: ¿Funciona en móvil?**
 A: Sí, está optimizada mobile-first. 80% del uso es móvil. Funciona en cualquier navegador (Chrome, Safari, Firefox). No requiere instalar app.
 
 **Q: ¿Necesito cuenta bancaria?**
-A: No. Homelas NO se conecta a tu banco. Tú registras manualmente tus gastos. Esto te da control total y funciona con efectivo.
+A: No. Tallify NO se conecta a tu banco. Tú registras manualmente tus gastos. Esto te da control total y funciona con efectivo.
 
 **Q: ¿Puedo usar con mi pareja / roommate?**
 A: Actualmente cada usuario tiene su cuenta separada. Feature de "gastos compartidos" está en roadmap para Q2 2026.
@@ -1425,14 +1425,14 @@ A: Sí, en cualquier momento. Eliminar cuenta borra TODOS tus datos permanenteme
 ### Funcionalidad
 
 **Q: ¿Sincroniza automáticamente con mi banco?**
-A: No. Homelas requiere registro manual. Esto tiene ventajas:
+A: No. Tallify requiere registro manual. Esto tiene ventajas:
 - ✅ Funciona con cualquier banco / efectivo
 - ✅ No necesitas dar contraseña bancaria
 - ✅ Más seguro (no hay acceso a tu cuenta)
 - ✅ Más consciente (registrar te hace pensar en el gasto)
 
 **Q: ¿Puedo registrar gastos en efectivo?**
-A: Sí, perfectamente. Muchos usuarios usan Homelas principalmente para efectivo que es difícil de trackear.
+A: Sí, perfectamente. Muchos usuarios usan Tallify principalmente para efectivo que es difícil de trackear.
 
 **Q: ¿Soporta múltiples monedas?**
 A: Actualmente solo USD. Multi-moneda (USD, EUR) está en roadmap para Q4 2026.
@@ -1461,20 +1461,20 @@ A: Todos los modernos: Chrome, Safari, Firefox, Edge. Mobile y desktop.
 ### Comparaciones
 
 **Q: ¿Es mejor que Excel?**
-A: Para gestión de gastos personales, sí. Excel es más flexible pero requiere setup y disciplina. Homelas es más simple y está optimizada para este caso de uso.
+A: Para gestión de gastos personales, sí. Excel es más flexible pero requiere setup y disciplina. Tallify es más simple y está optimizada para este caso de uso.
 
 **Q: ¿Por qué no usar app de mi banco?**
-A: Apps bancarias solo muestran transacciones pasadas. Homelas muestra gastos futuros (recurrentes, pendientes) y proyecciones. Además, funciona con múltiples bancos y efectivo.
+A: Apps bancarias solo muestran transacciones pasadas. Tallify muestra gastos futuros (recurrentes, pendientes) y proyecciones. Además, funciona con múltiples bancos y efectivo.
 
 **Q: ¿Es como YNAB?**
 A: Similar objetivo (control financiero) pero distinto approach:
 - YNAB: Complejo, "envelope budgeting", curva de aprendizaje
-- Homelas: Simple, visual, uso inmediato
+- Tallify: Simple, visual, uso inmediato
 - YNAB: $15 USD/mes
-- Homelas: Gratis
+- Tallify: Gratis
 
 **Q: ¿Por qué no Finerio/Monefy?**
-A: Homelas tiene UX/UI más moderna (Wise-inspired), mejor soporte de gastos recurrentes, y features más completos (dashboard inteligente, proyecciones, accesibilidad WCAG).
+A: Tallify tiene UX/UI más moderna (Wise-inspired), mejor soporte de gastos recurrentes, y features más completos (dashboard inteligente, proyecciones, accesibilidad WCAG).
 
 ---
 
@@ -1502,7 +1502,7 @@ A: Homelas tiene UX/UI más moderna (Wise-inspired), mejor soporte de gastos rec
 
 ### Contribuye
 
-Homelas es open source. Puedes:
+Tallify es open source. Puedes:
 - Reportar bugs
 - Sugerir features
 - Contribuir código
@@ -1516,7 +1516,7 @@ Ver: `CONTRIBUTING.md` para guía completa.
 
 ### El Pitch de 30 Segundos
 
-> **Homelas es la forma más simple de controlar tus finanzas personales.**
+> **Tallify es la forma más simple de controlar tus finanzas personales.**
 >
 > Registra gastos en 10 segundos. Configura recurrentes una vez. Ve tu balance en tiempo real. Toma decisiones con confianza.
 >
@@ -1530,7 +1530,7 @@ Ver: `CONTRIBUTING.md` para guía completa.
 
 > **¿Te has preguntado "¿puedo comprar esto?" y no estar seguro?**
 >
-> Homelas te da esa respuesta en 5 segundos.
+> Tallify te da esa respuesta en 5 segundos.
 >
 > Dashboard inteligente muestra tu balance real (no solo saldo bancario). Widget de próximos gastos te recuerda rentas y servicios antes de vencer. Top categorías identifica dónde gastas demás.
 >
@@ -1548,12 +1548,12 @@ Ver: `CONTRIBUTING.md` para guía completa.
 **Estado:** Production Ready
 **Última actualización:** 27 de Diciembre, 2025
 
-**Proyecto:** Homelas - Control Financiero Personal
+**Proyecto:** Tallify - Control Financiero Personal
 **Autor:** Luis Naranja (@luishron)
 
 ---
 
 <div align="center">
   <strong>Tu tranquilidad financiera empieza hoy</strong><br>
-  <a href="https://homelas.app">Probar Homelas Gratis →</a>
+  <a href="https://homelas.app">Probar Tallify Gratis →</a>
 </div>

@@ -1,9 +1,14 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Zap, RefreshCw, Mail, Gift } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function HeroSection() {
+  const t = useTranslations('pages.home.hero');
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="container mx-auto px-4 py-20 md:py-32">
@@ -14,12 +19,11 @@ export function HeroSection() {
               id="hero-heading"
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight max-w-4xl mx-auto lg:mx-0"
             >
-              <span className="text-primary">El problema no es gastar.</span> Es
-              decidir sin ver lo que viene.
+              <span className="text-primary">{t('headline.highlight')}</span> {t('headline.rest')}
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-6 max-w-2xl mx-auto lg:mx-0">
-              Homelas te muestra tus gastos y tu balance real antes de gastar.
+              {t('subtitle')}
             </p>
 
             {/* Feature Points */}
@@ -40,7 +44,7 @@ export function HeroSection() {
                   className="text-base font-medium transition-colors duration-300"
                   style={{ color: 'hsl(var(--foreground))' }}
                 >
-                  <span className="group-hover:text-[hsl(45_93%_47%)] transition-colors">Gratis</span>
+                  <span className="group-hover:text-[hsl(45_93%_47%)] transition-colors">{t('features.free')}</span>
                 </span>
               </div>
 
@@ -60,7 +64,7 @@ export function HeroSection() {
                   className="text-base font-medium transition-colors duration-300"
                   style={{ color: 'hsl(var(--foreground))' }}
                 >
-                  <span className="group-hover:text-[hsl(98_100%_70%)] transition-colors">Registro de gasto fácil</span>
+                  <span className="group-hover:text-[hsl(98_100%_70%)] transition-colors">{t('features.quick')}</span>
                 </span>
               </div>
 
@@ -80,7 +84,7 @@ export function HeroSection() {
                   className="text-base font-medium transition-colors duration-300"
                   style={{ color: 'hsl(var(--foreground))' }}
                 >
-                  <span className="group-hover:text-[hsl(220_89%_61%)] transition-colors">Gastos recurrentes</span>
+                  <span className="group-hover:text-[hsl(220_89%_61%)] transition-colors">{t('features.recurring')}</span>
                 </span>
               </div>
 
@@ -100,7 +104,7 @@ export function HeroSection() {
                   className="text-base font-medium transition-colors duration-300"
                   style={{ color: 'hsl(var(--foreground))' }}
                 >
-                  <span className="group-hover:text-[hsl(280_83%_63%)] transition-colors">Alertas por email</span>
+                  <span className="group-hover:text-[hsl(280_83%_63%)] transition-colors">{t('features.alerts')}</span>
                 </span>
               </div>
             </div>
@@ -111,9 +115,9 @@ export function HeroSection() {
                 size="lg"
                 asChild
                 className="h-12 px-8 text-base font-semibold"
-                aria-label="Crear cuenta gratuita en Homelas"
+                aria-label={t('cta')}
               >
-                <Link href="/login">Comenzar gratis →</Link>
+                <Link href="/login">{t('cta')}</Link>
               </Button>
             </div>
           </div>
@@ -123,7 +127,7 @@ export function HeroSection() {
             <div className="relative aspect-video rounded-xl border-2 border-border shadow-2xl overflow-hidden bg-card">
               <Image
                 src="/screenshots/dashboard-light.png"
-                alt="Dashboard de Homelas mostrando balance, gastos e ingresos en tiempo real con KPIs principales"
+                alt={t('imageAlt')}
                 fill
                 className="object-cover"
                 priority

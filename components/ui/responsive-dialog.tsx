@@ -48,6 +48,12 @@ import {
  * ```
  */
 
+// Create context to share isDesktop value across all sub-components
+const ResponsiveDialogContext = React.createContext<{
+  isDesktop: boolean;
+  mounted: boolean;
+}>({ isDesktop: false, mounted: false });
+
 interface ResponsiveDialogProps {
   children: React.ReactNode;
   open?: boolean;
@@ -60,19 +66,29 @@ export function ResponsiveDialog({
   onOpenChange
 }: ResponsiveDialogProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
+  const [mounted, setMounted] = React.useState(false);
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        {children}
-      </Dialog>
-    );
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return null;
   }
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      {children}
-    </Drawer>
+    <ResponsiveDialogContext.Provider value={{ isDesktop, mounted }}>
+      {isDesktop ? (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+          {children}
+        </Dialog>
+      ) : (
+        <Drawer open={open} onOpenChange={onOpenChange}>
+          {children}
+        </Drawer>
+      )}
+    </ResponsiveDialogContext.Provider>
   );
 }
 
@@ -85,7 +101,7 @@ export function ResponsiveDialogTrigger({
   children,
   asChild
 }: ResponsiveDialogTriggerProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogTrigger asChild={asChild}>{children}</DialogTrigger>;
@@ -103,7 +119,7 @@ export function ResponsiveDialogContent({
   children,
   className
 }: ResponsiveDialogContentProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogContent className={className}>{children}</DialogContent>;
@@ -127,7 +143,7 @@ export function ResponsiveDialogHeader({
   children,
   className
 }: ResponsiveDialogHeaderProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogHeader className={className}>{children}</DialogHeader>;
@@ -145,7 +161,7 @@ export function ResponsiveDialogTitle({
   children,
   className
 }: ResponsiveDialogTitleProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogTitle className={className}>{children}</DialogTitle>;
@@ -163,7 +179,7 @@ export function ResponsiveDialogDescription({
   children,
   className
 }: ResponsiveDialogDescriptionProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogDescription className={className}>{children}</DialogDescription>;
@@ -181,7 +197,7 @@ export function ResponsiveDialogFooter({
   children,
   className
 }: ResponsiveDialogFooterProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     return <DialogFooter className={className}>{children}</DialogFooter>;
@@ -201,7 +217,7 @@ export function ResponsiveDialogClose({
   asChild,
   className
 }: ResponsiveDialogCloseProps) {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isDesktop } = React.useContext(ResponsiveDialogContext);
 
   if (isDesktop) {
     // Dialog uses DialogClose from radix, accessible via DialogPrimitive

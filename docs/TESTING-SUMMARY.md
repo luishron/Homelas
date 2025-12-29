@@ -185,7 +185,7 @@ These remain custom because they're core to the Wise-inspired design system and 
 - **Component Parity:** All features preserved ✅
 
 ### Design System Compliance
-- **Color Palette:** Homelas verde vibrante (#9FFF66) ✅
+- **Color Palette:** Tallify verde vibrante (#9FFF66) ✅
 - **Semantic Colors:** transaction-income, transaction-expense ✅
 - **Touch Targets:** ≥ 44px on interactive elements ✅
 - **Contrast Ratios:** ≥ 4.5:1 verified ✅

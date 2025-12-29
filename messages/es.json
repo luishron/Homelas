@@ -1,0 +1,535 @@
+{
+  "brand": {
+    "name": "Tallify",
+    "tagline": "Haz que tu dinero cuente",
+    "description": "Gestiona tus gastos e ingresos, visualiza tu situación financiera en tiempo real. Gratis para siempre."
+  },
+  "navigation": {
+    "login": "Iniciar Sesión",
+    "getStarted": "Comenzar gratis"
+  },
+  "pages": {
+    "home": {
+      "hero": {
+        "headline": {
+          "highlight": "El problema no es gastar.",
+          "rest": "Es decidir sin ver lo que viene."
+        },
+        "subtitle": "Tallify te muestra tus gastos y tu balance real antes de gastar.",
+        "features": {
+          "free": "Gratis",
+          "quick": "Registro de gasto fácil",
+          "recurring": "Gastos recurrentes",
+          "alerts": "Alertas por email"
+        },
+        "cta": "Comenzar gratis →",
+        "imageAlt": "Dashboard de Tallify mostrando balance, gastos e ingresos en tiempo real con KPIs principales"
+      },
+      "problem": {
+        "headline": "¿Te suena",
+        "headlineHighlight": "familiar?",
+        "subtitle": "¿Te identificas con alguno? Tallify es para ti.",
+        "problems": {
+          "doubt": {
+            "title": "Dudas antes de gastar",
+            "description": "¿Me alcanza? ¿Estoy gastando de más?",
+            "highlight": "No tienes claridad financiera",
+            "imageAlt": "Persona con dudas antes de realizar una compra"
+          },
+          "visibility": {
+            "title": "El dinero se diluye",
+            "description": "Ganas bien, pero no sabes a dónde va tu dinero.",
+            "highlight": "Falta de visibilidad total",
+            "imageAlt": "Dinero dispersándose sin control"
+          },
+          "consequences": {
+            "title": "Olvidos que cuestan",
+            "description": "Recargos, intereses y decisiones que pesan.",
+            "highlight": "Consecuencias evitables",
+            "imageAlt": "Calendario con pagos olvidados"
+          }
+        }
+      },
+      "solution": {
+        "title": "Mira {brand} en acción",
+        "subtitle": "Ve cómo funciona con capturas reales del dashboard",
+        "steps": {
+          "headline": "Tu control financiero en",
+          "headlineHighlight": "3 pasos simples",
+          "items": {
+            "register": {
+              "title": "Registra en 10 segundos",
+              "description": "Click, escribe y listo.",
+              "benefit": "30 horas/año ahorradas",
+              "imageAlt": "Interfaz de registro rápido de gastos"
+            },
+            "balance": {
+              "title": "Ve tu balance real",
+              "description": "Tu dinero disponible real, no solo el saldo bancario.",
+              "benefit": "Paz mental financiera",
+              "imageAlt": "Dashboard mostrando balance real"
+            },
+            "decide": {
+              "title": "Decide con confianza",
+              "description": "Sabes exactamente cuánto puedes gastar.",
+              "benefit": "Decisiones sin ansiedad",
+              "imageAlt": "Usuario tomando decisiones financieras"
+            }
+          }
+        }
+      },
+      "comparison": {
+        "headline": "¿Por qué",
+        "headlineHighlight": "Tallify?",
+        "subtitle": "Comparamos Tallify con las herramientas más populares para gestión de gastos",
+        "thisApp": "Esta herramienta",
+      "features": {
+        "registerTime": "Registro de gasto",
+        "setup": "Configuración inicial",
+        "focused": "Enfocado en finanzas",
+        "balance": "Balance real con recurrentes",
+        "pricing": "Precio (funciones básicas)",
+        "learning": "Curva de aprendizaje",
+        "mobile": "Mobile-first",
+        "dashboard": "Dashboard con KPIs"
+      },
+      "tallify": "Tallify",
+      "notion": "Notion",
+      "excel": "Excel",
+      "apps": "Apps Genéricas",
+      "values": {
+        "quick": "10 segundos",
+        "instant": "0 minutos",
+        "free": "Gratis",
+        "zeroDays": "0 días",
+        "manual": "Manual",
+        "basic": "Básico",
+        "customizable": "Personalizable"
+      },
+        "note": "* Excel es gratis si ya tienes Microsoft Office. Notion ofrece plan gratuito limitado. Apps genéricas varían en precio."
+      },
+      "quote": {
+        "headline": "Lo que no se mide,",
+        "headlineHighlight": "se descontrola",
+        "text": "Tallify mide. Tú controlas."
+      },
+      "pricing": {
+        "headline": "Empieza gratis.",
+        "headlineHighlight": "Escala solo si lo necesitas.",
+        "subtitle": "El plan se paga solo con los gastos que dejas de cometer cuando ves tus números claros.",
+        "billingPeriod": {
+          "monthly": "Mensual",
+          "annual": "Anual"
+        },
+        "plans": {
+          "free": {
+            "name": "Gratis",
+            "price": "$0",
+            "description": "Todo lo que necesitas para decidir bien.",
+            "features": {
+              "unlimitedExpenses": "Gastos e ingresos ilimitados",
+              "customCategories": "Categorías personalizables",
+              "paymentMethods": "Métodos de pago",
+              "realBalance": "Balance real (con gastos futuros)",
+              "clearDashboard": "Dashboard claro",
+              "multiDevice": "Uso en móvil y desktop"
+            },
+            "cta": "Comenzar gratis",
+            "ctaSubtext": "Sin tarjeta. Sin vencimiento."
+          },
+          "pro": {
+            "name": "Pro",
+            "description": "Para los que quieren delegar el control.",
+            "features": {
+              "allFree": "Todo lo del plan Gratis",
+              "recurringExpenses": "Gastos recurrentes automáticos",
+              "advancedFilters": "Búsqueda y filtros avanzados",
+              "monthlyComparison": "Visión mensual y comparativas",
+              "lessFriction": "Menos cosas que recordar"
+            },
+            "microArgument": "La suscripción se paga sola.\nEvitás un gasto innecesario y listo.",
+            "cta": "Pasar a Pro",
+            "popular": "Más popular"
+          },
+          "plus": {
+            "name": "Plus",
+            "description": "Para quienes quieren control total y reportes avanzados.",
+            "features": {
+              "allPro": "Todo lo del plan Pro",
+              "export": "Exportación de datos (CSV, PDF)",
+              "customReports": "Reportes personalizados",
+              "shareDashboard": "Compartir dashboard",
+              "multiCurrency": "Múltiples monedas"
+            },
+            "cta": "Pasar a Plus"
+          }
+        },
+        "perMonth": "/mes",
+        "savings": "Ahorras ${amount}",
+        "footerNote": "Tus datos son tuyos. Sin letra chica. Cancela cuando quieras."
+      },
+      "reviews": {
+        "headline": "Lo que dicen",
+        "headlineHighlight": "quienes ya lo usan",
+        "subtitle": "Personas reales que decidieron mejor después de empezar a usar Tallify.",
+        "items": {
+          "lucia": {
+            "name": "Lucía",
+            "city": "Buenos Aires",
+            "insight": "decidir sin fricción",
+            "review": "Probé Excel, probé apps, probé Notion. Todo servía, pero nada me ayudaba a decidir rápido. Tallify es la primera que abro cuando quiero saber si puedo gastar."
+          },
+          "martin": {
+            "name": "Martín",
+            "city": "Córdoba",
+            "insight": "previsión",
+            "review": "El problema nunca fue registrar gastos. Era no ver los pagos que venían. Cuando empecé a ver eso, dejé de equivocarme a fin de mes."
+          },
+          "sofia": {
+            "name": "Sofía",
+            "city": "CDMX",
+            "insight": "menos fricción que Notion",
+            "review": "Notion es increíble, pero para esto me cansé de armar sistemas. Tallify ya viene armado y por eso lo uso todos los días."
+          },
+          "pablo": {
+            "name": "Pablo",
+            "city": "Rosario",
+            "insight": "balance real",
+            "review": "Con otras herramientas veía números. Con Tallify veo si me alcanza. Parece parecido, pero no lo es."
+          },
+          "carla": {
+            "name": "Carla",
+            "city": "Montevideo",
+            "insight": "uso diario",
+            "review": "Excel lo uso para cerrar cosas. Tallify lo uso para decidir antes. Esa diferencia es clave."
+          },
+          "andres": {
+            "name": "Andrés",
+            "city": "Medellín",
+            "insight": "claridad sin disciplina",
+            "review": "Nunca fui constante registrando todo. Igual Tallify me da una idea clara de mi balance y eso me alcanza para decidir mejor."
+          },
+          "diego": {
+            "name": "Diego",
+            "city": "Santiago",
+            "insight": "La suscripción se paga sola",
+            "review": "El primer mes identifiqué gastos que ni recordaba. Ya pagué varios meses del Pro solo con eso. Y sigo encontrando más."
+          }
+        }
+      },
+      "faq": {
+        "headline": "Preguntas",
+        "headlineHighlight": "frecuentes",
+        "subtitle": "Todo lo que necesitas saber sobre Tallify",
+        "questions": {
+          "free": {
+            "q": "¿Es realmente gratis?",
+            "a": "Sí, el plan Gratis es 100% gratis para siempre. Incluye gastos e ingresos ilimitados, 10 categorías, 3 métodos de pago y todas las funciones básicas. Sin tarjeta de crédito requerida."
+          },
+          "categories": {
+            "q": "¿Qué pasa si necesito más de 10 categorías?",
+            "a": "Puedes hacer upgrade al plan Pro ($9.99/mes) para obtener categorías ilimitadas, gastos recurrentes avanzados, búsqueda global y más. El plan Pro se paga solo: usuarios identifican ~$250/mes en gastos innecesarios."
+          },
+          "bank": {
+            "q": "¿Se conecta con mi banco?",
+            "a": "No. Tallify NO accede a tu cuenta bancaria. Tú registras manualmente tus gastos. Esto te da control total y funciona con cualquier banco o efectivo."
+          },
+          "security": {
+            "q": "¿Mis datos están seguros?",
+            "a": "Sí. Usamos Supabase (infraestructura enterprise-grade) con encriptación y Row Level Security. Solo tú puedes ver tus datos. No vendemos ni compartimos tu información."
+          },
+          "mobile": {
+            "q": "¿Funciona en celular?",
+            "a": "Perfectamente. Tallify está diseñada mobile-first. 80% de usuarios la usan principalmente desde el celular. Funciona en cualquier navegador moderno."
+          },
+          "setup": {
+            "q": "¿Cuánto tiempo toma configurar?",
+            "a": "5 minutos hasta agregar tu primer gasto. No hay curva de aprendizaje. Es intuitivo desde el primer uso."
+          },
+          "export": {
+            "q": "¿Puedo exportar mis datos?",
+            "a": "Sí, puedes exportar todo y eliminar tu cuenta cuando quieras. Tus datos son tuyos. Sin ataduras."
+          }
+        }
+      },
+      "cta": {
+        "headline": "Empieza hoy.",
+        "headlineHighlight": "Gratis y sin compromiso.",
+        "subtitle": "Tu primer gasto registrado en 15 segundos.",
+        "benefits": {
+          "setup": "Setup en 5 minutos",
+          "noCard": "Sin tarjeta de crédito",
+          "forever": "Gratis para siempre"
+        },
+        "button": "Comenzar gratis →",
+        "buttonAria": "Crear cuenta gratuita en Tallify"
+      }
+    },
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión para continuar",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Iniciar sesión",
+      "submitting": "Iniciando sesión...",
+      "noAccount": "¿No tienes cuenta?",
+      "createAccount": "Crear cuenta gratis",
+      "loading": "Cargando...",
+      "errors": {
+        "signIn": "Error al iniciar sesión",
+        "magicLink": "Error al enviar el enlace mágico"
+      },
+      "tabs": {
+        "password": "Email & Contraseña",
+        "passwordShort": "Contraseña",
+        "magicLink": "Magic Link",
+        "recommended": "Recomendado"
+      },
+      "magicLink": {
+        "submit": "Enviar enlace mágico",
+        "sending": "Enviando...",
+        "howItWorks": "¿Cómo funciona?",
+        "step1": "Ingresa tu email y haz clic en \"Enviar\"",
+        "step2": "Revisa tu email y haz clic en el enlace",
+        "step3": "¡Listo! Acceso automático sin contraseñas"
+      },
+      "emailSent": {
+        "title": "Revisa tu email",
+        "subtitle": "Te enviamos un enlace mágico a",
+        "instructions": "Haz clic en el enlace del email para iniciar sesión. El enlace expira en",
+        "expiresIn": "1 hora",
+        "sendAnother": "Enviar otro enlace"
+      },
+      "branding": {
+        "title": "Tallify",
+        "description": "Gestiona tus finanzas personales de manera simple y efectiva",
+        "benefits": {
+          "control": {
+            "title": "Control total",
+            "description": "Rastrea cada gasto e ingreso en tiempo real"
+          },
+          "insights": {
+            "title": "Insights inteligentes",
+            "description": "Visualiza tendencias y proyecciones mensuales"
+          },
+          "secure": {
+            "title": "100% seguro",
+            "description": "Tus datos protegidos con encriptación de nivel bancario"
+          }
+        }
+      }
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Comienza gratis, sin tarjeta de crédito",
+      "nameLabel": "Nombre completo",
+      "namePlaceholder": "Juan Pérez",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "••••••••",
+      "passwordHint": "Mínimo 6 caracteres",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "submitButton": "Crear cuenta gratis",
+      "submitting": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "login": "Iniciar sesión",
+      "loading": "Cargando...",
+      "terms": "Al crear una cuenta, aceptas nuestros",
+      "termsLink": "Términos de Servicio",
+      "and": "y",
+      "privacyLink": "Política de Privacidad",
+      "success": {
+        "title": "¡Revisa tu email!",
+        "subtitle": "Te enviamos un correo de confirmación a",
+        "instructions": "Haz clic en el enlace del email para verificar tu cuenta y comenzar a usar Tallify.",
+        "note": "Nota:",
+        "noteText": "Revisa también tu carpeta de spam si no ves el email.",
+        "backToLogin": "Volver al inicio de sesión"
+      },
+      "branding": {
+        "title": "Únete a Tallify",
+        "description": "Comienza a gestionar tus finanzas personales de manera simple y efectiva",
+        "benefits": {
+          "free": {
+            "title": "Gratis para siempre",
+            "description": "Plan Free con todas las funciones básicas incluidas"
+          },
+          "noCard": {
+            "title": "Sin tarjeta requerida",
+            "description": "Crea tu cuenta en segundos, sin compromisos"
+          },
+          "secure": {
+            "title": "100% seguro",
+            "description": "Tus datos protegidos con encriptación de nivel bancario"
+          }
+        }
+      },
+      "errors": {
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+        "genericError": "Error al crear la cuenta",
+        "signUp": "Error al crear la cuenta"
+      }
+    },
+    "dashboard": {
+      "navigation": {
+        "toggleMenu": "Alternar menú",
+        "dashboard": "Dashboard",
+        "expenses": "Gastos",
+        "categories": "Categorías",
+        "paymentMethods": "Métodos de Pago",
+        "income": "Ingresos"
+      },
+      "months": {
+        "january": "Enero",
+        "february": "Febrero",
+        "march": "Marzo",
+        "april": "Abril",
+        "may": "Mayo",
+        "june": "Junio",
+        "july": "Julio",
+        "august": "Agosto",
+        "september": "Septiembre",
+        "october": "Octubre",
+        "november": "Noviembre",
+        "december": "Diciembre"
+      },
+      "summary": {
+        "title": "Resumen de {month} {year}"
+      },
+      "kpis": {
+        "monthlyExpenses": {
+          "label": "Gastos del Mes",
+          "aria": "Gastos totales del mes actual"
+        },
+        "monthlyIncome": {
+          "label": "Ingresos del Mes",
+          "aria": "Ingresos totales del mes actual",
+          "show": "Mostrar ingresos",
+          "hide": "Ocultar ingresos"
+        },
+        "monthlyBalance": {
+          "label": "Balance del Mes",
+          "aria": "Balance del mes actual (ingresos menos gastos)",
+          "surplus": "Superávit",
+          "deficit": "Déficit",
+          "show": "Mostrar balance",
+          "hide": "Ocultar balance"
+        },
+        "overdueExpenses": {
+          "label": "Gastos Vencidos",
+          "aria": "Gastos vencidos pendientes de pago",
+          "singular": "gasto",
+          "plural": "gastos"
+        }
+      },
+      "emptyState": {
+        "welcome": "Bienvenido a tu control de gastos",
+        "description": "Comienza registrando gastos e ingresos para tener una visión clara de tu situación financiera.",
+        "cta": "Agregar Primer Gasto",
+        "guide": {
+          "title": "Primeros pasos",
+          "step1": {
+            "title": "1. Crea categorías",
+            "description": "Organiza tus gastos (Alimentación, Transporte, etc.)"
+          },
+          "step2": {
+            "title": "2. Agrega métodos de pago",
+            "description": "Define tus tarjetas, cuentas y efectivo"
+          },
+          "step3": {
+            "title": "3. Registra gastos",
+            "description": "Empieza a llevar el control de tus finanzas"
+          }
+        }
+      },
+      "pluralization": {
+        "expense": {
+          "singular": "gasto",
+          "plural": "gastos"
+        },
+        "income": {
+          "singular": "ingreso",
+          "plural": "ingresos"
+        }
+      }
+    },
+    "onboarding": {
+      "progress": "Paso {step} de 4",
+      "skip": "Saltar configuración",
+      "previous": "Anterior",
+      "continue": "Continuar",
+      "processing": "Procesando...",
+      "goToDashboard": "Ir al Dashboard",
+      "error": "Ocurrió un error. Por favor intenta de nuevo.",
+      "step1": {
+        "title": "¡Bienvenido a Tallify!",
+        "subtitle": "Empecemos configurando tu perfil",
+        "label": "¿Cómo te llamas?",
+        "placeholder": "Tu nombre completo"
+      },
+      "step2": {
+        "title": "Categorías iniciales",
+        "subtitle": "Selecciona las categorías que más uses (puedes agregar más después)",
+        "categories": {
+          "food": "Alimentos",
+          "transport": "Transporte",
+          "entertainment": "Entretenimiento",
+          "services": "Servicios",
+          "health": "Salud",
+          "education": "Educación"
+        }
+      },
+      "step3": {
+        "title": "Método de pago",
+        "subtitle": "Agrega tu método de pago principal",
+        "nameLabel": "Nombre del método de pago",
+        "namePlaceholder": "Ej: Tarjeta principal, Efectivo, etc.",
+        "typeLabel": "Tipo",
+        "types": {
+          "credit": "Crédito",
+          "debit": "Débito",
+          "cash": "Efectivo"
+        }
+      },
+      "step4": {
+        "title": "¡Todo listo!",
+        "subtitle": "Ya puedes empezar a gestionar tus finanzas",
+        "greeting": "¡Hola, {name}!",
+        "summary": "Has configurado {categories} categorías y 1 método de pago.",
+        "note": "Puedes personalizar todo desde el dashboard.",
+        "nextSteps": {
+          "expense": {
+            "title": "Crea tu primer gasto",
+            "description": "Empieza a registrar tus gastos diarios"
+          },
+          "stats": {
+            "title": "Ve tus estadísticas",
+            "description": "Analiza tus gastos con gráficas y métricas"
+          },
+          "budgets": {
+            "title": "Configura presupuestos",
+            "description": "Establece límites de gasto por categoría"
+          }
+        }
+      }
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Tallify. Tu control financiero personal.",
+    "privacy": "Privacidad",
+    "terms": "Términos"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar"
+  }
+}

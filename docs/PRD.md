@@ -3,7 +3,7 @@
 
 Este documento resume **investigación académica relevante** sobre tracking financiero personal
 y traduce esos hallazgos en **decisiones concretas de producto y UX** para una app de gastos
-(como Homelas).
+(como Tallify).
 
 El objetivo no es “tener data”, sino **ayudar a las personas a decidir mejor antes de gastar**,
 reducir ansiedad y sostener el hábito en el tiempo.
@@ -127,7 +127,7 @@ Las personas gastan más cuando:
 - no perciben el impacto inmediato,
 - el pago es abstracto (tarjeta, digital).
 
-### Aplicación directa (muy alineada al diferencial de Homelas)
+### Aplicación directa (muy alineada al diferencial de Tallify)
 
 Antes de confirmar un gasto:
 - Mostrar impacto futuro simple:

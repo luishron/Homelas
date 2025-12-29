@@ -1,40 +1,36 @@
+'use client';
+
 import { Edit3, BarChart3, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
 
-const steps = [
+const stepsConfig = [
   {
+    key: 'register',
     number: "1",
     icon: Edit3,
-    title: "Registra en 10 segundos",
-    description: "Click, escribe y listo.",
-    benefit: "30 horas/año ahorradas",
     color: "hsl(98 100% 70%)", // Verde vibrante (primary)
     image: "/images/step-1-register.png",
-    imageAlt: "Interfaz de registro rápido de gastos",
   },
   {
+    key: 'balance',
     number: "2",
     icon: BarChart3,
-    title: "Ve tu balance real",
-    description: "Tu dinero disponible real, no solo el saldo bancario.",
-    benefit: "Paz mental financiera",
     color: "hsl(220 89% 61%)", // Azul
     image: "/images/step-2-balance.png",
-    imageAlt: "Dashboard mostrando balance real",
   },
   {
+    key: 'decide',
     number: "3",
     icon: CheckCircle2,
-    title: "Decide con confianza",
-    description: "Sabes exactamente cuánto puedes gastar.",
-    benefit: "Decisiones sin ansiedad",
     color: "hsl(142 76% 55%)", // Verde
     image: "/images/step-3-decide.png",
-    imageAlt: "Usuario tomando decisiones financieras",
   },
 ];
 
 export function SolutionSteps() {
+  const t = useTranslations('pages.home.solution.steps');
+
   return (
     <section
       className="py-16 md:py-20 bg-background"
@@ -47,18 +43,18 @@ export function SolutionSteps() {
             id="solution-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
           >
-            Tu control financiero en{" "}
-            <span className="text-primary">3 pasos simples</span>
+            {t('headline')}{" "}
+            <span className="text-primary">{t('headlineHighlight')}</span>
           </h2>
         </div>
 
         {/* Steps Grid */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {steps.map((step, index) => {
+          {stepsConfig.map((step, index) => {
             const Icon = step.icon;
             return (
               <div
-                key={step.number}
+                key={step.key}
                 className="group animate-fade-in-up bg-card border border-border rounded-2xl hover:shadow-xl transition-all hover:-translate-y-2 relative"
                 style={{
                   animationDelay: `${index * 150}ms`,
@@ -117,7 +113,7 @@ export function SolutionSteps() {
                         </svg>
                       </div>
                       <p className="text-xs font-medium opacity-60" style={{ color: step.color }}>
-                        {step.imageAlt}
+                        {t(`items.${step.key}.imageAlt`)}
                       </p>
                     </div>
                   </div>
@@ -125,7 +121,7 @@ export function SolutionSteps() {
                   {/* Uncomment when images are ready */}
                   {/* <Image
                     src={step.image}
-                    alt={step.imageAlt}
+                    alt={t(`items.${step.key}.imageAlt`)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   /> */}
@@ -134,11 +130,11 @@ export function SolutionSteps() {
                 {/* Content */}
                 <div className="p-6 rounded-b-2xl">
                   <h3 className="text-xl font-bold text-foreground mb-2">
-                    {step.title}
+                    {t(`items.${step.key}.title`)}
                   </h3>
 
                   <p className="text-sm text-muted-foreground mb-4">
-                    {step.description}
+                    {t(`items.${step.key}.description`)}
                   </p>
 
                   {/* Benefit Badge */}
@@ -149,7 +145,7 @@ export function SolutionSteps() {
                       color: step.color,
                     }}
                   >
-                    ✓ {step.benefit}
+                    ✓ {t(`items.${step.key}.benefit`)}
                   </div>
                 </div>
               </div>

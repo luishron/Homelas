@@ -1,4 +1,4 @@
-# Plan de Actualización - Landing Page Homelas
+# Plan de Actualización - Landing Page Tallify
 
 **Versión:** 2.1.0 - Implementado
 **Fecha Inicio:** 27 de Diciembre, 2025
@@ -44,11 +44,11 @@
 10. FooterLanding - Minimalista
 
 **6. Nueva Sección de Comparación (v2.1.0):** ⭐
-- ✅ **ComparisonSection** - Tabla comparativa mostrando Homelas vs competidores:
-  - Homelas vs Notion vs Excel vs Apps Genéricas
+- ✅ **ComparisonSection** - Tabla comparativa mostrando Tallify vs competidores:
+  - Tallify vs Notion vs Excel vs Apps Genéricas
   - 8 criterios clave de comparación
-  - Desktop: Tabla completa con columna Homelas destacada
-  - Mobile: Cards individuales con Homelas siempre primera
+  - Desktop: Tabla completa con columna Tallify destacada
+  - Mobile: Cards individuales con Tallify siempre primera
   - Ventajas clave: Velocidad, simplicidad, precio, enfoque financiero
 
 **7. Mejoras de Pricing (v2.1.0):**
@@ -124,10 +124,10 @@ Tres secciones competían por atención mostrando contenido similar:
 ## Objetivos de la Nueva Landing
 
 ### Objetivo Principal
-**Comunicar claramente que Homelas resuelve el problema del control de gastos personales**
+**Comunicar claramente que Tallify resuelve el problema del control de gastos personales**
 
 ### Objetivos Específicos
-1. **Claridad del problema:** Usuario debe entender en < 5 segundos qué problema resuelve Homelas
+1. **Claridad del problema:** Usuario debe entender en < 5 segundos qué problema resuelve Tallify
 2. **Valor inmediato:** Destacar beneficios (no solo features)
 3. **Conversión:** Incrementar clicks en CTA "Comenzar gratis"
 4. **Trust:** Generar confianza sin necesidad de "desafiar bancos" u otros productos
@@ -203,7 +203,7 @@ Estructura: **Problema → Solución → Beneficio** en lugar de solo features
 
 ┌─────────────────────────────────────────┐
 │ 4. SOLUCIÓN (The Solution)              │
-│    Cómo Homelas resuelve el problema    │
+│    Cómo Tallify resuelve el problema    │
 │    - 3 pasos simples                    │
 │    - Visual del flujo                   │
 └─────────────────────────────────────────┘
@@ -281,13 +281,13 @@ Estructura: **Problema → Solución → Beneficio** en lugar de solo features
 
 ```tsx
 <Header>
-  <Logo /> {/* Simple "Homelas" */}
+  <Logo /> {/* Simple "Tallify" */}
   <CTA>Comenzar gratis</CTA>
 </Header>
 ```
 
 **Copy:**
-- Logo: "Homelas"
+- Logo: "Tallify"
 - CTA: "Comenzar gratis" (primario)
 
 ---
@@ -302,7 +302,7 @@ Estructura: **Problema → Solución → Beneficio** en lugar de solo features
 ¿No sabes si puedes hacer esa compra sin quedarte sin dinero?
 
 [Subheadline]
-Homelas te da la respuesta en 5 segundos. Control financiero simple
+Tallify te da la respuesta en 5 segundos. Control financiero simple
 para profesionistas que quieren paz mental.
 
 [CTA Primario]
@@ -348,7 +348,7 @@ Card 3:
 Los recargos por olvidos suman cientos de pesos al mes.
 
 [Subtext]
-Si respondiste "sí" a alguno, Homelas es para ti.
+Si respondiste "sí" a alguno, Tallify es para ti.
 ```
 
 **Elementos:**
@@ -361,7 +361,7 @@ Si respondiste "sí" a alguno, Homelas es para ti.
 
 ### 4. Solución + Beneficios (The Solution + Value Props)
 
-**Objetivo:** Mostrar cómo Homelas resuelve esos problemas Y qué ganas
+**Objetivo:** Mostrar cómo Tallify resuelve esos problemas Y qué ganas
 
 **Copy:**
 ```
@@ -489,7 +489,7 @@ en gastos reducibles.
 
 [Stat 2]
 XXX usuarios activos
-Profesionistas del mercado hispano confían en Homelas
+Profesionistas del mercado hispano confían en Tallify
 para sus finanzas.
 
 [Stat 3]
@@ -595,10 +595,10 @@ Sin letra chica. Cancela cuando quieras.
 
 **Q1: ¿Es realmente gratis?**
 Sí, 100% gratis sin límites. No hay plan premium, no hay features bloqueados.
-Homelas es gratis para siempre para usuarios individuales.
+Tallify es gratis para siempre para usuarios individuales.
 
 **Q2: ¿Se conecta con mi banco?**
-No. Homelas NO accede a tu cuenta bancaria. Tú registras manualmente
+No. Tallify NO accede a tu cuenta bancaria. Tú registras manualmente
 tus gastos. Esto te da control total y funciona con cualquier banco o efectivo.
 
 **Q3: ¿Mis datos están seguros?**
@@ -607,7 +607,7 @@ y Row Level Security. Solo tú puedes ver tus datos. No vendemos ni
 compartimos tu información.
 
 **Q4: ¿Funciona en móvil?**
-Perfectamente. Homelas está diseñada mobile-first. 80% de usuarios
+Perfectamente. Tallify está diseñada mobile-first. 80% de usuarios
 la usan principalmente desde el celular.
 
 **Q5: ¿Cuánto tiempo toma configurar?**
@@ -658,7 +658,7 @@ No requiere tarjeta de crédito. Configura en 5 minutos.
 
 **Copy:**
 ```
-© 2025 Homelas. Tu control financiero personal.
+© 2025 Tallify. Tu control financiero personal.
 
 Privacidad  |  Términos
 ```
@@ -840,7 +840,7 @@ Subtext: "Te enviaremos un link mágico. Sin contraseñas."
 "No saber si puedes hacer una compra sin quedarte sin dinero"
 
 **2. Solución:**
-"Homelas te muestra tu balance real en 5 segundos"
+"Tallify te muestra tu balance real en 5 segundos"
 
 **3. Diferenciador:**
 "Simple, gratis, mobile-first. Diseñado para el mercado hispano."
@@ -867,7 +867,7 @@ Opción C (Resultado):
 **Recomendación:** Opción A (más emotiva y relatable)
 
 **Hero Subheadline:**
-> "Homelas te da la respuesta en 5 segundos. Control financiero simple para profesionistas que quieren paz mental."
+> "Tallify te da la respuesta en 5 segundos. Control financiero simple para profesionistas que quieren paz mental."
 
 ---
 
@@ -1066,7 +1066,7 @@ Opción C (Resultado):
 - `/docs/PRD.md` - Product Requirements (personas, beneficios)
 - `/docs/BRD.md` - Business Requirements (problema, solución)
 - `/docs/IMPLEMENTATION_STATUS.md` - Features activas
-- `/docs/design-system.md` - Homelas design system
+- `/docs/design-system.md` - Tallify design system
 - `/docs/ACCESSIBILITY-AUDIT.md` - WCAG compliance
 
 ### Mejores Prácticas Landing Pages 2025
@@ -1452,7 +1452,7 @@ Opción C (Resultado):
 ## 🆚 Nueva Sección: ComparisonSection (v2.1.0)
 
 ### Objetivo
-Posicionar a Homelas como la mejor opción frente a alternativas populares (Notion, Excel, Apps genéricas) mediante una tabla comparativa visual que destaca ventajas competitivas.
+Posicionar a Tallify como la mejor opción frente a alternativas populares (Notion, Excel, Apps genéricas) mediante una tabla comparativa visual que destaca ventajas competitivas.
 
 ### Ubicación
 Entre **ScreenshotsCarousel** y **PricingTable**
@@ -1467,7 +1467,7 @@ Entre **ScreenshotsCarousel** y **PricingTable**
 **Desktop - Tabla Completa:**
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ Característica  │ Homelas  │ Notion │ Excel │ Apps Genéricas │
+│ Característica  │ Tallify  │ Notion │ Excel │ Apps Genéricas │
 ├─────────────────────────────────────────────────────────────────┤
 │ Registro gasto  │ 10 seg   │ 5 min  │ 20 min│ 1 min          │
 │ Config inicial  │ 0 min    │ 30 min │ 60 min│ 15 min         │
@@ -1480,7 +1480,7 @@ Entre **ScreenshotsCarousel** y **PricingTable**
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Columna Homelas destacada:**
+**Columna Tallify destacada:**
 - Fondo verde tenue (`bg-primary/5`)
 - Bordes verde (`border-l-2 border-r-2 border-primary`)
 - Texto verde para valores (`text-primary font-semibold`)
@@ -1488,14 +1488,14 @@ Entre **ScreenshotsCarousel** y **PricingTable**
 
 **Mobile - Cards Individuales:**
 Cada característica se presenta en una card con 4 filas:
-- Homelas (destacada con fondo verde)
+- Tallify (destacada con fondo verde)
 - Notion (gris)
 - Excel (gris)
 - Apps Genéricas (gris)
 
 ### 8 Criterios de Comparación
 
-| # | Criterio | Homelas Gana Porque... |
+| # | Criterio | Tallify Gana Porque... |
 |---|----------|------------------------|
 | 1 | **Registro de gasto** | 10 seg vs 5 min (Notion) / 20 min (Excel) |
 | 2 | **Configuración inicial** | 0 min (listo para usar) vs 30-60 min otros |
@@ -1509,9 +1509,9 @@ Cada característica se presenta en una card con 4 filas:
 ### Copy Principal
 
 ```markdown
-## ¿Por qué Homelas?
+## ¿Por qué Tallify?
 
-Comparamos Homelas con las herramientas más populares para gestión de gastos
+Comparamos Tallify con las herramientas más populares para gestión de gastos
 
 [Tabla de comparación]
 
@@ -1554,7 +1554,7 @@ Comparamos Homelas con las herramientas más populares para gestión de gastos
 - Confianza: No exageramos, usamos números reales
 
 **SEO:**
-- Keywords: "Homelas vs Notion", "Homelas vs Excel", "mejor app gastos"
+- Keywords: "Tallify vs Notion", "Tallify vs Excel", "mejor app gastos"
 - Long-tail: "app control gastos más rápida"
 - Featured snippet potential con tabla estructurada
 
@@ -1647,7 +1647,7 @@ Facturado mensualmente
 **Estado:** ✅ Implementado | 🆚 Comparación Agregada | 💳 Pricing Mejorado
 
 **Cambios principales v2.1.0:**
-- ✅ ComparisonSection: Homelas vs Notion/Excel/Apps
+- ✅ ComparisonSection: Tallify vs Notion/Excel/Apps
 - ✅ Toggle Mensual/Anual en pricing
 - ✅ Plan Plus con precio real
 - ✅ Estrategia de ahorro visible

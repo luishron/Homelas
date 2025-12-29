@@ -1,4 +1,4 @@
-# 📚 Índice de Documentación - Homelas
+# 📚 Índice de Documentación - Tallify
 
 **Versión del proyecto:** 0.1.0-beta
 **Última actualización:** 27 de Diciembre, 2025
@@ -33,7 +33,7 @@ Empieza aquí si es tu primera vez con el proyecto.
 
 Sistema de diseño, componentes y mejoras visuales.
 
-- **[design-system.md](./design-system.md)** - **Sistema de Diseño Homelas** ⭐
+- **[design-system.md](./design-system.md)** - **Sistema de Diseño Tallify** ⭐
   Paleta de colores, tipografía, espaciado, animaciones y design tokens completos.
 
 - **[ACCESSIBILITY-AUDIT.md](./ACCESSIBILITY-AUDIT.md)** - **Auditoría WCAG 2.1 AA** ✅
@@ -160,6 +160,6 @@ Guías para contribuir y trabajar con el código.
 
 **¿Falta algo?** Abre un issue en GitHub o consulta [CONTRIBUTING.md](../CONTRIBUTING.md) para proponer mejoras.
 
-**Proyecto:** Homelas - Expense Tracking App
+**Proyecto:** Tallify - Expense Tracking App
 **Licencia:** MIT
 **Mantenido por:** [luishron](https://github.com/luishron)

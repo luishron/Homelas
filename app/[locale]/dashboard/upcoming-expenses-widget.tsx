@@ -62,7 +62,7 @@ export function UpcomingExpensesWidget({ expenses, categories }: UpcomingExpense
     expenseDate.setHours(0, 0, 0, 0);
     const daysDiff = Math.floor((expenseDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
-    // Usar colores alineados con la marca Homelas
+    // Usar colores alineados con la marca Tallify
     if (daysDiff === 0) return 'bg-orange-500 hover:bg-orange-600 text-white';
     if (daysDiff === 1) return 'bg-orange-400 hover:bg-orange-500 text-white';
     if (daysDiff <= 3) return 'bg-yellow-500/80 hover:bg-yellow-600 text-white';

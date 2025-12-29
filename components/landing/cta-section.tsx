@@ -1,35 +1,40 @@
+'use client';
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 export function CTASection() {
+  const t = useTranslations('pages.home.cta');
+
   return (
     <section className="relative py-20 bg-gradient-to-b from-primary/5 via-background to-background overflow-hidden">
       <div className="container mx-auto px-4 text-center relative z-10">
         {/* Headline */}
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in">
-          Empieza hoy.{" "}
-          <span className="text-primary">Gratis y sin compromiso.</span>
+          {t('headline')}{" "}
+          <span className="text-primary">{t('headlineHighlight')}</span>
         </h2>
 
         {/* Subheadline */}
         <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in-up">
-          Tu primer gasto registrado en 15 segundos.
+          {t('subtitle')}
         </p>
 
         {/* Benefits */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
           <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-sm sm:text-base">Setup en 5 minutos</span>
+            <span className="text-sm sm:text-base">{t('benefits.setup')}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-sm sm:text-base">Sin tarjeta de crédito</span>
+            <span className="text-sm sm:text-base">{t('benefits.noCard')}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle2 className="w-5 h-5 text-primary" aria-hidden="true" />
-            <span className="text-sm sm:text-base">Gratis para siempre</span>
+            <span className="text-sm sm:text-base">{t('benefits.forever')}</span>
           </div>
         </div>
 
@@ -39,9 +44,9 @@ export function CTASection() {
             size="lg"
             asChild
             className="h-14 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
-            aria-label="Crear cuenta gratuita en Homelas"
+            aria-label={t('buttonAria')}
           >
-            <Link href="/login">Comenzar gratis →</Link>
+            <Link href="/login">{t('button')}</Link>
           </Button>
         </div>
       </div>

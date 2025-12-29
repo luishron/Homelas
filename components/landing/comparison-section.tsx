@@ -1,58 +1,61 @@
+'use client';
+
 import { Check, X } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 const comparisons = [
   {
     feature: "Registro de gasto",
-    homelas: "10 segundos",
+    tallify: "10 segundos",
     notion: "~5 minutos (plantillas)",
     excel: "~20 minutos (fórmulas)",
     apps: "~1 minuto",
   },
   {
     feature: "Configuración inicial",
-    homelas: "0 minutos",
+    tallify: "0 minutos",
     notion: "30+ minutos",
     excel: "60+ minutos",
     apps: "15 minutos",
   },
   {
     feature: "Enfocado en finanzas",
-    homelas: true,
+    tallify: true,
     notion: false,
     excel: false,
     apps: true,
   },
   {
     feature: "Balance real con recurrentes",
-    homelas: true,
+    tallify: true,
     notion: false,
     excel: "Manual",
     apps: false,
   },
   {
     feature: "Precio (funciones básicas)",
-    homelas: "Gratis",
+    tallify: "Gratis",
     notion: "$10/mes",
     excel: "Gratis*",
     apps: "$5-15/mes",
   },
   {
     feature: "Curva de aprendizaje",
-    homelas: "0 días",
+    tallify: "0 días",
     notion: "~1 semana",
     excel: "~2 semanas",
     apps: "~2 días",
   },
   {
     feature: "Mobile-first",
-    homelas: true,
+    tallify: true,
     notion: false,
     excel: false,
     apps: true,
   },
   {
     feature: "Dashboard con KPIs",
-    homelas: true,
+    tallify: true,
     notion: "Personalizable",
     excel: "Manual",
     apps: "Básico",
@@ -60,6 +63,8 @@ const comparisons = [
 ];
 
 export function ComparisonSection() {
+  const t = useTranslations('pages.home.comparison');
+
   return (
     <section
       className="py-16 md:py-20 bg-background"
@@ -72,11 +77,10 @@ export function ComparisonSection() {
             id="comparison-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
           >
-            ¿Por qué <span className="text-primary">Homelas?</span>
+            {t('headline')} <span className="text-primary">{t('headlineHighlight')}</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comparamos Homelas con las herramientas más populares para gestión
-            de gastos
+            {t('subtitle')}
           </p>
         </div>
 
@@ -90,7 +94,7 @@ export function ComparisonSection() {
                 </th>
                 <th className="p-4 text-center border-b-2 border-primary bg-primary/5">
                   <div className="text-lg font-bold text-primary mb-1">
-                    Homelas
+                    Tallify
                   </div>
                   <div className="text-xs text-muted-foreground">
                     Esta herramienta
@@ -120,7 +124,7 @@ export function ComparisonSection() {
                     {row.feature}
                   </td>
                   <td className="p-4 text-center bg-primary/5 border-l-2 border-r-2 border-primary">
-                    {renderCell(row.homelas, true)}
+                    {renderCell(row.tallify, true)}
                   </td>
                   <td className="p-4 text-center">
                     {renderCell(row.notion, false)}
@@ -151,10 +155,10 @@ export function ComparisonSection() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-primary/10 border border-primary">
                   <span className="text-sm font-semibold text-primary">
-                    Homelas
+                    Tallify
                   </span>
                   <span className="text-sm font-medium">
-                    {renderCell(row.homelas, true)}
+                    {renderCell(row.tallify, true)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
@@ -190,13 +194,13 @@ export function ComparisonSection() {
 
 function renderCell(
   value: string | boolean,
-  isHomelas: boolean
+  isTallify: boolean
 ): React.ReactNode {
   if (typeof value === "boolean") {
     return value ? (
       <Check
         className={`w-5 h-5 mx-auto ${
-          isHomelas ? "text-primary" : "text-green-500"
+          isTallify ? "text-primary" : "text-green-500"
         }`}
       />
     ) : (
@@ -207,7 +211,7 @@ function renderCell(
   return (
     <span
       className={`text-sm ${
-        isHomelas ? "font-semibold text-primary" : "text-muted-foreground"
+        isTallify ? "font-semibold text-primary" : "text-muted-foreground"
       }`}
     >
       {value}

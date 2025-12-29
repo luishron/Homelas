@@ -1,4 +1,4 @@
-# 🎨 Mejoras de UX/UI para Homelas
+# 🎨 Mejoras de UX/UI para Tallify
 
 > Recomendaciones específicas para chips, botones, estados, navegación y tipografía
 
@@ -856,5 +856,5 @@ Opciones:
 ---
 
 <div align="center">
-  <strong>Homelas UI Improvements v2.0 - Hecho con ❤️ y Claude Code</strong>
+  <strong>Tallify UI Improvements v2.0 - Hecho con ❤️ y Claude Code</strong>
 </div>

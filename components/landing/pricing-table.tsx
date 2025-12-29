@@ -5,87 +5,62 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { useTranslations } from 'next-intl';
 
 type BillingPeriod = "monthly" | "annual";
 
-const pricingPlans = [
+const pricingPlansConfig = [
   {
-    name: "Gratis",
+    key: 'free',
     price: "$0",
-    description: "Todo lo que necesitas para decidir bien.",
-    features: [
-      "Gastos e ingresos ilimitados",
-      "Categorías personalizables",
-      "Métodos de pago",
-      "Balance real (con gastos futuros)",
-      "Dashboard claro",
-      "Uso en móvil y desktop",
-    ],
-    cta: "Comenzar gratis",
-    ctaSubtext: "Sin tarjeta. Sin vencimiento.",
-    href: "/login",
+    href: "/registro",
+    features: ['unlimitedExpenses', 'customCategories', 'paymentMethods', 'realBalance', 'clearDashboard', 'multiDevice'],
   },
   {
-    name: "Pro",
+    key: 'pro',
     monthlyPrice: 14.99,
     annualPrice: 149.9,
-    description: "Para los que quieren delegar el control.",
-    features: [
-      "Todo lo del plan Gratis",
-      "Gastos recurrentes automáticos",
-      "Búsqueda y filtros avanzados",
-      "Visión mensual y comparativas",
-      "Menos cosas que recordar",
-    ],
-    microArgument: "La suscripción se paga sola.\nEvitás un gasto innecesario y listo.",
-    cta: "Pasar a Pro",
-    href: "/login",
+    href: "/registro",
     popular: true,
+    features: ['allFree', 'recurringExpenses', 'advancedFilters', 'monthlyComparison', 'lessFriction'],
   },
   {
-    name: "Plus",
+    key: 'plus',
     monthlyPrice: 19.99,
     annualPrice: 199.9,
-    description: "Para quienes quieren control total y reportes avanzados.",
-    features: [
-      "Todo lo del plan Pro",
-      "Exportación de datos (CSV, PDF)",
-      "Reportes personalizados",
-      "Compartir dashboard",
-      "Múltiples monedas",
-    ],
-    cta: "Pasar a Plus",
-    href: "/login",
+    href: "/registro",
+    features: ['allPro', 'export', 'customReports', 'shareDashboard', 'multiCurrency'],
   },
 ];
 
 export function PricingTable() {
+  const t = useTranslations('pages.home.pricing');
   const [billingPeriod, setBillingPeriod] =
     useState<BillingPeriod>("annual");
 
-  const getPrice = (plan: typeof pricingPlans[number]) => {
+  const getPrice = (plan: typeof pricingPlansConfig[number]) => {
     if (plan.price) return { display: plan.price, period: "" };
 
     if (billingPeriod === "annual") {
       const monthlyEquivalent = plan.annualPrice! / 12;
       return {
         display: `$${monthlyEquivalent.toFixed(2)}`,
-        period: "/mes",
+        period: t('perMonth'),
       };
     }
 
     return {
       display: `$${plan.monthlyPrice!.toFixed(2)}`,
-      period: "/mes",
+      period: t('perMonth'),
     };
   };
 
-  const getSavings = (plan: typeof pricingPlans[number]) => {
+  const getSavings = (plan: typeof pricingPlansConfig[number]) => {
     if (!plan.monthlyPrice || billingPeriod === "monthly") return null;
     const annualTotal = plan.annualPrice!;
     const monthlyTotal = plan.monthlyPrice! * 12;
     const savings = monthlyTotal - annualTotal;
-    return `Ahorras $${savings.toFixed(2)}`;
+    return t('savings', { amount: savings.toFixed(2) });
   };
 
   return (
@@ -101,12 +76,11 @@ export function PricingTable() {
             id="pricing-heading"
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
           >
-            Empieza gratis.{" "}
-            <span className="text-primary">Escala solo si lo necesitas.</span>
+            {t('headline')}{" "}
+            <span className="text-primary">{t('headlineHighlight')}</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            El plan se paga solo con los gastos que dejas de cometer cuando ves
-            tus números claros.
+            {t('subtitle')}
           </p>
 
           {/* Billing Period Toggle */}
@@ -120,7 +94,7 @@ export function PricingTable() {
               }`}
               aria-pressed={billingPeriod === "monthly"}
             >
-              Mensual
+              {t('billingPeriod.monthly')}
             </button>
             <button
               onClick={() => setBillingPeriod("annual")}
@@ -131,16 +105,16 @@ export function PricingTable() {
               }`}
               aria-pressed={billingPeriod === "annual"}
             >
-              Anual
+              {t('billingPeriod.annual')}
             </button>
           </div>
         </div>
 
         {/* Pricing Grid */}
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pricingPlans.map((plan, index) => (
+          {pricingPlansConfig.map((plan, index) => (
             <div
-              key={plan.name}
+              key={plan.key}
               className={`relative animate-fade-in-up rounded-2xl p-8 ${
                 plan.popular
                   ? "bg-card border-2 border-primary shadow-2xl scale-105"
@@ -154,18 +128,18 @@ export function PricingTable() {
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground px-4 py-1 text-sm font-semibold">
-                    Más popular
+                    {t(`plans.${plan.key}.popular`)}
                   </Badge>
                 </div>
               )}
 
               {/* Plan Name */}
               <h3 className="text-2xl font-bold text-foreground mb-2 mt-2">
-                {plan.name}
+                {t(`plans.${plan.key}.name`)}
               </h3>
 
               {/* Price */}
-              <div className="mb-4">
+              <div className="mb-6">
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-bold text-foreground">
                     {getPrice(plan).display}
@@ -185,7 +159,7 @@ export function PricingTable() {
 
               {/* Description */}
               <p className="text-base text-muted-foreground mb-6 leading-relaxed">
-                {plan.description}
+                {t(`plans.${plan.key}.description`)}
               </p>
 
               {/* Features */}
@@ -194,16 +168,16 @@ export function PricingTable() {
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
                       <Check className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-foreground">{feature}</span>
+                      <span className="text-sm text-foreground">{t(`plans.${plan.key}.features.${feature}`)}</span>
                     </li>
                   ))}
                 </ul>
               )}
 
               {/* Micro-argument */}
-              {plan.microArgument && (
-                <p className="text-sm text-foreground font-medium italic mb-6 p-3 bg-primary/5 rounded-lg border-l-2 border-primary">
-                  {plan.microArgument}
+              {plan.key === 'pro' && (
+                <p className="text-sm text-foreground font-medium italic mb-6 p-3 bg-primary/5 rounded-lg border-l-2 border-primary whitespace-pre-line">
+                  {t(`plans.${plan.key}.microArgument`)}
                 </p>
               )}
 
@@ -217,13 +191,13 @@ export function PricingTable() {
                     : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 }`}
               >
-                <Link href={plan.href}>{plan.cta} →</Link>
+                <Link href={plan.href}>{t(`plans.${plan.key}.cta`)} →</Link>
               </Button>
 
               {/* CTA Subtext */}
-              {plan.ctaSubtext && (
+              {plan.key === 'free' && (
                 <p className="text-xs text-muted-foreground text-center mt-3">
-                  {plan.ctaSubtext}
+                  {t(`plans.${plan.key}.ctaSubtext`)}
                 </p>
               )}
             </div>
@@ -233,7 +207,7 @@ export function PricingTable() {
         {/* Footer Note */}
         <div className="max-w-3xl mx-auto mt-16 text-center">
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Tus datos son tuyos. Sin letra chica. Cancela cuando quieras.
+            {t('footerNote')}
           </p>
         </div>
       </div>

@@ -41,7 +41,7 @@ export function ValuePropsSection() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4"
           >
             Lo que ganas con{" "}
-            <span className="text-primary">Homelas</span>
+            <span className="text-primary">Tallify</span>
           </h2>
         </div>
 

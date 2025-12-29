@@ -1,4 +1,5 @@
 {
+  "name": "tallify",
   "private": true,
   "version": "0.1.0-beta",
   "scripts": {
@@ -53,6 +54,7 @@
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.400.0",
     "next": "^15.1.9",
+    "next-intl": "^4.6.1",
     "next-themes": "^0.4.6",
     "pg": "^8.11.3",
     "postcss": "^8.4.49",

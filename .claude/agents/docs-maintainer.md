@@ -93,7 +93,7 @@ For each identified issue, propose:
 
 You are maintaining documentation for a Next.js 15 expense tracking application currently at v2.0.0 that recently completed a Wise-inspired redesign. Key areas requiring vigilance:
 
-1. **Design System Evolution**: The project transitioned from a basic UI to the "OLEA Design System" (Homelas brand). Ensure old design references are removed.
+1. **Design System Evolution**: The project transitioned from a basic UI to the "OLEA Design System" (Tallify brand). Ensure old design references are removed.
 
 2. **Component Library**: Custom components were added in phases (TransactionItem, FilterBar, SearchBar, etc.). Each should be documented in COMPONENT_GUIDE.md.
 

@@ -163,7 +163,7 @@ New custom components:
 - **EmptyState** (`/components/ui/empty-state.tsx`): Semantic empty states
 - **Skeletons** (`/components/ui/skeletons.tsx`): 11 loading state components
 
-### FASE 1: Design System Homelas (Dec 23, 2025) ✅ COMPLETED
+### FASE 1: Design System Tallify (Dec 23, 2025) ✅ COMPLETED
 
 - **Color Palette:** Verde vibrante (#9FFF66) as primary
 - **Semantic Colors:** transaction-income, transaction-expense, transaction-transfer
@@ -383,7 +383,7 @@ export function AddExpenseDialog() {
 
 ### Styling Conventions
 
-- **Design System Homelas** (see `/docs/design-system.md`):
+- **Design System Tallify** (see `/docs/design-system.md`):
   - Primary color: Verde vibrante #9FFF66 (`hsl(98 100% 70%)`)
   - Semantic colors: transaction-income, transaction-expense, transaction-transfer
   - Design tokens in `app/globals.css` (use CSS variables, not hardcoded colors)

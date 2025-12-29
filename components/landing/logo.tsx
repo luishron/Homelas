@@ -36,7 +36,7 @@ export function Logo({ className = "" }: { className?: string }) {
           $
         </text>
       </svg>
-      <span className="text-xl font-bold text-foreground">Homelas</span>
+      <span className="text-xl font-bold text-foreground">Tallify</span>
     </div>
   );
 }
