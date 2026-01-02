@@ -24,12 +24,21 @@ export default async function PagadosPage() {
   // Obtener métodos de pago del usuario
   const paymentMethods = await getPaymentMethodsByUser(user.id);
 
-  // Obtener SOLO gastos pagados
+  // Obtener SOLO gastos pagados del mes actual
   const { expenses, totalExpenses } = await getExpensesByUser(user.id, {
     limit: 500
   });
 
-  const paidExpenses = expenses.filter((e) => e.payment_status === 'pagado');
+  // Filtrar solo gastos pagados del mes actual
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+
+  const paidExpenses = expenses.filter((e) => {
+    if (e.payment_status !== 'pagado') return false;
+    const expenseDate = new Date(e.date);
+    return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -41,9 +50,9 @@ export default async function PagadosPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">Historial de Pagados</h1>
+            <h1 className="text-3xl font-bold">Gastos Pagados</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Gastos que ya han sido marcados como pagados
+              Gastos pagados del mes actual
             </p>
           </div>
         </div>
