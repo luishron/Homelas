@@ -76,36 +76,54 @@ export function ExpenseHeatmapClient({
     });
   }, [dataMap, dateRange]);
 
-  // Group by weeks (GitHub style: 7 rows for days of week, columns for weeks)
+  // Create a 2D grid: grid[row][col] where row = day of week (0-6), col = week number
   const gridData = useMemo(() => {
-    // Get all weeks in the range
-    const weeks = eachWeekOfInterval(
-      {
-        start: dateRange.startDate,
-        end: dateRange.endDate,
-      },
-      { weekStartsOn: 1 } // Start on Monday
-    );
+    if (allDays.length === 0) return { grid: [], weeks: [] };
 
-    return weeks.map((weekStart) => {
-      const weekEnd = endOfWeek(weekStart, { weekStartsOn: 1 });
+    // Calculate week number for each day (0-indexed from start date)
+    const daysWithWeek = allDays.map((day) => {
+      const dayDate = parseISO(day.date);
+      const dayOfWeek = dayDate.getDay();
+      // Convert to Monday-first: Mon=0, Tue=1, ..., Sun=6
+      const rowIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 
-      // Create 7 slots for each day of the week (Mon-Sun)
-      const days: (DayData | null)[] = Array(7).fill(null);
+      // Calculate week number from start date
+      const daysSinceStart = Math.floor(
+        (dayDate.getTime() - dateRange.startDate.getTime()) / (1000 * 60 * 60 * 24)
+      );
+      const weekNumber = Math.floor((daysSinceStart + (dateRange.startDate.getDay() === 0 ? 6 : dateRange.startDate.getDay() - 1)) / 7);
 
-      // Fill in days that exist in our data range
-      allDays.forEach((day) => {
-        const dayDate = parseISO(day.date);
-        if (dayDate >= weekStart && dayDate <= weekEnd) {
-          const dayOfWeek = dayDate.getDay();
-          // Convert Sunday (0) to index 6, Monday (1) to index 0
-          const dayIndex = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-          days[dayIndex] = day;
-        }
+      return { ...day, rowIndex, weekNumber };
+    });
+
+    // Get total number of weeks
+    const maxWeek = Math.max(...daysWithWeek.map((d) => d.weekNumber));
+    const totalWeeks = maxWeek + 1;
+
+    // Create empty grid: 7 rows × N columns
+    const grid: (DayData | null)[][] = Array(7)
+      .fill(null)
+      .map(() => Array(totalWeeks).fill(null));
+
+    // Fill the grid
+    daysWithWeek.forEach((day) => {
+      if (day.rowIndex >= 0 && day.rowIndex < 7 && day.weekNumber >= 0 && day.weekNumber < totalWeeks) {
+        grid[day.rowIndex][day.weekNumber] = day;
+      }
+    });
+
+    // Get week start dates for month labels
+    const weeks = Array(totalWeeks)
+      .fill(null)
+      .map((_, weekIndex) => {
+        const daysInWeek = 7;
+        const dayOffset = weekIndex * daysInWeek - (dateRange.startDate.getDay() === 0 ? 6 : dateRange.startDate.getDay() - 1);
+        const weekStart = new Date(dateRange.startDate);
+        weekStart.setDate(weekStart.getDate() + dayOffset);
+        return weekStart;
       });
 
-      return { days, weekStart };
-    });
+    return { grid, weeks };
   }, [allDays, dateRange]);
 
   // Calculate month labels positions
@@ -113,11 +131,11 @@ export function ExpenseHeatmapClient({
     const labels: Array<{ text: string; colIndex: number }> = [];
     let lastMonth = -1;
 
-    gridData.forEach((week, index) => {
-      const month = getMonth(week.weekStart);
+    gridData.weeks.forEach((weekStart, index) => {
+      const month = getMonth(weekStart);
       if (month !== lastMonth) {
         labels.push({
-          text: format(week.weekStart, 'MMM', { locale: es }),
+          text: format(weekStart, 'MMM', { locale: es }),
           colIndex: index,
         });
         lastMonth = month;
@@ -261,51 +279,56 @@ export function ExpenseHeatmapClient({
                     ))}
                   </div>
 
-                  {/* Heatmap cells */}
+                  {/* Heatmap cells - Grid 2D: 7 rows × N columns */}
                   <div className="flex gap-1">
-                    {gridData.map((week, weekIndex) => (
-                      <div key={weekIndex} className="flex flex-col gap-1">
-                        {week.days.map((day, dayIndex) => (
-                          <div key={dayIndex}>
-                            {day ? (
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button
-                                    className={`
-                                      w-[11px] h-[11px] rounded-sm transition-all duration-150
-                                      hover:ring-2 hover:ring-ring hover:ring-offset-1
-                                      focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none
-                                      ${getIntensityClass(day.count)}
-                                    `}
-                                    aria-label={t('cell.ariaLabel', {
-                                      date: format(parseISO(day.date), 'PPP', {
-                                        locale: es,
-                                      }),
-                                      count: day.count,
-                                    })}
-                                  />
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <div className="text-xs space-y-1">
-                                    <p className="font-semibold">
-                                      {format(parseISO(day.date), 'PPP', { locale: es })}
-                                    </p>
-                                    <p className="text-muted-foreground">
-                                      {t('tooltip.expenses', { count: day.count })}
-                                    </p>
-                                    {day.total > 0 && (
-                                      <p className="font-medium text-primary">
-                                        {formatCurrency(day.total, currency)}
+                    {/* Iterate through columns (weeks) */}
+                    {gridData.grid[0]?.map((_, colIndex) => (
+                      <div key={colIndex} className="flex flex-col gap-1">
+                        {/* Iterate through rows (days of week) */}
+                        {gridData.grid.map((row, rowIndex) => {
+                          const day = row[colIndex];
+                          return (
+                            <div key={rowIndex}>
+                              {day ? (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <button
+                                      className={`
+                                        w-[11px] h-[11px] rounded-sm transition-all duration-150
+                                        hover:ring-2 hover:ring-ring hover:ring-offset-1
+                                        focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none
+                                        ${getIntensityClass(day.count)}
+                                      `}
+                                      aria-label={t('cell.ariaLabel', {
+                                        date: format(parseISO(day.date), 'PPP', {
+                                          locale: es,
+                                        }),
+                                        count: day.count,
+                                      })}
+                                    />
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <div className="text-xs space-y-1">
+                                      <p className="font-semibold">
+                                        {format(parseISO(day.date), 'PPP', { locale: es })}
                                       </p>
-                                    )}
-                                  </div>
-                                </TooltipContent>
-                              </Tooltip>
-                            ) : (
-                              <div className="w-[11px] h-[11px]" /> // Empty space for days outside range
-                            )}
-                          </div>
-                        ))}
+                                      <p className="text-muted-foreground">
+                                        {t('tooltip.expenses', { count: day.count })}
+                                      </p>
+                                      {day.total > 0 && (
+                                        <p className="font-medium text-primary">
+                                          {formatCurrency(day.total, currency)}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              ) : (
+                                <div className="w-[11px] h-[11px]" /> // Empty space
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     ))}
                   </div>
