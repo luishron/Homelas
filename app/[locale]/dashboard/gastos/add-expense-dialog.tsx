@@ -46,15 +46,17 @@ export function AddExpenseDialog({
   categories,
   paymentMethods,
   defaultCategoryId,
-  lockCategory = false
+  lockCategory = false,
+  defaultRecurring = false
 }: {
   categories: Category[];
   paymentMethods: PaymentMethod[];
   defaultCategoryId?: number;
   lockCategory?: boolean;
+  defaultRecurring?: boolean;
 }) {
   const [open, setOpen] = useState(false);
-  const [isRecurring, setIsRecurring] = useState(false);
+  const [isRecurring, setIsRecurring] = useState(defaultRecurring);
   const [categoryId, setCategoryId] = useState(
     defaultCategoryId ? String(defaultCategoryId) : ''
   );

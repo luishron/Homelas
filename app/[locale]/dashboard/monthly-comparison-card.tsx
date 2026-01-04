@@ -1,4 +1,6 @@
-import { Calendar, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Calendar, TrendingUp, TrendingDown, Minus, PlusCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -172,8 +174,16 @@ export function MonthlyComparisonCard({
                 </div>
               </>
             ) : (
-              <div className="text-sm text-muted-foreground py-4">
-                Sin gastos recurrentes configurados
+              <div className="text-center py-4">
+                <p className="text-sm text-muted-foreground mb-3">
+                  Sin gastos recurrentes configurados
+                </p>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/dashboard/gastos?recurring=true">
+                    <PlusCircle className="h-3 w-3 mr-2" />
+                    Crear gasto recurrente
+                  </Link>
+                </Button>
               </div>
             )}
           </div>

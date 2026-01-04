@@ -19,8 +19,16 @@ import { getUserCurrency } from '@/lib/utils/currency-helpers';
 
 export const dynamic = 'force-dynamic';
 
-export default async function GastosPage() {
+export default async function GastosPage({
+  searchParams
+}: {
+  searchParams: Promise<{ recurring?: string }>
+}) {
   const user = await getUser();
+
+  // Detectar si se debe abrir con "recurrente" checkeado
+  const params = await searchParams;
+  const defaultRecurring = params.recurring === 'true';
 
   if (!user) {
     return <div>No autenticado</div>;
@@ -158,6 +166,7 @@ export default async function GastosPage() {
               <AddExpenseDialog
                 categories={categories}
                 paymentMethods={paymentMethods}
+                defaultRecurring={defaultRecurring}
               />
             )}
           </div>
