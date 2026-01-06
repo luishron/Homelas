@@ -69,15 +69,12 @@ export async function updateSession(request: NextRequest) {
       return supabaseResponse;
     }
 
-    // Verificar si el usuario ha completado el onboarding
-    const { data: profile, error } = await supabase
-      .from('user_profiles')
-      .select('onboarding_completed')
-      .eq('id', user.id)
-      .single();
+    // Read onboarding status from user metadata (cached in JWT, no DB query!)
+    // This is MUCH faster than querying the database on every request
+    const onboardingCompleted = user.user_metadata?.onboarding_completed === true;
 
-    // Si no hay perfil o no ha completado onboarding, redirigir a onboarding
-    if (error || !profile || !profile.onboarding_completed) {
+    // Si no ha completado onboarding, redirigir a onboarding
+    if (!onboardingCompleted) {
       // Permitir acceso a la página de onboarding
       if (pathname.includes('/onboarding')) {
         return supabaseResponse;

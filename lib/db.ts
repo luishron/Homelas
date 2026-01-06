@@ -189,7 +189,17 @@ export async function updateUserProfile(
 }
 
 export async function completeOnboarding(userId: string): Promise<UserProfile> {
-  return updateUserProfile(userId, { onboarding_completed: true });
+  const supabase = await createClient();
+
+  // Update user_profiles table
+  const profile = await updateUserProfile(userId, { onboarding_completed: true });
+
+  // Update user metadata in auth for faster middleware checks (no DB query needed)
+  await supabase.auth.updateUser({
+    data: { onboarding_completed: true }
+  });
+
+  return profile;
 }
 
 //==============================================================================

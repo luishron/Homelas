@@ -271,7 +271,7 @@
       "emailLabel": "Email",
       "emailPlaceholder": "tu@email.com",
       "passwordLabel": "Contraseña",
-      "passwordPlaceholder": "••••••••",
+      "passwordPlaceholder": "Ingresa tu contraseña",
       "submitButton": "Iniciar sesión",
       "submitting": "Iniciando sesión...",
       "noAccount": "¿No tienes cuenta?",
@@ -301,6 +301,10 @@
         "instructions": "Haz clic en el enlace del email para iniciar sesión. El enlace expira en",
         "expiresIn": "1 hora",
         "sendAnother": "Enviar otro enlace"
+      },
+      "redirecting": {
+        "title": "Redirigiendo...",
+        "subtitle": "Te estamos llevando al dashboard"
       },
       "branding": {
         "title": "Tallify",

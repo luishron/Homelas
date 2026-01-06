@@ -111,8 +111,8 @@ export default function OnboardingPage() {
       } else if (step === 5) {
         // Complete onboarding
         await finishOnboarding();
+        // Redirect to dashboard - middleware will handle the rest
         router.push('/dashboard');
-        router.refresh();
       }
     } catch (err) {
       setError(t('error'));

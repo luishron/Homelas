@@ -25,6 +25,7 @@ function LoginForm() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -41,14 +42,15 @@ function LoginForm() {
 
       if (result.error) {
         setError(result.error);
+        setIsLoading(false);
       } else {
-        // Redirect to dashboard on success
+        // Show optimistic feedback
+        setIsRedirecting(true);
+        // Redirect to dashboard - middleware will handle the rest
         router.push('/dashboard');
-        router.refresh();
       }
     } catch (error) {
       setError(t('errors.signIn'));
-    } finally {
       setIsLoading(false);
     }
   };
@@ -72,6 +74,31 @@ function LoginForm() {
       setIsLoading(false);
     }
   };
+
+  if (isRedirecting) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background via-background to-primary/5 p-4 sm:p-6 md:p-8">
+        <Card className="w-full max-w-md animate-fade-in border-primary/20 shadow-2xl">
+          <CardHeader className="space-y-4 text-center pb-6">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 ring-4 ring-primary/5">
+              <Wallet className="h-10 w-10 text-primary animate-pulse" />
+            </div>
+            <CardTitle className="text-2xl sm:text-3xl font-bold">
+              {t('redirecting.title')}
+            </CardTitle>
+            <CardDescription className="text-base sm:text-lg">
+              {t('redirecting.subtitle')}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex justify-center pb-8">
+            <div className="h-2 w-48 bg-muted rounded-full overflow-hidden">
+              <div className="h-full bg-primary animate-pulse rounded-full" style={{ width: '100%' }} />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (emailSent) {
     return (
