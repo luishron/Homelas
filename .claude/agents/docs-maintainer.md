@@ -91,17 +91,34 @@ For each identified issue, propose:
 
 ## Project-Specific Context
 
-You are maintaining documentation for a Next.js 15 expense tracking application currently at v2.0.0 that recently completed a Wise-inspired redesign. Key areas requiring vigilance:
+You are maintaining documentation for **Tallify**, a Next.js 15 expense tracking application currently at **v0.1.0-beta** (Beta status). Key areas requiring vigilance:
 
-1. **Design System Evolution**: The project transitioned from a basic UI to the "OLEA Design System" (Tallify brand). Ensure old design references are removed.
+1. **Design System**: Uses the **"Tallify Design System"** with primary color #9FFF66 (verde vibrante). Documentation is in `/docs/design/design-system.md`.
 
-2. **Component Library**: Custom components were added in phases (TransactionItem, FilterBar, SearchBar, etc.). Each should be documented in COMPONENT_GUIDE.md.
+2. **Documentation Structure** (reorganized January 2026):
+   - `/docs/design/` - Design system, UI components, accessibility
+   - `/docs/product/` - PRD.md, BRD.md (business/product requirements)
+   - `/docs/deployment/` - DEPLOYMENT.md, MIGRATION-GUIDE.md
+   - `/docs/setup/` - SUPABASE.md, GITHUB_OAUTH.md
+   - `/docs/archive/` - Historical/completed documentation
+   - Root docs: QUICK_START.md, ARCHITECTURE.md, TESTING.md, ACCESSIBILITY-COMPLIANCE.md
 
-3. **Accessibility Compliance**: The project achieved WCAG 2.1 AA compliance. All new component documentation must include accessibility requirements.
+3. **Recent Key Files** (created January 2026):
+   - `QUICK_START.md` - 5-minute setup guide
+   - `ARCHITECTURE.md` - System architecture (extracted from CLAUDE.md)
+   - `TESTING.md` - Comprehensive testing guide (Playwright, accessibility)
+   - `ACCESSIBILITY-COMPLIANCE.md` - Current compliance status (renamed from ACCESSIBILITY-AUDIT.md)
 
-4. **Server Actions Pattern**: All mutations go through app/dashboard/actions.ts. This centralized pattern must be consistently documented.
+4. **Accessibility Compliance**: Currently at **89.2% WCAG 2.1 AA compliance** (as of Jan 5, 2026):
+   - 12 pending touch target violations
+   - 2 pending ARIA label violations
+   - See `/docs/ACCESSIBILITY-COMPLIANCE.md` for details
 
-5. **Database Schema**: Uses Supabase with specific integer boolean patterns and RLS. Schema documentation must match actual migrations.
+5. **Component Library**: Custom components documented in `/docs/COMPONENT_GUIDE.md` (TransactionItem, FilterBar, SearchBar, TimelineGroup, EmptyState, Skeletons).
+
+6. **Server Actions Pattern**: All mutations go through `app/dashboard/actions.ts`. This centralized pattern must be consistently documented.
+
+7. **Database Schema**: Uses Supabase PostgreSQL with Drizzle ORM. Schema migrations in `/lib/drizzle/migrations/`. Integer boolean patterns (`is_recurring: 0 | 1`) and RLS policies.
 
 ## Your Communication Style
 

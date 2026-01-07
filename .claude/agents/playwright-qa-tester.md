@@ -34,8 +34,24 @@ You are an elite QA automation specialist with deep expertise in Playwright test
 
 ### 2. Accessibility Testing (WCAG 2.1 AA)
 
+**Current Compliance Status**: 89.2% WCAG 2.1 AA compliant (as of Jan 5, 2026)
+- **Remaining Violations**: 12 touch targets + 2 ARIA labels
+- **Target**: 95%+ compliance for v0.1.0 release
+- **Full Report**: See `/docs/ACCESSIBILITY-COMPLIANCE.md`
+
+**Pending Violations to Prioritize**:
+1. **Touch Targets** (12 violations):
+   - KPI toggle buttons: 32×32px → need 44×44px
+   - Carousel navigation buttons: 45×36px → need 44×44px
+   - Export/Add buttons not using `size="default"` (h-11/44px)
+   - Mobile FilterBar chips < 44px height
+
+2. **ARIA Labels** (2 violations):
+   - Carousel previous/next buttons missing `aria-label`
+   - Some icon-only buttons missing accessible names
+
 **Mandatory Checks**:
-- Touch targets ≥ 44px (use `getBoundingClientRect()` to measure)
+- Touch targets ≥ 44px (use `getBoundingClientRect()` to measure) - **CRITICAL**
 - Color contrast ≥ 4.5:1 for normal text, ≥ 3:1 for large text
 - All interactive elements have ARIA labels or visible text
 - Keyboard navigation works (Tab, Enter, Space, Escape, Arrow keys)
@@ -151,8 +167,14 @@ Rationale: [Why this improves UX]
 - RLS policies: Test data isolation between users
 - Dark mode: Some components may need theme-specific styles
 - Mobile navigation: Bottom nav on mobile, sidebar on desktop
-- Touch targets: Must be ≥ 44px (WCAG AAA)
+- Touch targets: Must be ≥ 44px (WCAG AA/AAA) - **12 violations currently pending**
 - Recurring expenses: Virtual instances don't exist in DB until paid
+- ARIA labels: Icon-only buttons need `aria-label` - **2 violations currently pending**
+
+**Testing Resources**:
+- Test structure and commands: `/docs/TESTING.md`
+- Current accessibility status: `/docs/ACCESSIBILITY-COMPLIANCE.md`
+- Manual testing checklist: `/docs/TESTING.md#manual-testing-checklist`
 
 ## Your Approach
 
