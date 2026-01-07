@@ -37,7 +37,7 @@ export default async function IngresosPage() {
           </TabsList>
           <div className="flex items-center gap-2">
             {categories.length === 0 ? (
-              <Link href="/dashboard/ingresos/categorias">
+              <Link href="/dashboard/income/categories">
                 <Button size="sm" className="h-8 gap-1">
                   <span>Crear Categoría Primero</span>
                 </Button>
@@ -68,7 +68,7 @@ export default async function IngresosPage() {
               <div className="text-center py-8">
                 <p className="text-muted-foreground">No hay ingresos registrados</p>
                 {categories.length === 0 ? (
-                  <Link href="/dashboard/ingresos/categorias">
+                  <Link href="/dashboard/income/categories">
                     <Button className="mt-4" size="sm">
                       <PlusCircle className="mr-2 h-4 w-4" />
                       Crear Categoría Primero

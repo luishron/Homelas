@@ -56,7 +56,7 @@ export function CategoryCardCompact({ category }: CategoryCardCompactProps) {
   const transactionCount = category.recentExpenses?.length || 0;
 
   return (
-    <Link href={`/dashboard/categorias/${category.id}`}>
+    <Link href={`/dashboard/categories/${category.id}`}>
       <CardFinance
         variant="elevated"
         accentPosition="none"

@@ -179,7 +179,7 @@ export function MonthlyComparisonCard({
                   Sin gastos recurrentes configurados
                 </p>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/dashboard/gastos?recurring=true">
+                  <Link href="/dashboard/expenses?recurring=true">
                     <PlusCircle className="h-3 w-3 mr-2" />
                     Crear gasto recurrente
                   </Link>

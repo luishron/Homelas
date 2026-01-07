@@ -19,7 +19,7 @@ import {
   DollarSign
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { CurrencySelector } from '../dashboard/configuracion/currency-selector';
+import { CurrencySelector } from '../dashboard/profile/settings/currency-selector';
 import { type CurrencyCode, DEFAULT_CURRENCY, inferCurrencyFromTimezone } from '@/lib/config/currencies';
 
 type OnboardingStep = 1 | 2 | 3 | 4 | 5;

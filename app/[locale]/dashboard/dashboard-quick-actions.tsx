@@ -11,7 +11,7 @@ interface DashboardQuickActionsProps {
 export function DashboardQuickActions({ overdueCount }: DashboardQuickActionsProps) {
   return (
     <QuickActionsContainer>
-      <Link href="/dashboard/gastos">
+      <Link href="/dashboard/expenses">
         <QuickActionCard
           icon={Plus}
           label="Nuevo Gasto"
@@ -20,7 +20,7 @@ export function DashboardQuickActions({ overdueCount }: DashboardQuickActionsPro
         />
       </Link>
 
-      <Link href="/dashboard/ingresos">
+      <Link href="/dashboard/income">
         <QuickActionCard
           icon={TrendingUp}
           label="Nuevo Ingreso"
@@ -28,7 +28,7 @@ export function DashboardQuickActions({ overdueCount }: DashboardQuickActionsPro
         />
       </Link>
 
-      <Link href="/dashboard/gastos">
+      <Link href="/dashboard/expenses">
         <QuickActionCard
           icon={Send}
           label="Pagar Gasto"
@@ -36,7 +36,7 @@ export function DashboardQuickActions({ overdueCount }: DashboardQuickActionsPro
         />
       </Link>
 
-      <Link href="/dashboard/categorias">
+      <Link href="/dashboard/categories">
         <QuickActionCard
           icon={Wallet}
           label="Categorías"

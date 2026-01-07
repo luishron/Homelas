@@ -30,7 +30,7 @@ export async function updateUserProfile(formData: FormData): Promise<ActionResul
       throw new Error(error.message);
     }
 
-    revalidatePath('/dashboard/configuracion');
+    revalidatePath('/dashboard/profile/settings');
     revalidatePath('/dashboard');
   });
 }
@@ -83,6 +83,6 @@ export async function updateUserPreferences(formData: FormData): Promise<ActionR
     // Revalidar todas las páginas del dashboard
     // (porque la moneda afecta todo el formateo)
     revalidatePath('/dashboard', 'layout');
-    revalidatePath('/dashboard/configuracion');
+    revalidatePath('/dashboard/profile/settings');
   });
 }

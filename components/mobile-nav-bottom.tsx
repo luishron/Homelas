@@ -11,7 +11,12 @@ import {
   CreditCard,
   MoreHorizontal,
   History,
-  ChevronRight
+  ChevronRight,
+  Receipt,
+  User,
+  Settings,
+  Shield,
+  Download
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -30,34 +35,94 @@ export function MobileNavBottom() {
   // Items principales (3 máximo para mejor UX mobile)
   const primaryLinks = [
     { href: '/dashboard', label: 'Inicio', icon: Home },
-    { href: '/dashboard/gastos', label: 'Gastos', icon: DollarSign }
+    { href: '/dashboard/expenses', label: 'Gastos', icon: DollarSign }
   ];
 
-  // Items secundarios en el menú "Más"
+  // Items secundarios en el menú "Más" - Agrupados por sección
   const moreLinks = [
+    // Sección Gasto
     {
-      href: '/dashboard/ingresos',
-      label: 'Ingresos',
-      icon: TrendingUp,
-      description: 'Registra tus fuentes de ingreso'
+      section: 'Gasto',
+      items: [
+        {
+          href: '/dashboard/categories',
+          label: 'Categorías',
+          icon: FolderOpen,
+          description: 'Administra categorías de gastos'
+        },
+        {
+          href: '/dashboard/payment-methods',
+          label: 'Métodos de pago',
+          icon: CreditCard,
+          description: 'Configura tarjetas y cuentas'
+        },
+        {
+          href: '/dashboard/expenses/recurring',
+          label: 'Recurrentes',
+          icon: Receipt,
+          description: 'Plantillas de gastos automáticos'
+        },
+        {
+          href: '/dashboard/expenses/paid',
+          label: 'Pagados',
+          icon: History,
+          description: 'Historial de gastos pagados'
+        }
+      ]
     },
+    // Sección Ingresos
     {
-      href: '/dashboard/categorias',
-      label: 'Categorías',
-      icon: FolderOpen,
-      description: 'Administra categorías de gastos'
+      section: 'Ingresos',
+      items: [
+        {
+          href: '/dashboard/income',
+          label: 'Ingresos',
+          icon: TrendingUp,
+          description: 'Registra tus fuentes de ingreso'
+        },
+        {
+          href: '/dashboard/income/categories',
+          label: 'Categorías',
+          icon: FolderOpen,
+          description: 'Administra categorías de ingresos'
+        },
+        {
+          href: '/dashboard/income/recurring',
+          label: 'Recurrentes',
+          icon: TrendingUp,
+          description: 'Plantillas de ingresos automáticos'
+        }
+      ]
     },
+    // Sección Perfil
     {
-      href: '/dashboard/metodos-pago',
-      label: 'Métodos de Pago',
-      icon: CreditCard,
-      description: 'Configura tarjetas y cuentas'
-    },
-    {
-      href: '/dashboard/gastos/pagados',
-      label: 'Gastos Pagados',
-      icon: History,
-      description: 'Consulta el historial'
+      section: 'Perfil',
+      items: [
+        {
+          href: '/dashboard/profile/settings',
+          label: 'Configuración',
+          icon: Settings,
+          description: 'Preferencias y ajustes'
+        },
+        {
+          href: '/dashboard/profile/account',
+          label: 'Mi cuenta',
+          icon: User,
+          description: 'Datos personales y plan'
+        },
+        {
+          href: '/dashboard/profile/security',
+          label: 'Seguridad',
+          icon: Shield,
+          description: 'Contraseña y autenticación'
+        },
+        {
+          href: '/dashboard/profile/export',
+          label: 'Exportar datos',
+          icon: Download,
+          description: 'Backups y exportaciones'
+        }
+      ]
     }
   ];
 
@@ -147,65 +212,79 @@ export function MobileNavBottom() {
             </SheetDescription>
           </SheetHeader>
 
-          <div className="mt-8 space-y-3">
-            {moreLinks.map(({ href, label, icon: Icon, description }) => {
-              const isActive = pathname === href;
-              return (
-                <button
-                  key={href}
-                  onClick={() => handleMoreLinkClick(href)}
-                  aria-label={`${label}: ${description}`}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={cn(
-                    'w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300',
-                    'hover:bg-accent/80 active:scale-[0.97]',
-                    'border-2 border-transparent',
-                    isActive
-                      ? 'bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 border-primary/30 shadow-sm shadow-primary/20'
-                      : 'hover:border-accent'
-                  )}
-                >
-                  <div
-                    className={cn(
-                      'flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300',
-                      isActive
-                        ? 'bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/30'
-                        : 'bg-muted group-hover:bg-muted/80'
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        'h-6 w-6 transition-transform duration-300',
-                        isActive ? 'text-white scale-110' : 'text-muted-foreground'
-                      )}
-                    />
-                  </div>
+          <div className="mt-8 space-y-6">
+            {moreLinks.map((section) => (
+              <div key={section.section}>
+                {/* Section Header */}
+                <div className="px-4 mb-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {section.section}
+                  </h3>
+                </div>
 
-                  <div className="flex-1 text-left">
-                    <div
-                      className={cn(
-                        'font-semibold text-base mb-0.5 transition-colors',
-                        isActive && 'text-primary'
-                      )}
-                    >
-                      {label}
-                    </div>
-                    <div className="text-xs text-muted-foreground leading-relaxed">
-                      {description}
-                    </div>
-                  </div>
+                {/* Section Items */}
+                <div className="space-y-2">
+                  {section.items.map(({ href, label, icon: Icon, description }) => {
+                    const isActive = pathname === href;
+                    return (
+                      <button
+                        key={href}
+                        onClick={() => handleMoreLinkClick(href)}
+                        aria-label={`${label}: ${description}`}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={cn(
+                          'w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300',
+                          'hover:bg-accent/80 active:scale-[0.97]',
+                          'border-2 border-transparent',
+                          isActive
+                            ? 'bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 border-primary/30 shadow-sm shadow-primary/20'
+                            : 'hover:border-accent'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300',
+                            isActive
+                              ? 'bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/30'
+                              : 'bg-muted group-hover:bg-muted/80'
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'h-6 w-6 transition-transform duration-300',
+                              isActive ? 'text-white scale-110' : 'text-muted-foreground'
+                            )}
+                          />
+                        </div>
 
-                  <ChevronRight
-                    className={cn(
-                      'h-5 w-5 transition-all duration-300',
-                      isActive
-                        ? 'text-primary translate-x-1'
-                        : 'text-muted-foreground group-hover:translate-x-1'
-                    )}
-                  />
-                </button>
-              );
-            })}
+                        <div className="flex-1 text-left">
+                          <div
+                            className={cn(
+                              'font-semibold text-base mb-0.5 transition-colors',
+                              isActive && 'text-primary'
+                            )}
+                          >
+                            {label}
+                          </div>
+                          <div className="text-xs text-muted-foreground leading-relaxed">
+                            {description}
+                          </div>
+                        </div>
+
+                        <ChevronRight
+                          className={cn(
+                            'h-5 w-5 transition-all duration-300',
+                            isActive
+                              ? 'text-primary translate-x-1'
+                              : 'text-muted-foreground group-hover:translate-x-1'
+                          )}
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Footer decorativo */}

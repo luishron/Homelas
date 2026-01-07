@@ -62,7 +62,7 @@ export function CategoryCard({ category }: { category: CategoryWithData }) {
 
   return (
     <>
-      <Link href={`/dashboard/categorias/${category.id}`}>
+      <Link href={`/dashboard/categories/${category.id}`}>
         <CardFinance
           variant="elevated"
           accentPosition="top"

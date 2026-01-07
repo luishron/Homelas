@@ -100,7 +100,7 @@ export default async function DashboardPage() {
                 {t('emptyState.description')}
               </p>
               <Button asChild>
-                <Link href="/dashboard/gastos">
+                <Link href="/dashboard/expenses">
                   <PlusCircle className="mr-2 h-4 w-4" />
                   {t('emptyState.cta')}
                 </Link>
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
                 {t('emptyState.description')}
               </p>
               <Button variant="outline" asChild>
-                <Link href="/dashboard/ingresos">
+                <Link href="/dashboard/income">
                   <TrendingUp className="mr-2 h-4 w-4" />
                   {t('navigation.income')}
                 </Link>

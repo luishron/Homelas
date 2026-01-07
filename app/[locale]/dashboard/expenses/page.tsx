@@ -101,7 +101,7 @@ export default async function GastosPage({
           </p>
         </div>
         <Button variant="outline" asChild>
-          <Link href="/dashboard/gastos/pagados" className="gap-2">
+          <Link href="/dashboard/expenses/pagados" className="gap-2">
             <History className="h-4 w-4" />
             <span>Ver Pagados ({paidCount})</span>
           </Link>

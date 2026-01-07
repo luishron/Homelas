@@ -140,7 +140,7 @@ export function CategoryCardDetailed({ category }: CategoryCardDetailedProps) {
 
   return (
     <>
-      <Link href={`/dashboard/categorias/${category.id}`}>
+      <Link href={`/dashboard/categories/${category.id}`}>
         <CardFinance
           variant="elevated"
           accentPosition="top"

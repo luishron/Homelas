@@ -7,9 +7,13 @@ import {
   TrendingUp,
   PanelLeft,
   CreditCard,
-  Settings
+  Settings,
+  User,
+  Shield,
+  Download,
+  Receipt,
+  History
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 import {
   Breadcrumb,
@@ -22,9 +26,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Analytics } from '@vercel/analytics/react';
-import { User } from './user';
+import { User as UserButton } from './user';
 import Providers from './providers';
 import { NavItem } from './nav-item';
+import { NavSection } from './nav-section';
 import { MobileNavBottom } from '@/components/mobile-nav-bottom';
 import { QuickAddFAB } from './quick-add-fab';
 import { getCategoriesByUser, getPaymentMethodsByUser, getExpensesByUser, getIncomesByUser } from '@/lib/db';
@@ -68,7 +73,7 @@ export default async function DashboardLayout({
               <DashboardBreadcrumb t={t} brandName={brandT('name')} />
               <GlobalSearchTrigger />
               <div className="ml-auto" />
-              <User />
+              <UserButton />
             </header>
             <main className="grid flex-1 items-start gap-2 p-3 pb-20 sm:p-4 sm:pb-0 sm:px-6 sm:py-0 md:gap-4">
               {children}
@@ -87,6 +92,27 @@ export default async function DashboardLayout({
 }
 
 function DesktopNav({ t, brandName }: { t: any; brandName: string }) {
+  const expenseLinks = [
+    { href: '/dashboard/expenses', label: t('navigation.expense.all'), icon: "Receipt" as const },
+    { href: '/dashboard/categories', label: t('navigation.expense.categories'), icon: "FolderOpen" as const },
+    { href: '/dashboard/payment-methods', label: t('navigation.expense.paymentMethods'), icon: "CreditCard" as const },
+    { href: '/dashboard/expenses/recurring', label: t('navigation.expense.recurring'), icon: "Receipt" as const },
+    { href: '/dashboard/expenses/paid', label: t('navigation.expense.paid'), icon: "History" as const }
+  ];
+
+  const incomeLinks = [
+    { href: '/dashboard/income', label: t('navigation.income.all'), icon: "TrendingUp" as const },
+    { href: '/dashboard/income/categories', label: t('navigation.income.categories'), icon: "FolderOpen" as const },
+    { href: '/dashboard/income/recurring', label: t('navigation.income.recurring'), icon: "TrendingUp" as const }
+  ];
+
+  const profileLinks = [
+    { href: '/dashboard/profile/settings', label: t('navigation.profile.settings'), icon: "Settings" as const },
+    { href: '/dashboard/profile/account', label: t('navigation.profile.account'), icon: "User" as const },
+    { href: '/dashboard/profile/security', label: t('navigation.profile.security'), icon: "Shield" as const },
+    { href: '/dashboard/profile/export', label: t('navigation.profile.export'), icon: "Download" as const }
+  ];
+
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-60 flex-col border-r bg-background sm:flex">
       <div className="flex h-full flex-col gap-2">
@@ -103,29 +129,37 @@ function DesktopNav({ t, brandName }: { t: any; brandName: string }) {
         {/* Navigation Items */}
         <div className="flex-1 overflow-auto py-2">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+            {/* Dashboard Link */}
             <NavItem href="/dashboard" label={t('navigation.dashboard')}>
               <Home className="h-4 w-4" />
             </NavItem>
 
-            <NavItem href="/dashboard/gastos" label={t('navigation.expenses')}>
-              <DollarSign className="h-4 w-4" />
-            </NavItem>
+            {/* Gasto Section */}
+            <NavSection
+              title={t('navigation.sections.expense')}
+              icon="DollarSign"
+              links={expenseLinks}
+              defaultOpen={true}
+              storageKey="nav-expense-open"
+            />
 
-            <NavItem href="/dashboard/categorias" label={t('navigation.categories')}>
-              <FolderOpen className="h-4 w-4" />
-            </NavItem>
+            {/* Ingresos Section */}
+            <NavSection
+              title={t('navigation.sections.income')}
+              icon="TrendingUp"
+              links={incomeLinks}
+              defaultOpen={false}
+              storageKey="nav-income-open"
+            />
 
-            <NavItem href="/dashboard/metodos-pago" label={t('navigation.paymentMethods')}>
-              <CreditCard className="h-4 w-4" />
-            </NavItem>
-
-            <NavItem href="/dashboard/ingresos" label={t('navigation.income')}>
-              <TrendingUp className="h-4 w-4" />
-            </NavItem>
-
-            <NavItem href="/dashboard/configuracion" label={t('navigation.settings')}>
-              <Settings className="h-4 w-4" />
-            </NavItem>
+            {/* Perfil Section */}
+            <NavSection
+              title={t('navigation.sections.profile')}
+              icon="User"
+              links={profileLinks}
+              defaultOpen={false}
+              storageKey="nav-profile-open"
+            />
           </nav>
         </div>
       </div>
@@ -134,16 +168,8 @@ function DesktopNav({ t, brandName }: { t: any; brandName: string }) {
 }
 
 function MobileNav({ t, brandName }: { t: any; brandName: string }) {
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-
-  const navLinks = [
-    { href: '/dashboard', labelKey: 'navigation.dashboard', icon: Home },
-    { href: '/dashboard/gastos', labelKey: 'navigation.expenses', icon: DollarSign },
-    { href: '/dashboard/categorias', labelKey: 'navigation.categories', icon: FolderOpen },
-    { href: '/dashboard/metodos-pago', labelKey: 'navigation.paymentMethods', icon: CreditCard },
-    { href: '/dashboard/ingresos', labelKey: 'navigation.income', icon: TrendingUp },
-    { href: '/dashboard/configuracion', labelKey: 'navigation.settings', icon: Settings }
-  ];
+  // Note: Server component, can't use pathname directly
+  // We'll use a simpler structure for mobile Sheet navigation
 
   return (
     <Sheet>
@@ -168,22 +194,77 @@ function MobileNav({ t, brandName }: { t: any; brandName: string }) {
           {/* Navigation */}
           <nav className="flex-1 overflow-auto py-4">
             <div className="grid gap-1 px-2 text-sm font-medium">
-              {navLinks.map(({ href, labelKey, icon: Icon }) => {
-                const isActive = pathname === href;
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className={cn(
-                      'flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground transition-all hover:text-primary',
-                      isActive ? 'bg-muted text-primary' : 'transparent'
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {t(labelKey)}
-                  </Link>
-                );
-              })}
+              {/* Dashboard */}
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted"
+              >
+                <Home className="h-4 w-4" />
+                {t('navigation.dashboard')}
+              </Link>
+
+              {/* Sección Gasto */}
+              <div className="mt-4 px-3 text-xs font-semibold uppercase text-muted-foreground">
+                {t('navigation.sections.expense')}
+              </div>
+              <Link href="/dashboard/expenses" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <Receipt className="h-4 w-4" />
+                {t('navigation.expense.all')}
+              </Link>
+              <Link href="/dashboard/categories" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <FolderOpen className="h-4 w-4" />
+                {t('navigation.expense.categories')}
+              </Link>
+              <Link href="/dashboard/payment-methods" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <CreditCard className="h-4 w-4" />
+                {t('navigation.expense.paymentMethods')}
+              </Link>
+              <Link href="/dashboard/expenses/recurring" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <Receipt className="h-4 w-4" />
+                {t('navigation.expense.recurring')}
+              </Link>
+              <Link href="/dashboard/expenses/paid" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <History className="h-4 w-4" />
+                {t('navigation.expense.paid')}
+              </Link>
+
+              {/* Sección Ingresos */}
+              <div className="mt-4 px-3 text-xs font-semibold uppercase text-muted-foreground">
+                {t('navigation.sections.income')}
+              </div>
+              <Link href="/dashboard/income" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <TrendingUp className="h-4 w-4" />
+                {t('navigation.income.all')}
+              </Link>
+              <Link href="/dashboard/income/categories" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <FolderOpen className="h-4 w-4" />
+                {t('navigation.income.categories')}
+              </Link>
+              <Link href="/dashboard/income/recurring" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <TrendingUp className="h-4 w-4" />
+                {t('navigation.income.recurring')}
+              </Link>
+
+              {/* Sección Perfil */}
+              <div className="mt-4 px-3 text-xs font-semibold uppercase text-muted-foreground">
+                {t('navigation.sections.profile')}
+              </div>
+              <Link href="/dashboard/profile/settings" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <Settings className="h-4 w-4" />
+                {t('navigation.profile.settings')}
+              </Link>
+              <Link href="/dashboard/profile/account" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <User className="h-4 w-4" />
+                {t('navigation.profile.account')}
+              </Link>
+              <Link href="/dashboard/profile/security" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <Shield className="h-4 w-4" />
+                {t('navigation.profile.security')}
+              </Link>
+              <Link href="/dashboard/profile/export" className="flex items-center gap-3 rounded-lg px-3 py-3 min-h-[44px] text-muted-foreground hover:text-primary hover:bg-muted">
+                <Download className="h-4 w-4" />
+                {t('navigation.profile.export')}
+              </Link>
             </div>
           </nav>
         </div>

@@ -150,7 +150,7 @@ export function UpcomingExpensesWidget({ expenses, categories, currency, current
             </CardDescription>
           </div>
           <Button variant="outline" size="sm" asChild>
-            <Link href="/dashboard/gastos">Ver todos</Link>
+            <Link href="/dashboard/expenses">Ver todos</Link>
           </Button>
         </div>
       </CardHeader>
@@ -213,7 +213,7 @@ export function UpcomingExpensesWidget({ expenses, categories, currency, current
           {expenses.length > 7 && (
             <div className="pt-2 text-center">
               <Button variant="link" size="sm" asChild>
-                <Link href="/dashboard/gastos">
+                <Link href="/dashboard/expenses">
                   Ver {expenses.length - 7} más
                 </Link>
               </Button>

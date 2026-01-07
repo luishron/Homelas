@@ -22,7 +22,7 @@ export function CategoryHeader({ category }: { category: Category }) {
         </Link>
         <ChevronRight className="h-4 w-4" />
         <Link
-          href="/dashboard/categorias"
+          href="/dashboard/categories"
           className="hover:text-foreground transition-colors"
         >
           Categorías
@@ -34,7 +34,7 @@ export function CategoryHeader({ category }: { category: Category }) {
       {/* Back button for mobile */}
       <div className="md:hidden">
         <Button variant="ghost" size="sm" asChild>
-          <Link href="/dashboard/categorias" className="gap-2">
+          <Link href="/dashboard/categories" className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Volver a Categorías
           </Link>

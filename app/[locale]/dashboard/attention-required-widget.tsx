@@ -240,7 +240,7 @@ export function AttentionRequiredWidget({
           </div>
           {expenses.length > 5 && (
             <Button variant="outline" size="sm" asChild>
-              <Link href="/dashboard/gastos?filter=attention">Ver todos</Link>
+              <Link href="/dashboard/expenses?filter=attention">Ver todos</Link>
             </Button>
           )}
         </div>
@@ -356,7 +356,7 @@ export function AttentionRequiredWidget({
           {expenses.length > 5 && (
             <div className="pt-2 text-center">
               <Button variant="link" size="sm" asChild>
-                <Link href="/dashboard/gastos?filter=attention">
+                <Link href="/dashboard/expenses?filter=attention">
                   Ver todos ({expenses.length})
                 </Link>
               </Button>

@@ -382,11 +382,29 @@
       "navigation": {
         "toggleMenu": "Toggle menu",
         "dashboard": "Dashboard",
-        "expenses": "Expenses",
-        "categories": "Categories",
-        "paymentMethods": "Payment Methods",
-        "income": "Income",
-        "settings": "Settings"
+        "sections": {
+          "expense": "Expense",
+          "income": "Income",
+          "profile": "Profile"
+        },
+        "expense": {
+          "all": "Expenses",
+          "categories": "Categories",
+          "paymentMethods": "Payment methods",
+          "recurring": "Recurring",
+          "paid": "Paid"
+        },
+        "income": {
+          "all": "Income",
+          "categories": "Categories",
+          "recurring": "Recurring"
+        },
+        "profile": {
+          "settings": "Settings",
+          "account": "My account",
+          "security": "Security",
+          "export": "Export data"
+        }
       },
       "months": {
         "january": "January",

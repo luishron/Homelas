@@ -45,7 +45,7 @@ export default async function PagadosPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" asChild>
-            <Link href="/dashboard/gastos">
+            <Link href="/dashboard/expenses">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
