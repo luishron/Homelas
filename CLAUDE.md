@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal expense management web application built with Next.js 15, TypeScript, Supabase, and Tailwind CSS. Features expense tracking, recurring expenses, income management, payment methods, and financial analytics dashboard.
+Personal expense management web application built with Next.js 15, TypeScript, Supabase whit Drizzle ORM, and Tailwind CSS. Features expense tracking, recurring expenses, income management, payment methods, and financial analytics dashboard.
+
 
 **Version:** 0.1.0-beta
 **Status:** 🚧 Beta
