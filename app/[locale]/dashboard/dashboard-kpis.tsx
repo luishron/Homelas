@@ -82,7 +82,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses, cu
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-full min-w-0">
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-full min-w-0">
       {/* Total Gastos del Mes */}
       <div className="rounded-lg border bg-card p-6 shadow-sm max-w-full min-w-0">
         <div className="flex items-center justify-between mb-3">
@@ -92,7 +92,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses, cu
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </div>
         <div className="space-y-1">
-          <p className="text-2xl font-bold tracking-tight">{formatCurrency(currentMonth.totalExpenses, currency)}</p>
+          <p className="text-2xl font-bold tracking-tight tabular-nums">{formatCurrency(currentMonth.totalExpenses, currency)}</p>
           <p className="text-xs text-muted-foreground">
             {currentMonth.expensesCount} {currentMonth.expensesCount === 1 ? t('pluralization.expense.singular') : t('pluralization.expense.plural')}
           </p>
@@ -122,7 +122,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses, cu
           </div>
         </div>
         <div className="space-y-1">
-          <p className="text-2xl font-bold tracking-tight text-green-600">
+          <p className="text-2xl font-bold tracking-tight tabular-nums text-green-600">
             {hideIncome ? '••••••' : formatCurrency(currentMonth.totalIncome, currency)}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -154,7 +154,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses, cu
           </div>
         </div>
         <div className="space-y-1">
-          <p className={`text-2xl font-bold tracking-tight ${
+          <p className={`text-2xl font-bold tracking-tight tabular-nums ${
             currentMonth.balance >= 0 ? 'text-green-600' : 'text-red-600'
           }`}>
             {hideBalance ? '••••••' : formatCurrency(currentMonth.balance, currency)}
@@ -185,7 +185,7 @@ export function DashboardKPIs({ currentMonth, previousMonth, overdueExpenses, cu
           }`} />
         </div>
         <div className="space-y-1">
-          <p className={`text-2xl font-bold tracking-tight ${
+          <p className={`text-2xl font-bold tracking-tight tabular-nums ${
             overdueExpenses.count > 0 ? 'text-destructive' : 'text-muted-foreground'
           }`}>
             {overdueExpenses.count > 0 ? formatCurrency(overdueExpenses.total, currency) : formatCurrency(0, currency)}

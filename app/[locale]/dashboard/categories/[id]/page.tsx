@@ -74,7 +74,7 @@ export default async function CategoryDetailsPage({
 
       <CategoryStatsCards statistics={statistics} />
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
         <CategoryTrendChart data={monthlyTrend} category={category} />
 
         <Card>

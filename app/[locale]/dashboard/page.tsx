@@ -89,7 +89,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Estado vacío con CTAs */}
-        <div className="grid gap-4 md:grid-cols-2 animate-fade-in-up w-full max-w-full min-w-0" style={{ animationDelay: '0.03s' }}>
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 animate-fade-in-up w-full max-w-full min-w-0" style={{ animationDelay: '0.03s' }}>
           <div className="rounded-lg border bg-card p-8">
             <div className="flex flex-col items-center text-center">
               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -181,7 +181,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Grid de 2 columnas: Atención requerida y Top categorías */}
-      <div className="grid gap-6 md:grid-cols-2 animate-fade-in-up w-full max-w-full min-w-0" style={{ animationDelay: '0.07s' }}>
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 animate-fade-in-up w-full max-w-full min-w-0" style={{ animationDelay: '0.07s' }}>
         <AttentionRequiredWidget
           expenses={attentionRequiredExpenses}
           categories={categories}

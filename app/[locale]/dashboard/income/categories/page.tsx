@@ -16,11 +16,13 @@ export default async function IncomeCategoriesPage() {
   const categories = await getIncomeCategoriesByUser(user.id);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Categorías de Ingresos</h1>
-          <p className="text-muted-foreground mt-1">
+    <div className="flex flex-col gap-4 w-full max-w-full">
+      <div className="flex items-center justify-between w-full min-w-0">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-bold truncate">
+            Categorías de Ingresos
+          </h1>
+          <p className="text-muted-foreground mt-1 truncate">
             Organiza tus ingresos por categorías
           </p>
         </div>
@@ -28,7 +30,7 @@ export default async function IncomeCategoriesPage() {
       </div>
 
       {categories.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center w-full">
           <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
             <h3 className="mt-4 text-lg font-semibold">
               No hay categorías de ingresos
@@ -40,7 +42,7 @@ export default async function IncomeCategoriesPage() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full">
           {categories.map((category) => (
             <IncomeCategoryCard key={category.id} category={category} />
           ))}

@@ -81,25 +81,25 @@ export function PaymentMethodCard({
             </Button>
           </div>
         </div>
-        <CardTitle>{paymentMethod.name}</CardTitle>
-        <CardDescription>
+        <CardTitle className="line-clamp-1">{paymentMethod.name}</CardTitle>
+        <CardDescription className="line-clamp-2">
           {PAYMENT_TYPE_LABELS[paymentMethod.type] || paymentMethod.type}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           {paymentMethod.bank && (
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Banco:</span>
-              <span className="text-sm font-medium">{paymentMethod.bank}</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-sm text-muted-foreground flex-shrink-0">Banco:</span>
+              <span className="text-sm font-medium truncate min-w-0">{paymentMethod.bank}</span>
             </div>
           )}
           {paymentMethod.last_four_digits && (
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-sm text-muted-foreground flex-shrink-0">
                 Últimos 4 dígitos:
               </span>
-              <span className="text-sm font-medium font-mono">
+              <span className="text-sm font-medium font-mono tabular-nums">
                 •••• {paymentMethod.last_four_digits}
               </span>
             </div>

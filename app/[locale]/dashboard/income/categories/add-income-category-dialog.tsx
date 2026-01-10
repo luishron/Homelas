@@ -20,7 +20,20 @@ import { useRouter } from 'next/navigation';
 import { COLORS } from '@/lib/constants/colors';
 import { useToast } from '@/hooks/use-toast';
 
-const ICONS = ['💼', '💡', '📈', '🎁', '💰', '🏦', '📊', '💵', '🎯', '⭐', '🚀', '💎'];
+const ICONS = [
+  '💼',
+  '💡',
+  '📈',
+  '🎁',
+  '💰',
+  '🏦',
+  '📊',
+  '💵',
+  '🎯',
+  '⭐',
+  '🚀',
+  '💎'
+];
 
 export function AddIncomeCategoryDialog() {
   const [open, setOpen] = useState(false);
@@ -61,9 +74,12 @@ export function AddIncomeCategoryDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Nueva Categoría
+        <Button
+          aria-label="Agregar nueva categoría de ingreso"
+          className="gap-2"
+        >
+          <PlusCircle className="h-4 w-4 shrink-0" />
+          <span className="hidden sm:block">Nueva Categoría</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">

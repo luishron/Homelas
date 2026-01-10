@@ -40,11 +40,11 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
   return (
     <Card className={`${getBackgroundColor()} border-2`}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-medium">
+        <div className="flex items-center justify-between gap-2">
+          <CardTitle className="text-base font-medium line-clamp-1">
             Presupuesto Mensual
           </CardTitle>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-muted-foreground tabular-nums flex-shrink-0">
             {mes}/{año}
           </span>
         </div>
@@ -54,13 +54,12 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
         {excedido && (
           <div className="flex items-start gap-2 rounded-lg bg-red-500/10 p-3 border border-red-500/20">
             <AlertCircle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
-            <div className="text-sm">
-              <p className="font-medium text-red-700 dark:text-red-400">
+            <div className="text-sm min-w-0 flex-1">
+              <p className="font-medium text-red-700 dark:text-red-400 break-words">
                 Límite excedido
               </p>
-              <p className="text-red-600 dark:text-red-500 text-xs mt-0.5">
-                Has superado el límite mensual por $
-                {(gastado - limite).toLocaleString()}
+              <p className="text-red-600 dark:text-red-500 text-xs mt-0.5 break-words">
+                Has superado el límite mensual por <span className="tabular-nums">${(gastado - limite).toLocaleString()}</span>
               </p>
             </div>
           </div>
@@ -69,11 +68,11 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
         {alertaActiva && !excedido && (
           <div className="flex items-start gap-2 rounded-lg bg-yellow-500/10 p-3 border border-yellow-500/20">
             <TrendingUp className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-            <div className="text-sm">
-              <p className="font-medium text-yellow-700 dark:text-yellow-400">
+            <div className="text-sm min-w-0 flex-1">
+              <p className="font-medium text-yellow-700 dark:text-yellow-400 break-words">
                 Alerta de presupuesto
               </p>
-              <p className="text-yellow-600 dark:text-yellow-500 text-xs mt-0.5">
+              <p className="text-yellow-600 dark:text-yellow-500 text-xs mt-0.5 break-words">
                 Te estás acercando al límite mensual
               </p>
             </div>
@@ -82,13 +81,13 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
 
         {/* Límite y Gastado */}
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs text-muted-foreground mb-1">Límite</p>
-            <p className="text-lg font-bold">${limite.toLocaleString()}</p>
+          <div className="min-w-0">
+            <p className="text-xs text-muted-foreground mb-1 truncate">Límite</p>
+            <p className="text-lg font-bold tabular-nums truncate">${limite.toLocaleString()}</p>
           </div>
-          <div>
-            <p className="text-xs text-muted-foreground mb-1">Gastado</p>
-            <p className={`text-lg font-bold ${getStatusColor()}`}>
+          <div className="min-w-0">
+            <p className="text-xs text-muted-foreground mb-1 truncate">Gastado</p>
+            <p className={`text-lg font-bold tabular-nums truncate ${getStatusColor()}`}>
               ${gastado.toLocaleString()}
             </p>
           </div>
@@ -96,9 +95,9 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
 
         {/* Barra de Progreso */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-muted-foreground">Progreso</span>
-            <span className={`font-medium ${getStatusColor()}`}>
+          <div className="flex items-center justify-between gap-2 text-xs">
+            <span className="text-muted-foreground truncate">Progreso</span>
+            <span className={`font-medium tabular-nums flex-shrink-0 ${getStatusColor()}`}>
               {porcentajeUsado.toFixed(1)}%
             </span>
           </div>
@@ -114,13 +113,13 @@ export function BudgetStatusCard({ status }: BudgetStatusCardProps) {
 
         {/* Disponible */}
         <div className="pt-2 border-t border-border/50">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">Disponible</span>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <DollarSign className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+              <span className="text-sm text-muted-foreground truncate">Disponible</span>
             </div>
             <span
-              className={`text-lg font-bold ${
+              className={`text-lg font-bold tabular-nums flex-shrink-0 ${
                 disponible < 0 ? 'text-red-500' : 'text-foreground'
               }`}
             >

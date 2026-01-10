@@ -39,7 +39,7 @@ const ICON_CATEGORIES = {
       { emoji: '🍺', name: 'cerveza' },
       { emoji: '🍷', name: 'vino' },
       { emoji: '🥤', name: 'refresco' },
-      { emoji: '🧃', name: 'jugo' },
+      { emoji: '🧃', name: 'jugo' }
     ]
   },
   transporte: {
@@ -58,7 +58,7 @@ const ICON_CATEGORIES = {
       { emoji: '🚲', name: 'bicicleta' },
       { emoji: '🛴', name: 'scooter' },
       { emoji: '⛽', name: 'gasolina' },
-      { emoji: '🅿️', name: 'estacionamiento' },
+      { emoji: '🅿️', name: 'estacionamiento' }
     ]
   },
   hogar: {
@@ -78,7 +78,7 @@ const ICON_CATEGORIES = {
       { emoji: '🔌', name: 'enchufe' },
       { emoji: '📺', name: 'television' },
       { emoji: '📞', name: 'telefono' },
-      { emoji: '📡', name: 'internet wifi' },
+      { emoji: '📡', name: 'internet wifi' }
     ]
   },
   entretenimiento: {
@@ -98,7 +98,7 @@ const ICON_CATEGORIES = {
       { emoji: '📖', name: 'libro' },
       { emoji: '🎯', name: 'objetivo meta' },
       { emoji: '🎲', name: 'dados juego' },
-      { emoji: '🃏', name: 'cartas poker' },
+      { emoji: '🃏', name: 'cartas poker' }
     ]
   },
   salud: {
@@ -119,7 +119,7 @@ const ICON_CATEGORIES = {
       { emoji: '🏊', name: 'natacion' },
       { emoji: '⚽', name: 'futbol' },
       { emoji: '🏀', name: 'basketball' },
-      { emoji: '🎾', name: 'tenis' },
+      { emoji: '🎾', name: 'tenis' }
     ]
   },
   finanzas: {
@@ -138,7 +138,7 @@ const ICON_CATEGORIES = {
       { emoji: '🛒', name: 'carrito supermercado' },
       { emoji: '🎁', name: 'regalo' },
       { emoji: '💍', name: 'anillo' },
-      { emoji: '⌚', name: 'reloj' },
+      { emoji: '⌚', name: 'reloj' }
     ]
   },
   otros: {
@@ -158,7 +158,7 @@ const ICON_CATEGORIES = {
       { emoji: '🖥️', name: 'monitor pc' },
       { emoji: '⚙️', name: 'configuracion' },
       { emoji: '🔒', name: 'candado seguridad' },
-      { emoji: '🌟', name: 'brillo especial' },
+      { emoji: '🌟', name: 'brillo especial' }
     ]
   }
 };
@@ -169,7 +169,8 @@ export function AddCategoryDialog() {
   const [selectedIcon, setSelectedIcon] = useState('📦');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<keyof typeof ICON_CATEGORIES>('comida');
+  const [activeTab, setActiveTab] =
+    useState<keyof typeof ICON_CATEGORIES>('comida');
   const router = useRouter();
   const { toast } = useToast();
 
@@ -180,11 +181,9 @@ export function AddCategoryDialog() {
     }
 
     const query = searchQuery.toLowerCase().trim();
-    const allIcons = Object.values(ICON_CATEGORIES).flatMap(cat => cat.icons);
+    const allIcons = Object.values(ICON_CATEGORIES).flatMap((cat) => cat.icons);
 
-    return allIcons.filter(icon =>
-      icon.name.toLowerCase().includes(query)
-    );
+    return allIcons.filter((icon) => icon.name.toLowerCase().includes(query));
   }, [searchQuery, activeTab]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -224,9 +223,9 @@ export function AddCategoryDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Nueva Categoría
+        <Button aria-label="Agregar nueva categoría" className="gap-2">
+          <PlusCircle className="h-4 w-4 shrink-0" />
+          <span className="hidden sm:block">Nueva Categoría</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
@@ -239,12 +238,7 @@ export function AddCategoryDialog() {
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Nombre</Label>
-            <Input
-              id="name"
-              name="name"
-              placeholder="ej. Alimentos"
-              required
-            />
+            <Input id="name" name="name" placeholder="ej. Alimentos" required />
           </div>
 
           <div className="grid gap-2">
@@ -289,7 +283,9 @@ export function AddCategoryDialog() {
                   <button
                     key={key}
                     type="button"
-                    onClick={() => setActiveTab(key as keyof typeof ICON_CATEGORIES)}
+                    onClick={() =>
+                      setActiveTab(key as keyof typeof ICON_CATEGORIES)
+                    }
                     className={`px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${
                       activeTab === key
                         ? 'bg-primary text-primary-foreground'

@@ -232,7 +232,7 @@ export default function OnboardingPage() {
                     placeholder={t('step1.placeholder')}
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="h-11 text-base"
+                    className="h-12 text-base"
                     autoFocus
                   />
                 </div>
@@ -304,7 +304,7 @@ export default function OnboardingPage() {
                     placeholder={t('step4.namePlaceholder')}
                     value={paymentName}
                     onChange={(e) => setPaymentName(e.target.value)}
-                    className="h-11 text-base"
+                    className="h-12 text-base"
                     autoFocus
                   />
                 </div>
@@ -395,7 +395,7 @@ export default function OnboardingPage() {
                 <Button
                   variant="outline"
                   onClick={handlePrevStep}
-                  className="h-11"
+                  className="h-12"
                   disabled={isLoading}
                 >
                   <ChevronLeft className="h-4 w-4 mr-2" />
@@ -404,7 +404,7 @@ export default function OnboardingPage() {
               )}
               <Button
                 onClick={handleNextStep}
-                className="h-11 flex-1 font-semibold"
+                className="h-12 flex-1 font-semibold"
                 disabled={!canContinue() || isLoading}
               >
                 {isLoading ? (

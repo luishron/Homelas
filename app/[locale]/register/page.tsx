@@ -91,7 +91,7 @@ function SignUpForm() {
               </p>
             </div>
             <Link href="/login" className="block">
-              <Button variant="outline" className="w-full h-11">
+              <Button variant="outline" className="w-full h-12">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 {t('success.backToLogin')}
               </Button>
@@ -194,7 +194,7 @@ function SignUpForm() {
                   onChange={(e) => setFullName(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                  className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                   autoFocus
                 />
               </div>
@@ -211,7 +211,7 @@ function SignUpForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                  className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                 />
               </div>
 
@@ -227,7 +227,7 @@ function SignUpForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                  className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                 />
                 <p className="text-xs text-muted-foreground">
                   {t('passwordHint')}
@@ -246,13 +246,13 @@ function SignUpForm() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                  className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                 />
               </div>
 
               <Button
                 type="submit"
-                className="h-11 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="h-12 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -281,7 +281,7 @@ function SignUpForm() {
             </div>
 
             <Link href="/login" className="block">
-              <Button variant="outline" className="w-full h-11">
+              <Button variant="outline" className="w-full h-12">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 {t('login')}
               </Button>

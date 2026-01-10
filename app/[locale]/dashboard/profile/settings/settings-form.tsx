@@ -132,14 +132,14 @@ export function SettingsForm({ profile, user }: SettingsFormProps) {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Tu nombre completo"
-                className="h-11"
+                className="h-12"
               />
             </div>
 
             <Button
               type="submit"
               disabled={isPendingProfile}
-              className="h-11"
+              className="h-12"
             >
               {isPendingProfile && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Guardar perfil
@@ -185,7 +185,7 @@ export function SettingsForm({ profile, user }: SettingsFormProps) {
                 id="theme"
                 value={theme}
                 onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
-                className="flex h-11 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 disabled={isPendingPreferences}
               >
                 <option value="system">Sistema</option>
@@ -200,7 +200,7 @@ export function SettingsForm({ profile, user }: SettingsFormProps) {
             <Button
               type="submit"
               disabled={isPendingPreferences}
-              className="h-11"
+              className="h-12"
             >
               {isPendingPreferences && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Guardar preferencias

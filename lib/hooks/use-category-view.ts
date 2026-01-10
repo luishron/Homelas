@@ -21,7 +21,7 @@ const STORAGE_KEY = 'categoryView';
  * <ViewToggle view={view} onViewChange={setView} />
  */
 export function useCategoryView() {
-  const [view, setViewState] = useState<CategoryView>('detailed');
+  const [view, setViewState] = useState<CategoryView>('compact');
 
   // Cargar preferencia guardada al montar el componente
   useEffect(() => {

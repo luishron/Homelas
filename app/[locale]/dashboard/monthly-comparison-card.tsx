@@ -75,22 +75,22 @@ export function MonthlyComparisonCard({
             </div>
             {hasPreviousData ? (
               <>
-                <div className="text-2xl font-bold mb-1">
+                <div className="text-2xl font-bold mb-1 tabular-nums">
                   {formatCurrency(previousMonth.totalExpenses, currency)}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-muted-foreground tabular-nums">
                   {previousMonth.expensesCount} gastos
                 </div>
                 <div className="mt-3 pt-3 border-t">
                   <div className="flex justify-between text-xs">
                     <span className="text-muted-foreground">Ingresos:</span>
-                    <span className="font-medium text-green-600">
+                    <span className="font-medium text-green-600 tabular-nums">
                       {formatCurrency(previousMonth.totalIncome, currency)}
                     </span>
                   </div>
                   <div className="flex justify-between text-xs mt-1">
                     <span className="text-muted-foreground">Balance:</span>
-                    <span className={`font-medium ${
+                    <span className={`font-medium tabular-nums ${
                       previousMonth.balance >= 0 ? 'text-green-600' : 'text-red-600'
                     }`}>
                       {formatCurrency(previousMonth.balance, currency)}
@@ -116,11 +116,11 @@ export function MonthlyComparisonCard({
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="text-2xl font-bold">
+              <div className="text-2xl font-bold tabular-nums">
                 {formatCurrency(currentMonth.totalExpenses, currency)}
               </div>
               {changePercent !== null && (
-                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium tabular-nums ${
                   changePercent > 5 ? 'bg-red-100 text-red-700' :
                   changePercent < -5 ? 'bg-green-100 text-green-700' :
                   'bg-gray-100 text-gray-700'
@@ -130,19 +130,19 @@ export function MonthlyComparisonCard({
                 </div>
               )}
             </div>
-            <div className="text-xs text-muted-foreground mt-1">
+            <div className="text-xs text-muted-foreground mt-1 tabular-nums">
               {currentMonth.expensesCount} gastos
             </div>
             <div className="mt-3 pt-3 border-t border-primary/20">
               <div className="flex justify-between text-xs">
                 <span className="text-muted-foreground">Ingresos:</span>
-                <span className="font-medium text-green-600">
+                <span className="font-medium text-green-600 tabular-nums">
                   {formatCurrency(currentMonth.totalIncome, currency)}
                 </span>
               </div>
               <div className="flex justify-between text-xs mt-1">
                 <span className="text-muted-foreground">Balance:</span>
-                <span className={`font-medium ${
+                <span className={`font-medium tabular-nums ${
                   currentMonth.balance >= 0 ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {formatCurrency(currentMonth.balance, currency)}
@@ -161,10 +161,10 @@ export function MonthlyComparisonCard({
             </div>
             {nextMonthProjection.count > 0 ? (
               <>
-                <div className="text-2xl font-bold mb-1 text-muted-foreground">
+                <div className="text-2xl font-bold mb-1 text-muted-foreground tabular-nums">
                   {formatCurrency(nextMonthProjection.total, currency)}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-muted-foreground tabular-nums">
                   {nextMonthProjection.count} gastos recurrentes
                 </div>
                 <div className="mt-3 pt-3 border-t border-muted-foreground/20">

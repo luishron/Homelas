@@ -126,12 +126,12 @@ export function UpcomingExpensesCard({
                 key={`${expense.templateId}-${expense.nextDate}`}
                 className="flex items-center justify-between rounded-lg border p-3"
               >
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium">
+                <div className="flex-1 space-y-1 min-w-0">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <p className="font-medium truncate min-w-0">
                       {expense.description || 'Sin descripción'}
                     </p>
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs flex-shrink-0 truncate">
                       {getCategoryName(expense.category_id)}
                     </Badge>
                   </div>
@@ -143,8 +143,8 @@ export function UpcomingExpensesCard({
                     </Badge>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-lg font-bold">
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <span className="text-lg font-bold tabular-nums">
                     {formatCurrency(expense.amount, currency)}
                   </span>
                   <Button

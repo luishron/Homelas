@@ -262,13 +262,13 @@ export function AttentionRequiredWidget({
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="relative flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <p className="font-medium text-sm group-hover:text-primary transition-colors">
+                  <div className="flex items-center gap-2 mb-1 min-w-0">
+                    <p className="font-medium text-sm group-hover:text-primary transition-colors truncate min-w-0">
                       {expense.description || 'Sin descripción'}
                     </p>
                     <Badge
                       variant="outline"
-                      className="text-xs group-hover:border-primary/50 transition-colors flex items-center gap-1"
+                      className="text-xs group-hover:border-primary/50 transition-colors flex items-center gap-1 flex-shrink-0 truncate"
                     >
                       <Tag className="h-3 w-3" />
                       {getCategoryName(expense.category_id)}
@@ -283,7 +283,7 @@ export function AttentionRequiredWidget({
                 </div>
 
                 <div className="relative flex items-center gap-2 ml-4 flex-shrink-0">
-                  <p className="font-semibold text-sm group-hover:text-primary transition-colors whitespace-nowrap">
+                  <p className="font-semibold text-sm group-hover:text-primary transition-colors whitespace-nowrap tabular-nums">
                     {formatCurrency(expense.amount, currency)}
                   </p>
 
@@ -293,7 +293,7 @@ export function AttentionRequiredWidget({
                     variant="ghost"
                     onClick={() => handlePay(expense)}
                     disabled={payingId === expense.id}
-                    className="h-11 px-3 text-xs min-w-[60px] flex-shrink-0"
+                    className="px-3 text-xs min-w-[60px] flex-shrink-0"
                     aria-label={`Marcar ${expense.description} como pagado`}
                   >
                     {payingId === expense.id ? (
@@ -310,7 +310,7 @@ export function AttentionRequiredWidget({
                         size="sm"
                         variant="outline"
                         disabled={postponingId === expense.id}
-                        className="h-11 px-3 text-xs min-w-[90px] flex-shrink-0"
+                        className="px-3 text-xs min-w-[90px] flex-shrink-0"
                         aria-label={`Posponer ${expense.description}`}
                       >
                         {postponingId === expense.id ? (
@@ -367,13 +367,13 @@ export function AttentionRequiredWidget({
           <div className="mt-4 pt-4 border-t space-y-1">
             <div className="flex justify-between text-xs">
               <span className="text-muted-foreground">Balance actual:</span>
-              <span className="font-medium">{formatCurrency(currentBalance, currency)}</span>
+              <span className="font-medium tabular-nums">{formatCurrency(currentBalance, currency)}</span>
             </div>
             <div className="flex justify-between text-xs">
               <span className="text-muted-foreground">Después de pagar todo:</span>
               <span
                 className={cn(
-                  'font-medium',
+                  'font-medium tabular-nums',
                   balanceAfterPaying >= 0
                     ? 'text-transaction-income'
                     : 'text-transaction-expense'

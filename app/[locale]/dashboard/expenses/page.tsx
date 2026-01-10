@@ -115,21 +115,21 @@ export default async function GastosPage({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 w-full max-w-full min-w-0">
           <div className="rounded-lg border-2 border-destructive bg-card p-3 sm:p-4 animate-scale-in max-w-full min-w-0" style={{ animationDelay: '0.02s' }}>
             <div className="text-xs font-medium text-destructive">Vencidos</div>
-            <div className="text-xl sm:text-2xl font-bold text-destructive">
+            <div className="text-xl sm:text-2xl font-bold text-destructive tabular-nums">
               {formatCurrency(stats.overdue, currency)}
             </div>
             <div className="text-xs text-muted-foreground">{stats.overdueCount} gastos</div>
           </div>
           <div className="rounded-lg border-2 border-warning bg-card p-3 sm:p-4 animate-scale-in max-w-full min-w-0" style={{ animationDelay: '0.04s' }}>
             <div className="text-xs font-medium text-warning">Pendientes</div>
-            <div className="text-xl sm:text-2xl font-bold text-warning">
+            <div className="text-xl sm:text-2xl font-bold text-warning tabular-nums">
               {formatCurrency(stats.pending, currency)}
             </div>
             <div className="text-xs text-muted-foreground">{stats.pendingCount} gastos</div>
           </div>
           <div className="rounded-lg border-2 border-success bg-card p-3 sm:p-4 animate-scale-in max-w-full min-w-0" style={{ animationDelay: '0.06s' }}>
             <div className="text-xs font-medium text-success">Pagados</div>
-            <div className="text-xl sm:text-2xl font-bold text-success">
+            <div className="text-xl sm:text-2xl font-bold text-success tabular-nums">
               {formatCurrency(paidTotal, currency)}
             </div>
             <div className="text-xs text-muted-foreground">{paidCount} gastos</div>

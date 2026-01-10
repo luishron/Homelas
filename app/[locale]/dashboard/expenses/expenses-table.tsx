@@ -197,7 +197,7 @@ export function ExpensesTable({
           <div className="mb-6">
             <div className="rounded-lg border-2 border-success bg-card p-4">
               <div className="text-sm font-medium text-success mb-1">Total Pagado</div>
-              <div className="text-3xl font-bold text-success">
+              <div className="text-3xl font-bold text-success tabular-nums">
                 {formatCurrency(totalAmount)}
               </div>
               <div className="text-sm text-muted-foreground mt-1">{expenses.length} gastos en historial</div>
@@ -313,7 +313,7 @@ export function ExpensesTable({
                   <TableCell className="hidden lg:table-cell">
                     {getPaymentMethodName(expense.payment_method, paymentMethods)}
                   </TableCell>
-                  <TableCell className="text-right font-semibold">
+                  <TableCell className="text-right font-semibold tabular-nums">
                     {formatCurrency(expense.amount)}
                   </TableCell>
                   {!hideActions && !showEditOnly && (
@@ -371,7 +371,7 @@ export function ExpensesTable({
                 <TableCell colSpan={7} className="text-right">
                   Total General:
                 </TableCell>
-                <TableCell className="text-right text-lg">
+                <TableCell className="text-right text-lg tabular-nums">
                   {formatCurrency(totalAmount)}
                 </TableCell>
                 {(!hideActions || showEditOnly) && (

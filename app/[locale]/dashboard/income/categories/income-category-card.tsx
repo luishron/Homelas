@@ -53,9 +53,9 @@ export function IncomeCategoryCard({ category }: { category: IncomeCategory }) {
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
-        <CardTitle>{category.name}</CardTitle>
+        <CardTitle className="line-clamp-1">{category.name}</CardTitle>
         {category.description && (
-          <CardDescription>{category.description}</CardDescription>
+          <CardDescription className="line-clamp-2">{category.description}</CardDescription>
         )}
       </CardHeader>
       <CardContent>

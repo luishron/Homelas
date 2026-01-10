@@ -76,9 +76,9 @@ export function AddPaymentMethodDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Nuevo Método de Pago
+        <Button aria-label="Agregar nuevo método de pago" className="gap-2">
+          <PlusCircle className="h-4 w-4 shrink-0" />
+          <span className="hidden sm:block">Nuevo Método de Pago</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
@@ -127,7 +127,9 @@ export function AddPaymentMethodDialog() {
           {(selectedType === 'tarjeta_credito' ||
             selectedType === 'tarjeta_debito') && (
             <div className="grid gap-2">
-              <Label htmlFor="lastFourDigits">Últimos 4 dígitos (opcional)</Label>
+              <Label htmlFor="lastFourDigits">
+                Últimos 4 dígitos (opcional)
+              </Label>
               <Input
                 id="lastFourDigits"
                 name="lastFourDigits"

@@ -172,7 +172,7 @@ export function SearchBar({
             }}
             placeholder={placeholder}
             className={cn(
-              'h-11 pl-10 pr-20 rounded-lg bg-muted/50 border-muted hover:border-input focus:bg-background',
+              'h-12 pl-10 pr-20 rounded-lg bg-muted/50 border-muted hover:border-input focus:bg-background',
               'transition-all duration-200'
             )}
             {...props}
@@ -186,7 +186,7 @@ export function SearchBar({
               <button
                 type="button"
                 onClick={handleClear}
-                className="h-11 w-11 rounded-full hover:bg-muted/80 flex items-center justify-center transition-colors"
+                className="h-12 w-12 rounded-full hover:bg-muted/80 flex items-center justify-center transition-colors"
                 aria-label="Limpiar búsqueda"
               >
                 <X className="h-4 w-4 text-muted-foreground" />
@@ -232,7 +232,7 @@ export function SearchBar({
 export function SearchBarSkeleton() {
   return (
     <div className="relative w-full">
-      <div className="h-11 rounded-lg bg-muted/50 animate-pulse" />
+      <div className="h-12 rounded-lg bg-muted/50 animate-pulse" />
     </div>
   );
 }

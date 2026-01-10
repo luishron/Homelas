@@ -100,9 +100,9 @@ export function CategoryCard({ category }: { category: CategoryWithData }) {
               </Button>
             </div>
 
-            <CardTitle className="mt-4">{category.name}</CardTitle>
+            <CardTitle className="mt-4 line-clamp-1">{category.name}</CardTitle>
             {category.description && (
-              <CardDescription>{category.description}</CardDescription>
+              <CardDescription className="line-clamp-2">{category.description}</CardDescription>
             )}
           </CardHeader>
 

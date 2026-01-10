@@ -61,7 +61,7 @@ export function CurrencySelector({ value, onChange, disabled }: CurrencySelector
           role="combobox"
           aria-expanded={open}
           aria-label="Seleccionar moneda"
-          className="w-full justify-between h-11"
+          className="w-full justify-between"
           disabled={disabled}
         >
           {selectedCurrency ? (

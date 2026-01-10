@@ -180,9 +180,9 @@ export function CategoryCardDetailed({ category }: CategoryCardDetailedProps) {
               </Button>
             </div>
 
-            <CardTitle className="mt-4">{category.name}</CardTitle>
+            <CardTitle className="mt-4 line-clamp-1">{category.name}</CardTitle>
             {category.description && (
-              <CardDescription>{category.description}</CardDescription>
+              <CardDescription className="line-clamp-2">{category.description}</CardDescription>
             )}
           </CardHeader>
 
@@ -200,9 +200,9 @@ export function CategoryCardDetailed({ category }: CategoryCardDetailedProps) {
 
               {/* Promedio mensual */}
               {category.monthlyAverage !== undefined && category.monthlyAverage > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Promedio mensual</span>
-                  <span className="text-xs font-medium tabular-nums">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs text-muted-foreground truncate">Promedio mensual</span>
+                  <span className="text-xs font-medium tabular-nums flex-shrink-0">
                     ${category.monthlyAverage.toFixed(2)} /mes
                   </span>
                 </div>
@@ -210,9 +210,9 @@ export function CategoryCardDetailed({ category }: CategoryCardDetailedProps) {
 
               {/* Último gasto */}
               {category.lastExpenseDate && (
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Último gasto</span>
-                  <span className="text-xs text-foreground">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs text-muted-foreground truncate">Último gasto</span>
+                  <span className="text-xs text-foreground flex-shrink-0">
                     {getRelativeDate(category.lastExpenseDate)}
                   </span>
                 </div>
@@ -259,13 +259,13 @@ export function CategoryCardDetailed({ category }: CategoryCardDetailedProps) {
                 <div className="border-t border-border/30" />
 
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">
+                  <div className="flex items-center justify-between gap-2 text-xs">
+                    <span className="text-muted-foreground truncate tabular-nums">
                       Presupuesto: ${category.budget.amount} /{category.budget.period}
                     </span>
                     <Badge
                       variant={getBudgetVariant(budgetPercent)}
-                      className="text-xs"
+                      className="text-xs flex-shrink-0"
                     >
                       {budgetPercent}%
                     </Badge>

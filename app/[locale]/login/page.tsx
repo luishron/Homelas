@@ -125,7 +125,7 @@ function LoginForm() {
             <Button
               onClick={() => setEmailSent(false)}
               variant="outline"
-              className="w-full h-11"
+              className="w-full h-12"
             >
               {t('emailSent.sendAnother')}
             </Button>
@@ -215,7 +215,7 @@ function LoginForm() {
             )}
 
             <Tabs defaultValue="password" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 h-11">
+              <TabsList className="grid w-full grid-cols-2 h-12">
                 <TabsTrigger value="password" className="gap-2 text-xs sm:text-sm">
                   <KeyRound className="h-4 w-4" />
                   <span className="hidden sm:inline">{t('tabs.password')}</span>
@@ -245,7 +245,7 @@ function LoginForm() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       disabled={isLoading}
-                      className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                      className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                       autoFocus
                     />
                   </div>
@@ -262,13 +262,13 @@ function LoginForm() {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       disabled={isLoading}
-                      className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                      className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="h-11 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
+                    className="h-12 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -301,13 +301,13 @@ function LoginForm() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       disabled={isLoading}
-                      className="h-11 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
+                      className="h-12 sm:h-12 text-sm sm:text-base transition-all focus:ring-2 focus:ring-primary/20"
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="h-11 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
+                    className="h-12 sm:h-12 w-full text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all"
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -361,7 +361,7 @@ function LoginForm() {
             </div>
 
             <Link href="/register" className="block">
-              <Button variant="outline" className="w-full h-11">
+              <Button variant="outline" className="w-full h-12">
                 <UserPlus className="h-4 w-4 mr-2" />
                 {t('createAccount')}
               </Button>

@@ -44,7 +44,7 @@ export function TopCategoriesChart({ categories, monthName, currency }: TopCateg
             {payload[0].payload.icon && `${payload[0].payload.icon} `}
             {payload[0].name}
           </p>
-          <p className="text-sm font-bold text-primary">
+          <p className="text-sm font-bold text-primary tabular-nums">
             {formatCurrency(payload[0].value, currency)}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -105,16 +105,18 @@ export function TopCategoriesChart({ categories, monthName, currency }: TopCateg
               <Button
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
                 size="sm"
-                className="rounded-r-none h-8"
+                className="rounded-r-none"
                 onClick={() => setViewMode('list')}
+                aria-label="Ver como lista"
               >
                 <BarChart3 className="h-4 w-4" />
               </Button>
               <Button
                 variant={viewMode === 'pie' ? 'default' : 'ghost'}
                 size="sm"
-                className="rounded-l-none h-8"
+                className="rounded-l-none"
                 onClick={() => setViewMode('pie')}
+                aria-label="Ver como gráfico circular"
               >
                 <PieChart className="h-4 w-4" />
               </Button>
@@ -147,7 +149,7 @@ export function TopCategoriesChart({ categories, monthName, currency }: TopCateg
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0 ml-2">
-                    <p className="font-bold whitespace-nowrap">
+                    <p className="font-bold whitespace-nowrap tabular-nums">
                       {formatCurrency(category.total, currency)}
                     </p>
                     <p className="text-xs text-muted-foreground whitespace-nowrap">
