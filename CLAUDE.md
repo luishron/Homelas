@@ -1,141 +1,24 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this codebase.
 
 ## Project Overview
 
-Personal expense management web application built with Next.js 15, TypeScript, Supabase whit Drizzle ORM, and Tailwind CSS. Features expense tracking, recurring expenses, income management, payment methods, and financial analytics dashboard.
-
+Personal expense management web application built with Next.js 15, TypeScript, Supabase, and Tailwind CSS.
 
 **Version:** 0.1.0-beta
 **Status:** 🚧 Beta
-**Last Updated:** January 7, 2026
+**Last Updated:** January 10, 2026
 
-**Tech Stack:**
-- **Framework**: Next.js 15 (App Router, Server Components)
-- **Language**: TypeScript 5.7 (strict mode)
-- **Database**: Supabase (PostgreSQL + RLS)
-- **Auth**: Supabase Auth with Magic Links
-- **ORM**: Drizzle for migrations
-- **UI**: Tailwind CSS + shadcn/ui
-- **State**: Zustand
+**Tech Stack:** Next.js 15 (App Router), TypeScript 5.7, Supabase (PostgreSQL + RLS), Drizzle ORM, Tailwind CSS + shadcn/ui, Zustand
 
-**Architecture:** See [`/docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for detailed system design, directory structure, and data layer documentation.
+**Architecture:** See [`/docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for detailed system design.
+
+**Recent Changes:** See `git log` for latest updates.
 
 ---
 
-## Recent Changes
-
-### Quick Actions en Dashboard (Jan 4, 2026) ✅ COMPLETED
-
-**Feature:** Botones de acción rápida "Resolver Gasto" en UpcomingExpensesWidget del dashboard.
-
-**Cambios Implementados:**
-1. **UpcomingExpensesWidget Interactive** - Botón "Pagar" inline con loading state
-2. **Balance footer** - Muestra balance actual y proyectado después de pagar gastos visibles
-
-**Patrón de Implementación:**
-```typescript
-const [payingId, setPayingId] = useState<number | null>(null);
-const { toast } = useToast();
-
-const handlePay = async (expense: Expense) => {
-  setPayingId(expense.id);
-  const result = await markExpenseAsPaid(expense.id);
-  if (!result.error) {
-    toast({ title: 'Gasto pagado', description: expense.description });
-    router.refresh();
-  }
-  setPayingId(null);
-};
-```
-
-### Multi-Currency System (Jan 2, 2026) ✅ COMPLETED
-
-**Feature:** 20 currencies with intelligent timezone-based inference
-
-**Key Files:**
-- `lib/config/currencies.ts` - Currency metadata
-- `lib/utils/currency-helpers.ts` - `getUserCurrency()` with caching
-- `app/[locale]/dashboard/configuracion/` - Settings page
-
-**Usage:**
-```typescript
-// Server Components
-const currency = await getUserCurrency();
-const formatted = formatCurrency(amount, currency);
-
-// Client Components (pass as prop)
-<Component amount={100} currency={currency} />
-```
-
-### User Registration Fix + 100% Drizzle (Dec 27, 2025) ✅ COMPLETED
-
-**Critical Fix:** Created migration `0001_add_user_plan_enum_and_triggers.sql` that:
-- Creates `user_plan` ENUM ('free', 'pro', 'plus', 'admin')
-- Migrates `role` → `plan` column
-- Sets up `handle_new_user()` trigger for automatic profile creation
-
-**Migration Approach:** ALL database changes now go through Drizzle (`lib/drizzle/migrations/`)
-
-### Design System & UX (Dec 23-27, 2025) ✅ COMPLETED
-
-- **FASE 5**: WCAG 2.1 AA Compliance (89.2% - see ACCESSIBILITY-COMPLIANCE.md)
-- **FASE 4**: GlobalSearch (Cmd+K), Advanced Filters, Toast System
-- **FASE 3**: Dashboard redesign, Wise-style transactions
-- **FASE 2**: Custom components (TransactionItem, FilterBar, SearchBar, etc.)
-- **FASE 1**: Tallify Design System (#9FFF66 primary, semantic colors)
-
----
-
-## Development Commands
-
-### Local Development
-```bash
-pnpm dev              # Start dev server (localhost:3000)
-pnpm build           # Production build
-pnpm start           # Start production server
-```
-
-### Code Quality
-```bash
-npx prettier --write .    # Format code
-npx tsc --noEmit         # Type check
-```
-
-### Database Management
-
-**100% Drizzle Migration Approach:**
-
-```bash
-pnpm db:generate     # Generate SQL from Drizzle schemas
-pnpm db:push         # Direct push (no migration files)
-pnpm db:migrate      # Apply migrations (dev/staging)
-pnpm build:prod      # Migrations + build (CI/CD)
-```
-
-**Important:** For production, use `pnpm build:prod` which auto-applies migrations.
-
-**Key Migration:**
-- `0001_add_user_plan_enum_and_triggers.sql` - CRITICAL for user registration
-
----
-
-## Architecture Quick Reference
-
-### Server-First Pattern
-
-```
-Client → Server Actions → Next.js Server → Supabase → PostgreSQL
-```
-
-**Key Principle:** All mutations through Server Actions with:
-1. Authentication via `withAuth()`
-2. Validation via Zod schemas
-3. Database ops via `lib/db.ts`
-4. Revalidation via `revalidate*()`
-
-### Critical Files
+## Critical Files
 
 - **`lib/db.ts`** - ALL database queries (single source of truth)
 - **`app/[locale]/dashboard/actions.ts`** - Primary Server Actions
@@ -143,40 +26,37 @@ Client → Server Actions → Next.js Server → Supabase → PostgreSQL
 - **`lib/action-helpers.ts`** - Server Action utilities (`withAuth`, `revalidate*`)
 - **`lib/validations/schemas.ts`** - Zod validation schemas
 
-**Detailed Architecture:** See [`/docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+---
 
-### Database Schema Quick Reference
+## Development Commands
 
-**Key Tables:**
-- `user_profiles` - User data with `plan` (ENUM), `preferences` (JSONB), `timezone`
-- `expenses` - Expenses with `is_recurring` (0|1), `payment_status` ('pagado'|'pendiente'|'vencido')
-- `incomes` - Income records
-- `categories` / `income_categories` - Separate category tables
-- `payment_methods` - Payment methods with `is_default` flag
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start dev server (localhost:3000) |
+| `pnpm build` | Production build |
+| `pnpm db:generate` | Generate SQL from Drizzle schemas |
+| `pnpm db:push` | Direct push (no migration files) |
+| `pnpm db:migrate` | Apply migrations (dev/staging) |
+| `pnpm build:prod` | Migrations + build (CI/CD) |
+| `npx prettier --write .` | Format code |
+| `npx tsc --noEmit` | Type check |
 
-**Recurring Expenses:** Stored once with `is_recurring=1`. Virtual instances generated at runtime. When paid, creates new record with `is_recurring=0`.
-
-**Full Schema:** See `README.md` Database Schema section or [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
+**Database:** For production, use `pnpm build:prod` which auto-applies migrations.
 
 ---
 
-## Important Patterns & Conventions
+## Mandatory Patterns
 
-### 1. Server Actions Are Centralized
+### 1. Server Actions Pattern
 
-**Location:** `app/[locale]/dashboard/actions.ts` (primary) or co-located with page (page-specific)
+**Location:** `app/[locale]/dashboard/actions.ts` (primary) or co-located with page.
 
-**Pattern:**
 ```typescript
 'use server'
-
 export async function saveExpense(formData: FormData): Promise<ActionResult> {
   return withAuth(async (userId) => {
     const validation = validateFormData(expenseSchema, formData);
-    if (!validation.success) throw new Error(validation.error);
-
-    await createExpense({ ...validation.data, user_id: userId });
-    revalidateGastos();
+    // ... createExpense, revalidateGastos()
   });
 }
 ```
@@ -186,75 +66,24 @@ export async function saveExpense(formData: FormData): Promise<ActionResult> {
 ### 2. Authentication Flow
 
 ```typescript
-// In Server Components
+// Server Components
 const user = await getUser() // from lib/auth.ts
 
-// In Server Actions
-// Use withAuth() wrapper (provides userId)
-
-// User ID type
-user.id // string (UUID), NOT number
+// Server Actions
+withAuth(async (userId) => { ... }) // provides userId (string UUID)
 ```
 
-### 3. Form Data Handling
-
-Server Actions receive `FormData`, not JSON:
-
-```typescript
-const categoryId = Number(formData.get('categoryId'))
-const isRecurring = formData.get('isRecurring') === 'true'
-const amount = parseFloat(formData.get('amount') as string)
-```
-
-### 4. Database Integer Booleans
-
-Supabase stores booleans as integers (0|1):
-
-```typescript
-// Write
-is_recurring: data.isRecurring ? 1 : 0
-
-// Read
-if (expense.is_recurring === 1) { ... }
-```
-
-### 5. Payment Method Display
-
-Format: `"Name (Bank) ••1234"`
-
-```typescript
-const display = `${name}${bank ? ` (${bank})` : ''}${lastFour ? ` ••${lastFour}` : ''}`
-```
-
-Store as separate fields: `name`, `bank`, `last_four_digits`
-
-### 6. Date Handling
-
-- **Database:** ISO strings (YYYY-MM-DD)
-- **Display:** `date.toLocaleDateString('es-MX')`
-- **Input:** `<input type="date">` uses ISO natively
-
-### 7. Currency Formatting ⭐ CRITICAL
+### 3. Currency Formatting ⭐ CRITICAL
 
 **Always** use centralized `formatCurrency()`:
 
 ```typescript
 // Server Components
-import { formatCurrency } from '@/lib/utils/formatting';
-import { getUserCurrency } from '@/lib/utils/currency-helpers';
-
 const currency = await getUserCurrency();
 const formatted = formatCurrency(amount, currency);
 
 // Client Components (pass currency as prop)
-interface Props {
-  amount: number;
-  currency: CurrencyCode;
-}
-
-function Component({ amount, currency }: Props) {
-  return <span>{formatCurrency(amount, currency)}</span>;
-}
+<Component amount={100} currency={currency} />
 ```
 
 **Never:**
@@ -264,36 +93,25 @@ function Component({ amount, currency }: Props) {
 
 **Supported:** 20 currencies from Spanish-speaking countries (`lib/config/currencies.ts`)
 
-### 8. Smart Expense Sorting
+### 4. Icon System ⭐ MANDATORY
 
-In `expenses-table.tsx`, expenses sorted by urgency:
-
-1. **Vencidos** (overdue) - Red background, left border
-2. **Pendientes** (pending) - Yellow badge
-3. **Pagados** (paid) - Green badge
-
-Within groups, sorted by date (ascending for overdue, descending for others).
-
-### 9. Revalidation Strategy
-
-After mutations, revalidate affected routes:
+**NEVER use emojis in the codebase.** Always use lucide-react icons.
 
 ```typescript
-revalidateGastos()        // /dashboard + /dashboard/gastos
-revalidateCategorias()    // Category pages
-revalidateIngresos()      // Income pages
-revalidateMetodosPago()   // Payment methods
+import { CategoryIcon } from '@/components/ui/category-icon';
+
+<CategoryIcon icon={category.icon} color={category.color} />
 ```
 
-### 10. Error Handling
-
-`withAuth()` wrapper catches errors automatically. For specific errors:
-
+**Icon Picker:**
 ```typescript
-if (!category) throw new Error('Category not found')
+import { CategoryIconPicker } from '@/components/ui/category-icon-picker';
+<CategoryIconPicker value={icon} onChange={setIcon} />
 ```
 
-### 11. Accessibility Requirements ✅ MANDATORY
+~50 curated icons in `/lib/constants/curated-category-icons.ts`
+
+### 5. Accessibility Requirements ✅ MANDATORY
 
 **ALL new components MUST meet WCAG 2.1 AA:**
 
@@ -304,145 +122,89 @@ if (!category) throw new Error('Category not found')
 - **Focus Visible:** `focus-visible:ring-2`
 - **Semantic HTML:** `<nav>`, `<main>`, `<button>`, `<a>`
 
-**Quick Checklist:**
-- [ ] Touch targets ≥ 44px
-- [ ] Color contrast ≥ 4.5:1
-- [ ] ARIA labels present
-- [ ] Keyboard navigation works
-- [ ] Focus indicators visible
-- [ ] Semantic HTML used
-
 **Full Requirements:** See [`/docs/ACCESSIBILITY-COMPLIANCE.md`](./docs/ACCESSIBILITY-COMPLIANCE.md)
 
-### 12. Component Patterns
+### 6. Database Integer Booleans
 
-**Server Components (default):**
-- Fetch data directly via `lib/db.ts`
-- Pass data to client components as props
-- Zero JavaScript bundle
+Supabase stores booleans as integers (0|1):
 
-**Client Components ('use client'):**
-- Only when interactivity needed
-- Use Server Actions for mutations
-- Examples: Forms, dialogs, dropdowns
+```typescript
+// Write: is_recurring: data.isRecurring ? 1 : 0
+// Read: if (expense.is_recurring === 1) { ... }
+```
 
-**Dialog Pattern:**
+### 7. FormData Handling
+
+Server Actions receive `FormData`, not JSON:
+
+```typescript
+const categoryId = Number(formData.get('categoryId'))
+const isRecurring = formData.get('isRecurring') === 'true'
+const amount = parseFloat(formData.get('amount') as string)
+```
+
+### 8. Revalidation Strategy
+
+After mutations, revalidate affected routes:
+
+```typescript
+revalidateGastos()        // /dashboard + /dashboard/gastos
+revalidateCategorias()    // Category pages
+revalidateIngresos()      // Income pages
+revalidateMetodosPago()   // Payment methods
+```
+
+---
+
+## Important Conventions
+
+### Component Patterns
+
+**Server Components (default):** Fetch data via `lib/db.ts`, pass to client components as props, zero JavaScript bundle.
+
+**Client Components ('use client'):** Only when interactivity needed. Use Server Actions for mutations.
+
 ```tsx
 'use client'
-
 export function AddExpenseDialog() {
-  return (
-    <Dialog>
-      <form action={saveExpense}>
-        {/* FormData fields */}
-        <Button type="submit">Save</Button>
-      </form>
-    </Dialog>
-  )
+  return <Dialog><form action={saveExpense}>...</form></Dialog>
 }
 ```
 
-### 13. Specialized Agents
+### Payment Method Display
 
-**When building features, use specialized agents for better results:**
-
-#### shadcn-component-builder 🎨
-**Use for:** Creating/modifying UI components with shadcn/ui
-- Mobile-first responsive design (320px → 1440px+)
-- WCAG 2.1 AA compliance (touch targets ≥ 44px, ARIA labels)
-- Tallify Design System integration
-- CVA variants and composition patterns
-- shadcn MCP integration (list/get components)
-
-**Invoke when:**
-- Adding new shadcn/ui components
-- Creating custom components
-- Fixing accessibility violations
-- Refactoring for mobile-first design
-
-```bash
-# Available in .claude/agents/shadcn-component-builder.md
-```
-
-#### docs-maintainer 📚
-**Use for:** Maintaining accurate, up-to-date documentation
-- Detects outdated documentation
-- Identifies missing docs for new features
-- Validates cross-references
-- Ensures version consistency
-
-**Invoke when:**
-- After implementing new features
-- After significant code changes
-- Before major releases
-
-#### playwright-qa-tester 🧪
-**Use for:** Automated testing and QA validation
-- End-to-end testing with Playwright
-- Accessibility validation (WCAG 2.1 AA)
-- UX/UI flow analysis
-- Regression testing
-
-**Invoke when:**
-- After completing features
-- Before deployments
-- When accessibility compliance needs verification
-
-**Note:** These agents are proactive tools. Don't hesitate to use them to maintain quality standards.
-
----
-
-### 14. Icon System ⭐ MANDATORY
-
-**NEVER use emojis in the codebase.** Always use lucide-react icons.
-
-#### Category Icons
-
-All category icons use lucide-react with dual backward compatibility:
+Format: `"Name (Bank) ••1234"`
 
 ```typescript
-// Display category icon
-import { CategoryIcon } from '@/components/ui/category-icon';
-
-<CategoryIcon
-  icon={category.icon}  // "Utensils" (new) or "🍔" (legacy)
-  color={category.color}
-  size={20}
-  fallback="Package"
-/>
+const display = `${name}${bank ? ` (${bank})` : ''}${lastFour ? ` ••${lastFour}` : ''}`
 ```
 
-#### Icon Selection
+Store as separate fields: `name`, `bank`, `last_four_digits`
 
-Use `CategoryIconPicker` for icon selection:
+### Date Handling
+
+- **Database:** ISO strings (YYYY-MM-DD)
+- **Display:** `date.toLocaleDateString('es-MX')`
+- **Input:** `<input type="date">` uses ISO natively
+
+### Smart Expense Sorting
+
+Expenses sorted by urgency:
+1. **Vencidos** (overdue) - Red background
+2. **Pendientes** (pending) - Yellow badge
+3. **Pagados** (paid) - Green badge
+
+Within groups, sorted by date.
+
+### Error Handling
+
+`withAuth()` wrapper catches errors automatically:
 
 ```typescript
-import { CategoryIconPicker } from '@/components/ui/category-icon-picker';
-
-<CategoryIconPicker
-  value={selectedIcon}
-  onChange={setSelectedIcon}
-  color={categoryColor}
-/>
+if (!category) throw new Error('Category not found')
 ```
 
-#### Available Icons
-
-~50 curated lucide-react icons in `/lib/constants/curated-category-icons.ts`:
-- Organized by category (comida, transporte, hogar, etc.)
-- Searchable by name and keywords
-- Mobile-first picker with WCAG 2.1 AA compliance
-
-#### Migration Note
-
-Existing categories may still have emoji icons (backward compatible).
-New categories automatically use lucide-react icon names.
-
-**Rule:** Never hardcode emojis. Use text or lucide-react icons instead.
-
----
-
-### 15. Styling
+### Styling
 
 **Design System:** See [`/docs/design/design-system.md`](./docs/design/design-system.md)
 
@@ -450,7 +212,13 @@ New categories automatically use lucide-react icon names.
 - **Semantic:** `transaction-income`, `transaction-expense`, `transaction-transfer`
 - **Tokens:** `bg-primary`, `text-foreground` (never hardcode colors)
 - **Responsive:** Mobile-first (`sm:`, `md:`, `lg:`)
-- **Dark Mode:** Fully supported via `next-themes`
+
+### Path Aliases
+
+```typescript
+import { Button } from '@/components/ui/button'  // ✅ Good
+import { Button } from '../../../components/...'  // ❌ Bad
+```
 
 ---
 
@@ -461,103 +229,54 @@ New categories automatically use lucide-react icon names.
 Required in `.env.local`:
 
 ```env
-# Supabase (required)
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_ANON_KEY=your-anon-key-here
-
-# Site URL (production)
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
-
-# Database URL (migrations in production)
 DATABASE_URL=postgresql://postgres:PASSWORD@db.PROJECT.supabase.co:5432/postgres?sslmode=require
 ```
 
-**Test User:** Run `npx tsx create-test-user.ts` after config
-
-### Path Aliases
-
-```typescript
-import { Button } from '@/components/ui/button'  // ✅ Good
-import { getUser } from '@/lib/auth'             // ✅ Good
-import { Button } from '../../../components/...'  // ❌ Bad
-```
+**Setup:** See [`/docs/QUICK_START.md`](./docs/QUICK_START.md) for complete setup guide.
 
 ---
 
-## Testing & Development Notes
-
-### Manual Testing Checklist
-
-Test these flows after changes:
-
-1. Create expense (one-time + recurring)
-2. Mark expense as paid/pending/overdue
-3. Pay recurring instance (creates new record)
-4. Create category (appears in expense form)
-5. Set default payment method (unsets previous)
-6. Dashboard KPIs update after changes
-
-### Common Gotchas
+## Critical Gotchas
 
 - `'use server'` required at top of action files
 - `'use client'` required for interactive components
 - Server Actions return serializable data only (no functions/Dates)
 - Supabase queries are async - always `await`
-- RLS: Test with different users for data isolation
 - `is_recurring` is 0|1 (integer), not boolean
 - Payment method IDs are strings in forms, convert to number for DB
-
-### Database Debugging
-
-Supabase SQL Editor queries:
-
-```sql
--- Check user's expenses
-SELECT * FROM expenses WHERE user_id = 'your-user-id' ORDER BY date DESC;
-
--- Check recurring expenses
-SELECT * FROM expenses WHERE user_id = 'your-user-id' AND is_recurring = 1;
-
--- Get user ID
-SELECT id, email FROM auth.users;
-```
-
-**Scripts:** See `scripts/supabase/` for helper SQL scripts
+- User ID is string (UUID), NOT number
 
 ---
 
-## When Making Changes
+## Specialized Agents
 
-### Adding a New Feature
+Use specialized agents for better results:
 
-1. Define types in `lib/db.ts`
-2. Create database queries in `lib/db.ts`
-3. Add Server Action in `app/[locale]/dashboard/actions.ts`
-4. Create Zod schema in `lib/validations/schemas.ts`
-5. Build UI (Server Components for display, Client for interaction)
-6. Add revalidation helper in `lib/action-helpers.ts` if needed
+| Agent | Use For | Invoke When |
+|-------|---------|-------------|
+| **shadcn-component-builder** | UI components with shadcn/ui, mobile-first design, WCAG 2.1 AA | Adding/modifying components, fixing accessibility |
+| **docs-maintainer** | Maintaining accurate documentation | After feature changes, before releases |
+| **playwright-qa-tester** | E2E testing, accessibility validation | After features, before deployments |
 
-### Modifying Database Schema
+**Note:** These agents are proactive tools. Use them to maintain quality standards.
 
-**100% Drizzle Approach:**
+---
 
-1. Edit `lib/drizzle/schema.ts`
-2. Generate: `pnpm db:generate`
-3. Review SQL in `lib/drizzle/migrations/`
-4. Add triggers/functions as raw SQL if needed
-5. Test locally: `pnpm db:migrate`
-6. Deploy to prod: `pnpm build:prod`
-7. Update `lib/db.ts` types
-8. Update Zod schemas
+## Database Schema
 
-**Example:** See `0001_add_user_plan_enum_and_triggers.sql` for triggers in migrations
+**Key Tables:**
+- `user_profiles` - User data with `plan` (ENUM), `preferences` (JSONB), `timezone`
+- `expenses` - Expenses with `is_recurring` (0|1), `payment_status`
+- `incomes` - Income records
+- `categories` / `income_categories` - Separate category tables
+- `payment_methods` - Payment methods with `is_default` flag
 
-### Adding a New Page
+**Recurring Expenses:** Stored once with `is_recurring=1`. Virtual instances generated at runtime. When paid, creates new record with `is_recurring=0`.
 
-1. Create `app/[locale]/dashboard/[new-page]/page.tsx`
-2. Add nav link in `app/[locale]/dashboard/layout.tsx`
-3. Add revalidation path in `lib/action-helpers.ts` if needed
-4. Ensure RLS policies cover new data access
+**Full Schema:** See [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
 
 ---
 
@@ -565,20 +284,10 @@ SELECT id, email FROM auth.users;
 
 **Central Index:** [`/docs/INDEX.md`](./docs/INDEX.md)
 
-**Key Docs:**
-- [`README.md`](./README.md) - Project overview & setup
-- [`/docs/QUICK_START.md`](./docs/QUICK_START.md) - 5-minute setup guide
-- [`/docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) - System architecture
-- [`/docs/TESTING.md`](./docs/TESTING.md) - Testing guide
-- [`/docs/COMPONENT_GUIDE.md`](./docs/COMPONENT_GUIDE.md) - Component catalog
-- [`/docs/ACCESSIBILITY-COMPLIANCE.md`](./docs/ACCESSIBILITY-COMPLIANCE.md) - WCAG compliance
-- [`/docs/design/design-system.md`](./docs/design/design-system.md) - Design system
-- [`/docs/deployment/MIGRATION-GUIDE.md`](./docs/deployment/MIGRATION-GUIDE.md) - Database migrations
-- [`/docs/deployment/DEPLOYMENT.md`](./docs/deployment/DEPLOYMENT.md) - Production deployment
-- [`CONTRIBUTING.md`](./CONTRIBUTING.md) - Contribution guidelines
+**Key Docs:** README.md, QUICK_START.md, ARCHITECTURE.md, COMPONENT_GUIDE.md, ACCESSIBILITY-COMPLIANCE.md
 
 ---
 
 **Version:** 0.1.0-beta
-**Last Updated:** January 7, 2026
-**Lines:** ~420 (reduced from 787)
+**Last Updated:** January 10, 2026
+**Lines:** ~280 (reduced from 585)
