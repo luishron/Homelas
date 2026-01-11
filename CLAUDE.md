@@ -124,7 +124,29 @@ import { CategoryIconPicker } from '@/components/ui/category-icon-picker';
 
 **Full Requirements:** See [`/docs/ACCESSIBILITY-COMPLIANCE.md`](./docs/ACCESSIBILITY-COMPLIANCE.md)
 
-### 6. Database Integer Booleans
+### 6. Drizzle ORM ⭐ MANDATORY
+
+**ALL database schema changes MUST go through Drizzle migrations:**
+
+```typescript
+// 1. Edit schema: lib/drizzle/schema.ts
+// 2. Generate: pnpm db:generate
+// 3. Review SQL in lib/drizzle/migrations/
+// 4. Apply: pnpm db:migrate
+```
+
+**Never:**
+- ❌ Modify database directly via Supabase SQL Editor
+- ❌ Create migrations manually in supabase/migrations/
+- ❌ Use raw SQL without migrations (except for queries)
+
+**For triggers/functions:** Add as raw SQL in Drizzle migration files.
+
+**Example:** See `0001_add_user_plan_enum_and_triggers.sql`
+
+**Production:** Use `pnpm build:prod` which auto-applies migrations.
+
+### 7. Database Integer Booleans
 
 Supabase stores booleans as integers (0|1):
 
@@ -133,7 +155,7 @@ Supabase stores booleans as integers (0|1):
 // Read: if (expense.is_recurring === 1) { ... }
 ```
 
-### 7. FormData Handling
+### 8. FormData Handling
 
 Server Actions receive `FormData`, not JSON:
 
@@ -143,7 +165,7 @@ const isRecurring = formData.get('isRecurring') === 'true'
 const amount = parseFloat(formData.get('amount') as string)
 ```
 
-### 8. Revalidation Strategy
+### 9. Revalidation Strategy
 
 After mutations, revalidate affected routes:
 
@@ -290,4 +312,4 @@ Use specialized agents for better results:
 
 **Version:** 0.1.0-beta
 **Last Updated:** January 10, 2026
-**Lines:** ~280 (reduced from 585)
+**Lines:** ~300 (reduced from 585)
